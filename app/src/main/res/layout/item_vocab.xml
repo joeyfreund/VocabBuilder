@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:longClickable="true">
+
+    <ImageView
+        android:layout_width="36sp"
+        android:layout_height="36sp"
+        android:id="@+id/vocabLevel"
+        android:layout_gravity="right"
+        android:src="@drawable/level_bars"
+        android:scaleType="fitXY"
+        android:contentDescription="@string/vocab_level"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/editCheckbox"
+        android:layout_toStartOf="@+id/editCheckbox"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/vocabName"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/vocabLevel"
+        android:layout_toStartOf="@+id/vocabLevel"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/vocabDefinition"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/vocabLevel"
+        android:layout_toStartOf="@+id/vocabLevel"
+        android:layout_below="@id/vocabName"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editCheckbox"
+        android:onClick="onCheckboxClicked"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+</RelativeLayout>

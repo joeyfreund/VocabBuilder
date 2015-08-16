@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="charlesli.com.personalvocabbuilder.MyVocabActivity">
+
+    <item android:id="@+id/add_vocab_my_vocab_button"
+          android:title="@string/add_vocab_button"
+          android:icon="@drawable/ic_action_new"
+          android:orderInCategory="100"
+          app:showAsAction="always"/>
+
+    <item android:id="@+id/del_my_vocab_button"
+          android:title="@string/del_vocab_button"
+          android:icon="@drawable/ic_action_discard"
+          android:orderInCategory="200"
+          app:showAsAction="ifRoom"/>
+
+
+</menu>
