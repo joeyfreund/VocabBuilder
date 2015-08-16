@@ -1,4 +1,4 @@
-package charlesli.com.personalvocabbuilder;
+package charlesli.com.personalvocabbuilder.sqlDatabase;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import charlesli.com.personalvocabbuilder.R;
 
 /**
  * Created by Li on 2015/4/17.

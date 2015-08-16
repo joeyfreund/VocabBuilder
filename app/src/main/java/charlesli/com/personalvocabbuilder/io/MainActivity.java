@@ -1,4 +1,4 @@
-package charlesli.com.personalvocabbuilder;
+package charlesli.com.personalvocabbuilder.io;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+
+import charlesli.com.personalvocabbuilder.R;
 
 
 public class MainActivity extends ActionBarActivity {

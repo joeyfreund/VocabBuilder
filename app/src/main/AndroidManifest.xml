@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".io.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,44 +17,44 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MyVocabActivity"
+            android:name=".io.MyVocabActivity"
             android:label="@string/title_activity_my_vocab"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".io.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="charlesli.com.personalvocabbuilder.MainActivity" />
+                android:value=".io.MainActivity" />
         </activity>
         <activity
-            android:name=".ReviewActivity"
+            android:name=".io.ReviewActivity"
             android:label="@string/title_activity_review"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".io.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="charlesli.com.personalvocabbuilder.MainActivity" />
+                android:value=".io.MainActivity" />
         </activity>
         <activity
-            android:name=".CategoriesActivity"
+            android:name=".io.CategoriesActivity"
             android:label="@string/title_activity_categories"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".io.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="charlesli.com.personalvocabbuilder.MainActivity" />
+                android:value=".io.MainActivity" />
         </activity>
         <activity
-            android:name=".WordDefinitionActivity"
+            android:name=".io.WordDefinitionActivity"
             android:label="@string/title_activity_word_definition"
-            android:parentActivityName=".ReviewActivity" >
+            android:parentActivityName=".io.ReviewActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="charlesli.com.personalvocabbuilder.ReviewActivity" />
+                android:value=".io.ReviewActivity" />
         </activity>
         <activity
-            android:name=".MyWordBank"
+            android:name=".io.MyWordBank"
             android:label="@string/title_activity_my_word_bank"
-            android:parentActivityName=".CategoriesActivity" >
+            android:parentActivityName=".io.CategoriesActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="charlesli.com.personalvocabbuilder.CategoriesActivity" />
+                android:value=".io.CategoriesActivity" />
         </activity>
     </application>
 

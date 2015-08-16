@@ -1,4 +1,4 @@
-package charlesli.com.personalvocabbuilder;
+package charlesli.com.personalvocabbuilder.io;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import charlesli.com.personalvocabbuilder.R;
 
 
 public class CategoriesActivity extends ActionBarActivity {

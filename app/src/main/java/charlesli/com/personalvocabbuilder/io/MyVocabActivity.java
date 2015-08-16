@@ -1,4 +1,4 @@
-package charlesli.com.personalvocabbuilder;
+package charlesli.com.personalvocabbuilder.io;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -20,6 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import charlesli.com.personalvocabbuilder.R;
+import charlesli.com.personalvocabbuilder.sqlDatabase.VocabCursorAdapter;
+import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
+import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
 
 public class MyVocabActivity extends ActionBarActivity {

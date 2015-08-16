@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="charlesli.com.personalvocabbuilder.MyWordBank">
+    tools:context="charlesli.com.personalvocabbuilder.io.MyWordBank">
 
     <item android:id="@+id/add_vocab_word_bank_button"
           android:title="@string/add_vocab_button"

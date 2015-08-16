@@ -1,4 +1,4 @@
-package charlesli.com.personalvocabbuilder;
+package charlesli.com.personalvocabbuilder.io;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,6 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import charlesli.com.personalvocabbuilder.R;
+import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
 
 public class ReviewActivity extends ActionBarActivity {

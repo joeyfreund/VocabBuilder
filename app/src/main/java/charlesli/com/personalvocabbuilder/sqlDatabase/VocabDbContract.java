@@ -1,4 +1,4 @@
-package charlesli.com.personalvocabbuilder;
+package charlesli.com.personalvocabbuilder.sqlDatabase;
 
 import android.provider.BaseColumns;
 

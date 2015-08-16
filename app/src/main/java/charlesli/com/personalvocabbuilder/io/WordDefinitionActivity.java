@@ -1,4 +1,4 @@
-package charlesli.com.personalvocabbuilder;
+package charlesli.com.personalvocabbuilder.io;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -14,6 +14,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import charlesli.com.personalvocabbuilder.R;
+import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
+import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
 
 public class WordDefinitionActivity extends ActionBarActivity {
