@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,7 +58,6 @@ public class MyVocabActivity extends ActionBarActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 mSelectedVocab = (String) ((TextView) view.findViewById(R.id.vocabName)).getText();
                 editVocabAlertDialog(mSelectedVocab, view, position, id);
-                view.setTag((int) position);
                 return true;
             }
         });
@@ -83,6 +83,15 @@ public class MyVocabActivity extends ActionBarActivity {
             addVocabAlertDialog();
         }
         else if (id == R.id.del_my_vocab_button) {
+            for (int i = 0; i < mVocabListView.getChildCount(); i++) {
+                CheckBox checkBox = (CheckBox) mVocabListView.getChildAt(i).findViewById(R.id.editCheckbox);
+                if (checkBox.isChecked()) {
+                    TextView vocab = (TextView) mVocabListView.getChildAt(i).findViewById(R.id.vocabName);
+                    String vocabText = (String) vocab.getText();
+                    Log.d("MyVocabActivity", vocabText);
+                    mCheckedItems.add(vocabText);
+                }
+            }
             Toast.makeText(this, "Delete Vocab", Toast.LENGTH_LONG).show();
         }
 
@@ -220,7 +229,6 @@ public class MyVocabActivity extends ActionBarActivity {
 
         if (checked) {
             mCheckedItems.add("hello");
-            view.getTag();
         }
     }
 
