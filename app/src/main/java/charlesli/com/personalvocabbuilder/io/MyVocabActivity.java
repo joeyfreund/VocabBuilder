@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabCursorAdapter;
@@ -74,9 +75,11 @@ public class MyVocabActivity extends ActionBarActivity {
             addVocabAlertDialog();
         }
         else if (id == R.id.del_my_vocab_button) {
+            boolean checkBoxSelected = false;
             for (int i = 0; i < mVocabListView.getChildCount(); i++) {
                 CheckBox checkBox = (CheckBox) mVocabListView.getChildAt(i).findViewById(R.id.editCheckbox);
                 if (checkBox.isChecked()) {
+                    checkBoxSelected = true;
                     TextView vocab = (TextView) mVocabListView.getChildAt(i).findViewById(R.id.vocabName);
                     String vocabText = (String) vocab.getText();
 
@@ -90,9 +93,14 @@ public class MyVocabActivity extends ActionBarActivity {
                     db.delete(VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
                 }
             }
-            // Update Cursor
-            mCursor = mDbHelper.getCursorMyVocab(mDbHelper);
-            mVocabAdapter.changeCursor(mCursor);
+            if (checkBoxSelected) {
+                // Update Cursor
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper);
+                mVocabAdapter.changeCursor(mCursor);
+            }
+            else {
+                Toast.makeText(this, "No words are selected", Toast.LENGTH_LONG).show();
+            }
         }
 
         return super.onOptionsItemSelected(item);
