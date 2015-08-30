@@ -18,8 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabCursorAdapter;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
@@ -34,8 +32,6 @@ public class MyVocabActivity extends ActionBarActivity {
     private String mSelectedVocab;
 
     private VocabDbHelper mDbHelper = new VocabDbHelper(this);
-
-    private ArrayList<String> mCheckedItems = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
