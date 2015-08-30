@@ -101,6 +101,12 @@ public class MyVocabActivity extends ActionBarActivity {
             else {
                 Toast.makeText(this, "No words are selected", Toast.LENGTH_LONG).show();
             }
+            for (int i = 0; i < mVocabListView.getChildCount(); i++) {
+                CheckBox checkBox = (CheckBox) mVocabListView.getChildAt(i).findViewById(R.id.editCheckbox);
+                if (checkBox.isChecked()) {
+                    checkBox.setChecked(false);
+                }
+            }
         }
 
         return super.onOptionsItemSelected(item);
