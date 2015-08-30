@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -90,9 +89,20 @@ public class MyVocabActivity extends ActionBarActivity {
                     String vocabText = (String) vocab.getText();
                     Log.d("MyVocabActivity", vocabText);
                     mCheckedItems.add(vocabText);
+
+                    // Delete Vocab from Database*****************************************
+                    SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                    // Define 'where' part of query
+                    String selection = VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB + " LIKE ?";
+                    // Specify arguments in placeholder order
+                    String[] selectionArgs = {vocabText};
+                    // Issue SQL statement
+                    db.delete(VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
                 }
             }
-            Toast.makeText(this, "Delete Vocab", Toast.LENGTH_LONG).show();
+            // Update Cursor
+            mCursor = mDbHelper.getCursorMyVocab(mDbHelper);
+            mVocabAdapter.changeCursor(mCursor);
         }
 
         return super.onOptionsItemSelected(item);
@@ -223,14 +233,6 @@ public class MyVocabActivity extends ActionBarActivity {
         builder.show();
     }
 
-    public void onCheckboxClicked(View view) {
-        // Is the view now checked?
-        boolean checked = ((CheckBox) view).isChecked();
-
-        if (checked) {
-            mCheckedItems.add("hello");
-        }
-    }
 
 
 
