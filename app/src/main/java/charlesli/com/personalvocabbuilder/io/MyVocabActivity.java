@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,10 +30,8 @@ public class MyVocabActivity extends ActionBarActivity {
 
     private VocabCursorAdapter mVocabAdapter;
     private ListView mVocabListView;
-    private TextView mEmptyTextView;
     private Cursor mCursor;
     private String mSelectedVocab;
-    private CheckBox mCheckBox;
 
     private VocabDbHelper mDbHelper = new VocabDbHelper(this);
 
@@ -46,9 +43,8 @@ public class MyVocabActivity extends ActionBarActivity {
         setContentView(R.layout.activity_my_vocab);
 
         mVocabListView = (ListView) findViewById(R.id.mVocabList);
-        mEmptyTextView = (TextView) findViewById(android.R.id.empty);
-        mVocabListView.setEmptyView(mEmptyTextView);
-        mCheckBox = (CheckBox) findViewById(R.id.editCheckbox);
+        TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
+        mVocabListView.setEmptyView(emptyTextView);
         mCursor = mDbHelper.getCursorMyVocab(mDbHelper);
         mVocabAdapter = new VocabCursorAdapter(this, mCursor, 0);
         mVocabListView.setAdapter(mVocabAdapter);
@@ -87,8 +83,6 @@ public class MyVocabActivity extends ActionBarActivity {
                 if (checkBox.isChecked()) {
                     TextView vocab = (TextView) mVocabListView.getChildAt(i).findViewById(R.id.vocabName);
                     String vocabText = (String) vocab.getText();
-                    Log.d("MyVocabActivity", vocabText);
-                    mCheckedItems.add(vocabText);
 
                     // Delete Vocab from Database*****************************************
                     SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -232,7 +226,6 @@ public class MyVocabActivity extends ActionBarActivity {
 
         builder.show();
     }
-
 
 
 
