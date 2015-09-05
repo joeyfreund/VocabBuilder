@@ -19,8 +19,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabCursorAdapter;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
@@ -37,7 +35,6 @@ public class MyWordBank extends ActionBarActivity {
 
     private VocabDbHelper mDbHelper = new VocabDbHelper(this);
 
-    private ArrayList<String> mCheckedItems = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +76,38 @@ public class MyWordBank extends ActionBarActivity {
             addVocabAlertDialog();
         }
         else if (id == R.id.del_my_vocab_button) {
-            Toast.makeText(this, "Delete Words", Toast.LENGTH_LONG).show();
+            boolean checkBoxSelected = false;
+            for (int i = 0; i < mWordBankListView.getChildCount(); i++) {
+                CheckBox checkBox = (CheckBox) mWordBankListView.getChildAt(i).findViewById(R.id.editCheckbox);
+                if (checkBox.isChecked()) {
+                    checkBoxSelected = true;
+                    TextView vocab = (TextView) mWordBankListView.getChildAt(i).findViewById(R.id.vocabName);
+                    String vocabText = (String) vocab.getText();
+
+                    // Delete Vocab from Database*****************************************
+                    SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                    // Define 'where' part of query
+                    String selection = VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB + " LIKE ?";
+                    // Specify arguments in placeholder order
+                    String[] selectionArgs = {vocabText};
+                    // Issue SQL statement
+                    db.delete(VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK, selection, selectionArgs);
+                }
+            }
+            if (checkBoxSelected) {
+                // Update Cursor
+                mCursor = mDbHelper.getCursorMyWordBank(mDbHelper);
+                mVocabAdapter.changeCursor(mCursor);
+            }
+            else {
+                Toast.makeText(this, "No words are selected", Toast.LENGTH_LONG).show();
+            }
+            for (int i = 0; i < mWordBankListView.getChildCount(); i++) {
+                CheckBox checkBox = (CheckBox) mWordBankListView.getChildAt(i).findViewById(R.id.editCheckbox);
+                if (checkBox.isChecked()) {
+                    checkBox.setChecked(false);
+                }
+            }
         }
         else if (id == R.id.label_my_vocab_button) {
             Toast.makeText(this, "Label Vocab", Toast.LENGTH_LONG).show();
@@ -209,15 +237,4 @@ public class MyWordBank extends ActionBarActivity {
         builder.show();
     }
 
-    public void onCheckboxClicked(View view) {
-        // Is the view now checked?
-        boolean checked = ((CheckBox) view).isChecked();
-
-        if (checked) {
-
-        }
-        else {
-
-        }
-    }
 }
