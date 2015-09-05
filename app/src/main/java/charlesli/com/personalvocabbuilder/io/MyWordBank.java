@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -110,7 +111,30 @@ public class MyWordBank extends ActionBarActivity {
             }
         }
         else if (id == R.id.label_my_vocab_button) {
-            Toast.makeText(this, "Label Vocab", Toast.LENGTH_LONG).show();
+            boolean checkBoxSelected = false;
+            for (int i = 0; i < mWordBankListView.getChildCount(); i++) {
+                CheckBox checkBox = (CheckBox) mWordBankListView.getChildAt(i).findViewById(R.id.editCheckbox);
+                if (checkBox.isChecked()) {
+                    checkBoxSelected = true;
+                    TextView vocab = (TextView) mWordBankListView.getChildAt(i).findViewById(R.id.vocabName);
+                    String vocabText = (String) vocab.getText();
+                    TextView definition = (TextView) mWordBankListView.getChildAt(i).findViewById(R.id.vocabDefinition);
+                    String definitionText = (String) definition.getText();
+                    ImageView level = (ImageView) mWordBankListView.getChildAt(i).findViewById(R.id.vocabLevel);
+
+
+                    mDbHelper.insertMyVocab(mDbHelper, vocabText, definitionText, 0);
+                }
+            }
+            if (!checkBoxSelected) {
+                Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
+            }
+            for (int i = 0; i < mWordBankListView.getChildCount(); i++) {
+                CheckBox checkBox = (CheckBox) mWordBankListView.getChildAt(i).findViewById(R.id.editCheckbox);
+                if (checkBox.isChecked()) {
+                    checkBox.setChecked(false);
+                }
+            }
         }
 
         return super.onOptionsItemSelected(item);
