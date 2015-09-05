@@ -13,13 +13,10 @@ import charlesli.com.personalvocabbuilder.R;
 
 public class MainActivity extends ActionBarActivity {
 
-    private CharSequence mTitle;
     private ImageButton mMyVocabButton;
     private ImageButton mReviewButton;
     private ImageButton mTestButton;
-    private ImageButton mDictionaryButton;
     private ImageButton mCategoriesButton;
-    private ImageButton mSettingsButton;
 
 
     @Override
@@ -27,14 +24,11 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTitle = getTitle();
 
         mMyVocabButton = (ImageButton) findViewById(R.id.myVocabButton);
         mReviewButton = (ImageButton) findViewById(R.id.reviewButton);
         mTestButton = (ImageButton) findViewById(R.id.testButton);
-        mDictionaryButton = (ImageButton) findViewById(R.id.dictionary_button);
         mCategoriesButton = (ImageButton) findViewById(R.id.categories_button);
-        mSettingsButton = (ImageButton) findViewById(R.id.settings_button);
 
         mMyVocabButton.setOnClickListener(new View.OnClickListener() {
             @Override
