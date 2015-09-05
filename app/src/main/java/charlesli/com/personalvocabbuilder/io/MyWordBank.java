@@ -101,7 +101,7 @@ public class MyWordBank extends ActionBarActivity {
                 mVocabAdapter.changeCursor(mCursor);
             }
             else {
-                Toast.makeText(this, "No words are selected", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
             }
             for (int i = 0; i < mWordBankListView.getChildCount(); i++) {
                 CheckBox checkBox = (CheckBox) mWordBankListView.getChildAt(i).findViewById(R.id.editCheckbox);
@@ -121,9 +121,8 @@ public class MyWordBank extends ActionBarActivity {
                     TextView definition = (TextView) mWordBankListView.getChildAt(i).findViewById(R.id.vocabDefinition);
                     String definitionText = (String) definition.getText();
                     ImageView level = (ImageView) mWordBankListView.getChildAt(i).findViewById(R.id.vocabLevel);
-
-
-                    mDbHelper.insertMyVocab(mDbHelper, vocabText, definitionText, 0);
+                    int levelNum = (int) level.getTag();
+                    mDbHelper.insertMyVocab(mDbHelper, vocabText, definitionText, levelNum);
                 }
             }
             if (!checkBoxSelected) {

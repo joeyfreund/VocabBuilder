@@ -99,7 +99,7 @@ public class MyVocabActivity extends ActionBarActivity {
                 mVocabAdapter.changeCursor(mCursor);
             }
             else {
-                Toast.makeText(this, "No words are selected", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
             }
             for (int i = 0; i < mVocabListView.getChildCount(); i++) {
                 CheckBox checkBox = (CheckBox) mVocabListView.getChildAt(i).findViewById(R.id.editCheckbox);
