@@ -18,6 +18,7 @@
         </activity>
         <activity
             android:name=".io.MyVocabActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_my_vocab"
             android:parentActivityName=".io.MainActivity" >
             <meta-data
@@ -50,6 +51,7 @@
         </activity>
         <activity
             android:name=".io.MyWordBank"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_my_word_bank"
             android:parentActivityName=".io.CategoriesActivity" >
             <meta-data
