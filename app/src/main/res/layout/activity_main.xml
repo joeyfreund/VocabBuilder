@@ -11,7 +11,7 @@
         android:id="@+id/myVocabButton"
         android:src="@drawable/my_vocab_button"
         android:contentDescription="@string/title_section2"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="153dp"
         android:scaleType="fitXY"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -34,7 +34,7 @@
         android:src="@drawable/test_button"
         android:contentDescription="@string/title_section4"
         android:scaleType="fitXY"
-        android:layout_alignTop="@+id/reviewButton"
+        android:layout_alignTop="@+id/dictionary_button"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"/>
 
@@ -42,12 +42,12 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:id="@+id/dictionary_button"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:contentDescription="@string/title_section5"
         android:src="@drawable/dictionary_button"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 
     <ImageButton
         android:layout_width="96dp"
@@ -56,9 +56,9 @@
         android:contentDescription="@string/title_section6"
         android:src="@drawable/categories_button"
         android:scaleType="fitXY"
-        android:layout_alignTop="@+id/settings_button"
-        android:layout_alignLeft="@+id/reviewButton"
-        android:layout_alignStart="@+id/reviewButton"/>
+        android:layout_alignTop="@+id/reviewButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
     <ImageButton
         android:layout_width="96dp"
@@ -67,8 +67,7 @@
         android:contentDescription="@string/title_section7"
         android:src="@drawable/settings_button"
         android:scaleType="fitXY"
-        android:layout_alignTop="@+id/dictionary_button"
-        android:layout_alignLeft="@+id/testButton"
-        android:layout_alignStart="@+id/testButton"/>
+        android:layout_alignTop="@+id/testButton"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
