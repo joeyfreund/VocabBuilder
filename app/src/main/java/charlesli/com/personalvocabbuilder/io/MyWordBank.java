@@ -128,6 +128,9 @@ public class MyWordBank extends ActionBarActivity {
             if (!checkBoxSelected) {
                 Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
             }
+            else {
+                Toast.makeText(this, "Added to My Vocab", Toast.LENGTH_SHORT).show();
+            }
             for (int i = 0; i < mWordBankListView.getChildCount(); i++) {
                 CheckBox checkBox = (CheckBox) mWordBankListView.getChildAt(i).findViewById(R.id.editCheckbox);
                 if (checkBox.isChecked()) {

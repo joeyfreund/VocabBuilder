@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import charlesli.com.personalvocabbuilder.R;
 
@@ -37,6 +38,9 @@ public class CategoriesActivity extends ActionBarActivity {
                 if (position == 0) {
                     Intent intent = new Intent(CategoriesActivity.this, MyWordBank.class);
                     startActivity(intent);
+                }
+                else {
+                    Toast.makeText(CategoriesActivity.this, "Coming soon...", Toast.LENGTH_SHORT).show();
                 }
             }
         });
