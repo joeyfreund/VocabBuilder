@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".io.MyVocabActivity"
+            android:name=".io.MyVocab"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_my_vocab"
             android:parentActivityName=".io.MainActivity" >
@@ -26,7 +26,7 @@
                 android:value=".io.MainActivity" />
         </activity>
         <activity
-            android:name=".io.ReviewActivity"
+            android:name=".io.Review"
             android:label="@string/title_activity_review"
             android:parentActivityName=".io.MainActivity" >
             <meta-data
@@ -34,7 +34,7 @@
                 android:value=".io.MainActivity" />
         </activity>
         <activity
-            android:name=".io.CategoriesActivity"
+            android:name=".io.Categories"
             android:label="@string/title_activity_categories"
             android:parentActivityName=".io.MainActivity" >
             <meta-data
@@ -42,21 +42,21 @@
                 android:value=".io.MainActivity" />
         </activity>
         <activity
-            android:name=".io.WordDefinitionActivity"
+            android:name=".io.WordDefinition"
             android:label="@string/title_activity_word_definition"
-            android:parentActivityName=".io.ReviewActivity" >
+            android:parentActivityName=".io.Review" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".io.ReviewActivity" />
+                android:value=".io.Review" />
         </activity>
         <activity
             android:name=".io.MyWordBank"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_my_word_bank"
-            android:parentActivityName=".io.CategoriesActivity" >
+            android:parentActivityName=".io.Categories" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".io.CategoriesActivity" />
+                android:value=".io.Categories" />
         </activity>
     </application>
 

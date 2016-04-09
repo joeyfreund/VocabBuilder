@@ -25,7 +25,7 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
 
-public class MyVocabActivity extends ActionBarActivity {
+public class MyVocab extends ActionBarActivity {
 
     private VocabCursorAdapter mVocabAdapter;
     private ListView mVocabListView;

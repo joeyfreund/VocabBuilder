@@ -20,7 +20,7 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
 
-public class WordDefinitionActivity extends ActionBarActivity {
+public class WordDefinition extends ActionBarActivity {
 
     private int mReviewOptionSelected;
     private TextView mTopTextView;
@@ -201,7 +201,7 @@ public class WordDefinitionActivity extends ActionBarActivity {
         }
         // If this is last row
         else {
-            // Exit the interface and go back to ReviewActivity
+            // Exit the interface and go back to Review
             mTracker.clear();
             finish();
         }

@@ -3,8 +3,6 @@ package charlesli.com.personalvocabbuilder.io;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,7 +12,7 @@ import android.widget.Toast;
 import charlesli.com.personalvocabbuilder.R;
 
 
-public class CategoriesActivity extends ActionBarActivity {
+public class Categories extends ActionBarActivity {
 
     private ListView mCategoriesListView;
 
@@ -36,11 +34,11 @@ public class CategoriesActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
-                    Intent intent = new Intent(CategoriesActivity.this, MyWordBank.class);
+                    Intent intent = new Intent(Categories.this, MyWordBank.class);
                     startActivity(intent);
                 }
                 else {
-                    Toast.makeText(CategoriesActivity.this, "Coming soon...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Categories.this, "Coming soon...", Toast.LENGTH_SHORT).show();
                 }
             }
         });

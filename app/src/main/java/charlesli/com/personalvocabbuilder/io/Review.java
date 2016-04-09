@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -14,7 +12,7 @@ import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
 
-public class ReviewActivity extends ActionBarActivity {
+public class Review extends ActionBarActivity {
 
     private Button mWordDefinitionButton;
     private Button mDefinitionWordButton;
@@ -42,7 +40,7 @@ public class ReviewActivity extends ActionBarActivity {
                     startReview(WORDTODEF);
                 }
                 else {
-                    Toast.makeText(ReviewActivity.this, "Add words to My Vocab first", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Review.this, "Add words to My Vocab first", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -53,16 +51,15 @@ public class ReviewActivity extends ActionBarActivity {
             public void onClick(View v) {
                 if (mCursor.getCount() > 0) {
                     startReview(DEFTOWORD);
-                }
-                else {
-                    Toast.makeText(ReviewActivity.this, "Add words to My Vocab first", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(Review.this, "Add words to My Vocab first", Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
 
     private  void startReview(int reviewOption) {
-        Intent intent = new Intent(this, WordDefinitionActivity.class);
+        Intent intent = new Intent(this, WordDefinition.class);
         intent.putExtra(getString(R.string.review_option_selected), reviewOption);
         startActivity(intent);
     }
