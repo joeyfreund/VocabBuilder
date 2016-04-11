@@ -84,7 +84,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
     }
 
 
-    public Cursor getCursorMyVocab(VocabDbHelper dbHelper) {
+    public Cursor getCursorMyVocab(VocabDbHelper dbHelper, String tableName) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         // Define a projection that specifies which columns from the database
@@ -97,7 +97,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         };
 
         Cursor cursor = db.query(
-                VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB, // The table to query
+                tableName, // The table to query
                 projection,                                 // The columns for the WHERE clause
                 null,                                        // The rows to return for the WHERE clause
                 null,                                        // selectionArgs
@@ -109,30 +109,6 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Cursor getCursorMyWordBank(VocabDbHelper dbHelper) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                VocabDbContract.DatabaseInfo._ID,
-                VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB,
-                VocabDbContract.DatabaseInfo.COLUMN_NAME_DEFINITION,
-                VocabDbContract.DatabaseInfo.COLUMN_NAME_LEVEL
-        };
-
-        Cursor cursor = db.query(
-                VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK, // The table to query
-                projection,                                 // The columns for the WHERE clause
-                null,                                        // The rows to return for the WHERE clause
-                null,                                        // selectionArgs
-                null,                                        // groupBy
-                null,                                        // having
-                null,                                        // orderBy
-                null                                         // limit (the number of rows)
-        );
-        return cursor;
-    }
 }
 
 

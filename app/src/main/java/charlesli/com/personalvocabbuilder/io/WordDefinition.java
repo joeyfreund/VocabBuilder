@@ -60,7 +60,7 @@ public class WordDefinition extends ActionBarActivity {
         mPerLvlButton = (Button) findViewById(R.id.lvl_perfect_button);
         mAgaLvlButton = (Button) findViewById(R.id.lvl_again_button);
 
-        mCursor = mDbHelper.getCursorMyVocab(mDbHelper);
+        mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
 
         loadRandomPage();
 

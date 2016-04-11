@@ -45,7 +45,7 @@ public class MyWordBank extends ActionBarActivity {
         mWordBankListView = (ListView) findViewById(R.id.mWordBankList);
         mEmptyTextView = (TextView) findViewById(android.R.id.empty);
         mWordBankListView.setEmptyView(mEmptyTextView);
-        mCursor = mDbHelper.getCursorMyWordBank(mDbHelper);
+        mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK);
         mVocabAdapter = new VocabCursorAdapter(this, mCursor, 0);
         mWordBankListView.setAdapter(mVocabAdapter);
         mWordBankListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -97,7 +97,7 @@ public class MyWordBank extends ActionBarActivity {
             }
             if (checkBoxSelected) {
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyWordBank(mDbHelper);
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK);
                 mVocabAdapter.changeCursor(mCursor);
             }
             else {
@@ -169,7 +169,7 @@ public class MyWordBank extends ActionBarActivity {
                 String definition = definitionInput.getText().toString();
                 mDbHelper.insertVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK, vocab, definition, 0);
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyWordBank(mDbHelper);
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });
@@ -238,7 +238,7 @@ public class MyWordBank extends ActionBarActivity {
                 );
 
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyWordBank(mDbHelper);
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });
@@ -255,7 +255,7 @@ public class MyWordBank extends ActionBarActivity {
                 db.delete(VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK, selection, selectionArgs);
 
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyWordBank(mDbHelper);
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });

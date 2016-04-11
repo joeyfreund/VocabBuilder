@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import charlesli.com.personalvocabbuilder.R;
+import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
 
@@ -31,7 +32,7 @@ public class Review extends ActionBarActivity {
         mWordDefinitionButton = (Button) findViewById(R.id.word_definition_button);
         mDefinitionWordButton = (Button) findViewById(R.id.definition_word_button);
 
-        mCursor = mDbHelper.getCursorMyVocab(mDbHelper);
+        mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
 
         mWordDefinitionButton.setOnClickListener(new View.OnClickListener() {
             @Override

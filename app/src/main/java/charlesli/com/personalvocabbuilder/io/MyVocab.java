@@ -42,7 +42,7 @@ public class MyVocab extends ActionBarActivity {
         mVocabListView = (ListView) findViewById(R.id.mVocabList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mVocabListView.setEmptyView(emptyTextView);
-        mCursor = mDbHelper.getCursorMyVocab(mDbHelper);
+        mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
         mVocabAdapter = new VocabCursorAdapter(this, mCursor, 0);
         mVocabListView.setAdapter(mVocabAdapter);
         mVocabListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -95,7 +95,7 @@ public class MyVocab extends ActionBarActivity {
             }
             if (checkBoxSelected) {
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(mDbHelper);
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
                 mVocabAdapter.changeCursor(mCursor);
             }
             else {
@@ -140,7 +140,7 @@ public class MyVocab extends ActionBarActivity {
                 mDbHelper.insertVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB, vocab, definition, 0);
                 mDbHelper.insertVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK, vocab, definition, 0);
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(mDbHelper);
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });
@@ -212,7 +212,7 @@ public class MyVocab extends ActionBarActivity {
 
 
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(mDbHelper);
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });
@@ -229,7 +229,7 @@ public class MyVocab extends ActionBarActivity {
                 db.delete(VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
 
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(mDbHelper);
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });
