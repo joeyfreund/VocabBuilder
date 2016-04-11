@@ -2,7 +2,8 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="charlesli.com.personalvocabbuilder.io.MyWordBank">
+                tools:context="charlesli.com.personalvocabbuilder.io.MyWordBank"
+                android:paddingLeft="5dp">
 
     <ListView
         android:layout_width="fill_parent"
