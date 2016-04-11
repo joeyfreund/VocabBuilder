@@ -58,6 +58,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".controller.Categories" />
         </activity>
+        <activity
+            android:name=".controller.GMAT"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_gmat"
+            android:parentActivityName=".controller.Categories" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".controller.Categories" />
+        </activity>
     </application>
 
 </manifest>

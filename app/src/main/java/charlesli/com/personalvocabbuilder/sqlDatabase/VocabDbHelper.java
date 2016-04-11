@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class VocabDbHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "VocabDatabase.db";
 
 
@@ -32,6 +32,14 @@ public class VocabDbHelper extends SQLiteOpenHelper {
             VocabDbContract.COLUMN_NAME_DEFINITION + " TEXT, " +
             VocabDbContract.COLUMN_NAME_LEVEL + " INTEGER );";
 
+    // Table for My Word Bank
+    private String CREATE_TABLE_GMAT =
+            "CREATE TABLE  " + VocabDbContract.TABLE_NAME_GMAT +
+                    " (" + VocabDbContract._ID + " INTEGER PRIMARY KEY," +
+                    VocabDbContract.COLUMN_NAME_VOCAB + " TEXT, " +
+                    VocabDbContract.COLUMN_NAME_DEFINITION + " TEXT, " +
+                    VocabDbContract.COLUMN_NAME_LEVEL + " INTEGER );";
+
 
 
     private static final String DELETE_TABLE_MY_VOCAB =
@@ -39,6 +47,9 @@ public class VocabDbHelper extends SQLiteOpenHelper {
 
     private static final String DELETE_TABLE_MY_WORD_BANK =
             "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_MY_WORD_BANK;
+
+    private static final String DELETE_TABLE_GMAT =
+            "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_GMAT;
 
     public VocabDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -50,6 +61,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         // Creating required tables
         db.execSQL(CREATE_TABLE_MY_VOCAB);
         db.execSQL(CREATE_TABLE_MY_WORD_BANK);
+        db.execSQL(CREATE_TABLE_GMAT);
     }
 
     @Override
@@ -58,6 +70,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         // simply to discard the data and start over
         db.execSQL(DELETE_TABLE_MY_VOCAB);
         db.execSQL(DELETE_TABLE_MY_WORD_BANK);
+        db.execSQL(DELETE_TABLE_GMAT);
 
         // Create new tables
         onCreate(db);
