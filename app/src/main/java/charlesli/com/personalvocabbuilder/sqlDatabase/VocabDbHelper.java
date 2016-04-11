@@ -62,6 +62,28 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_MY_VOCAB);
         db.execSQL(CREATE_TABLE_MY_WORD_BANK);
         db.execSQL(CREATE_TABLE_GMAT);
+        /*
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abaft", "adj: on or toward the rear of a ship", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abandon", "v: to leave behind", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abase", "v: to degrade, humiliate", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abbreviate", "v: to shorten, compress", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abdicate", "v: to reject, renounce", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abhor", "v: to hate", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abject", "v: to give up", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abnegation", "n: denial", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abominate", "v: to loathe, hate", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abridge", "v: to shorten, limit", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abrogate", "v: to cancel by authority", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abrupt", "adj: happening or ending unexpectedly", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abscond", "v: to go away hastily or secretly", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Absolve", "v: to forgive", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abstemious", "adj: sparing in use of food or drinks", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abstruse", "adj: hard to understand", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abysmal", "adj: very deep", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Accede", "v: to comply with", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Acclaim", "v: loud approval", 0);
+        mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Accrue", "v: a natural growth; a periodic increase", 0);
+        */
     }
 
     @Override
