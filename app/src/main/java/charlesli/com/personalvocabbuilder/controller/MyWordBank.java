@@ -30,7 +30,6 @@ public class MyWordBank extends ActionBarActivity {
 
     private VocabCursorAdapter mVocabAdapter;
     private ListView mWordBankListView;
-    private TextView mEmptyTextView;
     private Cursor mCursor;
     private String mSelectedVocab;
 
@@ -43,8 +42,8 @@ public class MyWordBank extends ActionBarActivity {
         setContentView(R.layout.activity_my_word_bank);
 
         mWordBankListView = (ListView) findViewById(R.id.mWordBankList);
-        mEmptyTextView = (TextView) findViewById(android.R.id.empty);
-        mWordBankListView.setEmptyView(mEmptyTextView);
+        TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
+        mWordBankListView.setEmptyView(emptyTextView);
         mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK);
         mVocabAdapter = new VocabCursorAdapter(this, mCursor, 0);
         mWordBankListView.setAdapter(mVocabAdapter);
