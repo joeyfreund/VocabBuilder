@@ -44,9 +44,9 @@ public class VocabCursorAdapter extends CursorAdapter {
         TextView tvVocabDefinition = (TextView) view.findViewById(R.id.vocabDefinition);
         ImageView tvVocabLevel = (ImageView) view.findViewById(R.id.vocabLevel);
         // Extract properties from cursor
-        String vocab = cursor.getString(cursor.getColumnIndexOrThrow(VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB));
-        String definition = cursor.getString(cursor.getColumnIndexOrThrow(VocabDbContract.DatabaseInfo.COLUMN_NAME_DEFINITION));
-        int level = cursor.getInt(cursor.getColumnIndexOrThrow(VocabDbContract.DatabaseInfo.COLUMN_NAME_LEVEL));
+        String vocab = cursor.getString(cursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_VOCAB));
+        String definition = cursor.getString(cursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_DEFINITION));
+        int level = cursor.getInt(cursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_LEVEL));
         // Populate fields with extracted properties
         tvVocabName.setText(vocab);
         tvVocabDefinition.setText(definition);

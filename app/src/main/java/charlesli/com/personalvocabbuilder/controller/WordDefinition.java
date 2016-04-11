@@ -58,7 +58,7 @@ public class WordDefinition extends ActionBarActivity {
         mPerLvlButton = (Button) findViewById(R.id.lvl_perfect_button);
         mAgaLvlButton = (Button) findViewById(R.id.lvl_again_button);
 
-        mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
+        mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);
 
         loadRandomPage();
 
@@ -78,11 +78,11 @@ public class WordDefinition extends ActionBarActivity {
 
         mCursor.moveToPosition(randomNum);
         // Get Word from Desired Random Row
-        String word = mCursor.getString(mCursor.getColumnIndexOrThrow(VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB));
+        String word = mCursor.getString(mCursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_VOCAB));
         // Get Definition from Desired Random Row
-        String definition = mCursor.getString(mCursor.getColumnIndexOrThrow(VocabDbContract.DatabaseInfo.COLUMN_NAME_DEFINITION));
+        String definition = mCursor.getString(mCursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_DEFINITION));
         // Get row ID from Desired Random Row
-        final int rowId = mCursor.getInt(mCursor.getColumnIndexOrThrow(VocabDbContract.DatabaseInfo._ID));
+        final int rowId = mCursor.getInt(mCursor.getColumnIndexOrThrow(VocabDbContract._ID));
 
         // if 0 (word - > definition): ********
         if (mReviewOptionSelected == 0) {
@@ -167,26 +167,26 @@ public class WordDefinition extends ActionBarActivity {
 
         // New value for one column
         ContentValues values = new ContentValues();
-        values.put(VocabDbContract.DatabaseInfo.COLUMN_NAME_LEVEL, level);
+        values.put(VocabDbContract.COLUMN_NAME_LEVEL, level);
 
         // Which row to update, based on the ID
-        String selection = VocabDbContract.DatabaseInfo._ID + " LIKE ?";
+        String selection = VocabDbContract._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(rowId)};
 
         int countMyVocab = db.update(
-                VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB,
+                VocabDbContract.TABLE_NAME_MY_VOCAB,
                 values,
                 selection,
                 selectionArgs
         );
 
         // Which row to update, based on the ID
-        String selectionWordBank = VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB + " LIKE ?";
-        String word = mCursor.getString(mCursor.getColumnIndexOrThrow(VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB));
+        String selectionWordBank = VocabDbContract.COLUMN_NAME_VOCAB + " LIKE ?";
+        String word = mCursor.getString(mCursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_VOCAB));
         String[] selectionArgsWordBank = {word};
 
         int countMyWordBank = db.update(
-                VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK,
+                VocabDbContract.TABLE_NAME_MY_WORD_BANK,
                 values,
                 selectionWordBank,
                 selectionArgsWordBank

@@ -32,7 +32,7 @@ public class Review extends ActionBarActivity {
         mWordDefinitionButton = (Button) findViewById(R.id.word_definition_button);
         mDefinitionWordButton = (Button) findViewById(R.id.definition_word_button);
 
-        mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
+        mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);
 
         mWordDefinitionButton.setOnClickListener(new View.OnClickListener() {
             @Override

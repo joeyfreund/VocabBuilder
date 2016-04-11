@@ -42,7 +42,7 @@ public class MyVocab extends ActionBarActivity {
         mVocabListView = (ListView) findViewById(R.id.mVocabList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mVocabListView.setEmptyView(emptyTextView);
-        mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
+        mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);
         mVocabAdapter = new VocabCursorAdapter(this, mCursor, 0);
         mVocabListView.setAdapter(mVocabAdapter);
         mVocabListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -86,16 +86,16 @@ public class MyVocab extends ActionBarActivity {
                     // Delete Vocab from Database*****************************************
                     SQLiteDatabase db = mDbHelper.getWritableDatabase();
                     // Define 'where' part of query
-                    String selection = VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB + " LIKE ?";
+                    String selection = VocabDbContract.COLUMN_NAME_VOCAB + " LIKE ?";
                     // Specify arguments in placeholder order
                     String[] selectionArgs = {vocabText};
                     // Issue SQL statement
-                    db.delete(VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
+                    db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
                 }
             }
             if (checkBoxSelected) {
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);
                 mVocabAdapter.changeCursor(mCursor);
             }
             else {
@@ -137,10 +137,10 @@ public class MyVocab extends ActionBarActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String vocab = vocabInput.getText().toString();
                 String definition = definitionInput.getText().toString();
-                mDbHelper.insertVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB, vocab, definition, 0);
-                mDbHelper.insertVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK, vocab, definition, 0);
+                mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB, vocab, definition, 0);
+                mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK, vocab, definition, 0);
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });
@@ -184,14 +184,14 @@ public class MyVocab extends ActionBarActivity {
 
                 // new value for one column
                 ContentValues values = new ContentValues();
-                values.put(VocabDbContract.DatabaseInfo.COLUMN_NAME_DEFINITION, definition);
+                values.put(VocabDbContract.COLUMN_NAME_DEFINITION, definition);
 
                 // which row to update, based on the ID
-                String selection = VocabDbContract.DatabaseInfo._ID + " LIKE ?";
+                String selection = VocabDbContract._ID + " LIKE ?";
                 String[] selectionArgs = {String.valueOf(id)};
 
                 int countMyVocab = db.update(
-                        VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB,
+                        VocabDbContract.TABLE_NAME_MY_VOCAB,
                         values,
                         selection,
                         selectionArgs
@@ -200,11 +200,11 @@ public class MyVocab extends ActionBarActivity {
                 // Update My Word Bank based on Vocab
 
                 // which row to update, based on the VOCAB
-                String selectionWordBank = VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB + " LIKE ?";
+                String selectionWordBank = VocabDbContract.COLUMN_NAME_VOCAB + " LIKE ?";
                 String[] selectionArgsWordBank = {selectedVocab};
 
                 int countWordBank = db.update(
-                        VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK,
+                        VocabDbContract.TABLE_NAME_MY_WORD_BANK,
                         values,
                         selectionWordBank,
                         selectionArgsWordBank
@@ -212,7 +212,7 @@ public class MyVocab extends ActionBarActivity {
 
 
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });
@@ -222,14 +222,14 @@ public class MyVocab extends ActionBarActivity {
                 // Delete Vocab from Database*****************************************
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
                 // Define 'where' part of query
-                String selection = VocabDbContract.DatabaseInfo._ID + " LIKE ?";
+                String selection = VocabDbContract._ID + " LIKE ?";
                 // Specify arguments in placeholder order
                 String[] selectionArgs = {String.valueOf(id)};
                 // Issue SQL statement
-                db.delete(VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
+                db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
 
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });

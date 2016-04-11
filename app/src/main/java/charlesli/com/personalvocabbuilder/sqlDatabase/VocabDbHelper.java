@@ -18,27 +18,27 @@ public class VocabDbHelper extends SQLiteOpenHelper {
 
     // Table for My Vocab
     private String CREATE_TABLE_MY_VOCAB =
-            "CREATE TABLE  " + VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB +
-            " (" + VocabDbContract.DatabaseInfo._ID + " INTEGER PRIMARY KEY," +
-            VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB + " TEXT, " +
-            VocabDbContract.DatabaseInfo.COLUMN_NAME_DEFINITION + " TEXT, " +
-            VocabDbContract.DatabaseInfo.COLUMN_NAME_LEVEL + " INTEGER );";
+            "CREATE TABLE  " + VocabDbContract.TABLE_NAME_MY_VOCAB +
+            " (" + VocabDbContract._ID + " INTEGER PRIMARY KEY," +
+            VocabDbContract.COLUMN_NAME_VOCAB + " TEXT, " +
+            VocabDbContract.COLUMN_NAME_DEFINITION + " TEXT, " +
+            VocabDbContract.COLUMN_NAME_LEVEL + " INTEGER );";
 
     // Table for My Word Bank
     private String CREATE_TABLE_MY_WORD_BANK =
-            "CREATE TABLE  " + VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK +
-            " (" + VocabDbContract.DatabaseInfo._ID + " INTEGER PRIMARY KEY," +
-            VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB + " TEXT, " +
-            VocabDbContract.DatabaseInfo.COLUMN_NAME_DEFINITION + " TEXT, " +
-            VocabDbContract.DatabaseInfo.COLUMN_NAME_LEVEL + " INTEGER );";
+            "CREATE TABLE  " + VocabDbContract.TABLE_NAME_MY_WORD_BANK +
+            " (" + VocabDbContract._ID + " INTEGER PRIMARY KEY," +
+            VocabDbContract.COLUMN_NAME_VOCAB + " TEXT, " +
+            VocabDbContract.COLUMN_NAME_DEFINITION + " TEXT, " +
+            VocabDbContract.COLUMN_NAME_LEVEL + " INTEGER );";
 
 
 
     private static final String DELETE_TABLE_MY_VOCAB =
-            "DROP TABLE IF EXISTS " + VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB;
+            "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_MY_VOCAB;
 
     private static final String DELETE_TABLE_MY_WORD_BANK =
-            "DROP TABLE IF EXISTS " + VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK;
+            "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_MY_WORD_BANK;
 
     public VocabDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -74,9 +74,9 @@ public class VocabDbHelper extends SQLiteOpenHelper {
 
         // Create a new vap of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB, vocab);
-        values.put(VocabDbContract.DatabaseInfo.COLUMN_NAME_DEFINITION, definition);
-        values.put(VocabDbContract.DatabaseInfo.COLUMN_NAME_LEVEL, level);
+        values.put(VocabDbContract.COLUMN_NAME_VOCAB, vocab);
+        values.put(VocabDbContract.COLUMN_NAME_DEFINITION, definition);
+        values.put(VocabDbContract.COLUMN_NAME_LEVEL, level);
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;
@@ -90,10 +90,10 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = {
-            VocabDbContract.DatabaseInfo._ID,
-            VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB,
-            VocabDbContract.DatabaseInfo.COLUMN_NAME_DEFINITION,
-            VocabDbContract.DatabaseInfo.COLUMN_NAME_LEVEL
+            VocabDbContract._ID,
+            VocabDbContract.COLUMN_NAME_VOCAB,
+            VocabDbContract.COLUMN_NAME_DEFINITION,
+            VocabDbContract.COLUMN_NAME_LEVEL
         };
 
         Cursor cursor = db.query(
