@@ -75,41 +75,45 @@ public class MyVocab extends ActionBarActivity {
             addVocabAlertDialog();
         }
         else if (id == R.id.del_my_vocab_button) {
-            boolean checkBoxSelected = false;
-            for (int i = 0; i < mVocabListView.getChildCount(); i++) {
-                CheckBox checkBox = (CheckBox) mVocabListView.getChildAt(i).findViewById(R.id.editCheckbox);
-                if (checkBox.isChecked()) {
-                    checkBoxSelected = true;
-                    TextView vocab = (TextView) mVocabListView.getChildAt(i).findViewById(R.id.vocabName);
-                    String vocabText = (String) vocab.getText();
-
-                    // Delete Vocab from Database*****************************************
-                    SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                    // Define 'where' part of query
-                    String selection = VocabDbContract.COLUMN_NAME_VOCAB + " LIKE ?";
-                    // Specify arguments in placeholder order
-                    String[] selectionArgs = {vocabText};
-                    // Issue SQL statement
-                    db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
-                }
-            }
-            if (checkBoxSelected) {
-                // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);
-                mVocabAdapter.changeCursor(mCursor);
-            }
-            else {
-                Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
-            }
-            for (int i = 0; i < mVocabListView.getChildCount(); i++) {
-                CheckBox checkBox = (CheckBox) mVocabListView.getChildAt(i).findViewById(R.id.editCheckbox);
-                if (checkBox.isChecked()) {
-                    checkBox.setChecked(false);
-                }
-            }
+            deleteVocab();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteVocab() {
+        boolean checkBoxSelected = false;
+        for (int i = 0; i < mVocabListView.getChildCount(); i++) {
+            CheckBox checkBox = (CheckBox) mVocabListView.getChildAt(i).findViewById(R.id.editCheckbox);
+            if (checkBox.isChecked()) {
+                checkBoxSelected = true;
+                TextView vocab = (TextView) mVocabListView.getChildAt(i).findViewById(R.id.vocabName);
+                String vocabText = (String) vocab.getText();
+
+                // Delete Vocab from Database*****************************************
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                // Define 'where' part of query
+                String selection = VocabDbContract.COLUMN_NAME_VOCAB + " LIKE ?";
+                // Specify arguments in placeholder order
+                String[] selectionArgs = {vocabText};
+                // Issue SQL statement
+                db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
+            }
+        }
+        if (checkBoxSelected) {
+            // Update Cursor
+            mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);
+            mVocabAdapter.changeCursor(mCursor);
+        }
+        else {
+            Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
+        }
+        for (int i = 0; i < mVocabListView.getChildCount(); i++) {
+            CheckBox checkBox = (CheckBox) mVocabListView.getChildAt(i).findViewById(R.id.editCheckbox);
+            if (checkBox.isChecked()) {
+                checkBox.setChecked(false);
+            }
+        }
     }
 
     private void addVocabAlertDialog() {

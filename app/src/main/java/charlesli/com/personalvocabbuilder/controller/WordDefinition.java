@@ -60,13 +60,13 @@ public class WordDefinition extends ActionBarActivity {
 
         mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);
 
-        loadRandomPage();
+        loadVocabInRandomOrder();
 
     }
 
 
 
-    private void loadRandomPage() {
+    private void loadVocabInRandomOrder() {
         // Get the length / number of rows in the table
         int numOfRows = mCursor.getCount();
         // Use Random to generate a random number from length
@@ -153,7 +153,7 @@ public class WordDefinition extends ActionBarActivity {
                 mAgaLvlButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        loadRandomPage();
+                        loadVocabInRandomOrder();
                     }
                 });
             }
@@ -194,7 +194,7 @@ public class WordDefinition extends ActionBarActivity {
         // If this is not last row
         if (mTracker.size() < mCursor.getCount()) {
             // Do the same thing / loadPage(int) again (recursive)
-            loadRandomPage();
+            loadVocabInRandomOrder();
 
         }
         // If this is last row
