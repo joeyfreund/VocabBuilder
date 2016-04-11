@@ -17,7 +17,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
 
 
     // Table for My Vocab
-    public String CREATE_TABLE_MY_VOCAB =
+    private String CREATE_TABLE_MY_VOCAB =
             "CREATE TABLE  " + VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB +
             " (" + VocabDbContract.DatabaseInfo._ID + " INTEGER PRIMARY KEY," +
             VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB + " TEXT, " +
@@ -25,7 +25,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
             VocabDbContract.DatabaseInfo.COLUMN_NAME_LEVEL + " INTEGER );";
 
     // Table for My Word Bank
-    public String CREATE_TABLE_MY_WORD_BANK =
+    private String CREATE_TABLE_MY_WORD_BANK =
             "CREATE TABLE  " + VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK +
             " (" + VocabDbContract.DatabaseInfo._ID + " INTEGER PRIMARY KEY," +
             VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB + " TEXT, " +

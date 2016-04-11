@@ -1,4 +1,4 @@
-package charlesli.com.personalvocabbuilder.io;
+package charlesli.com.personalvocabbuilder.controller;
 
 import android.content.Intent;
 import android.database.Cursor;

@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".io.MainActivity"
+            android:name=".controller.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,46 +17,46 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".io.MyVocab"
+            android:name=".controller.MyVocab"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_my_vocab"
-            android:parentActivityName=".io.MainActivity" >
+            android:parentActivityName=".controller.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".io.MainActivity" />
+                android:value=".controller.MainActivity" />
         </activity>
         <activity
-            android:name=".io.Review"
+            android:name=".controller.Review"
             android:label="@string/title_activity_review"
-            android:parentActivityName=".io.MainActivity" >
+            android:parentActivityName=".controller.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".io.MainActivity" />
+                android:value=".controller.MainActivity" />
         </activity>
         <activity
-            android:name=".io.Categories"
+            android:name=".controller.Categories"
             android:label="@string/title_activity_categories"
-            android:parentActivityName=".io.MainActivity" >
+            android:parentActivityName=".controller.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".io.MainActivity" />
+                android:value=".controller.MainActivity" />
         </activity>
         <activity
-            android:name=".io.WordDefinition"
+            android:name=".controller.WordDefinition"
             android:label="@string/title_activity_word_definition"
-            android:parentActivityName=".io.Review" >
+            android:parentActivityName=".controller.Review" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".io.Review" />
+                android:value=".controller.Review" />
         </activity>
         <activity
-            android:name=".io.MyWordBank"
+            android:name=".controller.MyWordBank"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_my_word_bank"
-            android:parentActivityName=".io.Categories" >
+            android:parentActivityName=".controller.Categories" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".io.Categories" />
+                android:value=".controller.Categories" />
         </activity>
     </application>
 

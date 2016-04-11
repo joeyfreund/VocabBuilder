@@ -1,4 +1,4 @@
-package charlesli.com.personalvocabbuilder.io;
+package charlesli.com.personalvocabbuilder.controller;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,27 +26,29 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
 
-public class MyVocab extends ActionBarActivity {
+public class MyWordBank extends ActionBarActivity {
 
     private VocabCursorAdapter mVocabAdapter;
-    private ListView mVocabListView;
+    private ListView mWordBankListView;
+    private TextView mEmptyTextView;
     private Cursor mCursor;
     private String mSelectedVocab;
 
     private VocabDbHelper mDbHelper = new VocabDbHelper(this);
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_vocab);
+        setContentView(R.layout.activity_my_word_bank);
 
-        mVocabListView = (ListView) findViewById(R.id.mVocabList);
-        TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
-        mVocabListView.setEmptyView(emptyTextView);
-        mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
+        mWordBankListView = (ListView) findViewById(R.id.mWordBankList);
+        mEmptyTextView = (TextView) findViewById(android.R.id.empty);
+        mWordBankListView.setEmptyView(mEmptyTextView);
+        mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK);
         mVocabAdapter = new VocabCursorAdapter(this, mCursor, 0);
-        mVocabListView.setAdapter(mVocabAdapter);
-        mVocabListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        mWordBankListView.setAdapter(mVocabAdapter);
+        mWordBankListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 mSelectedVocab = (String) ((TextView) view.findViewById(R.id.vocabName)).getText();
@@ -53,13 +56,12 @@ public class MyVocab extends ActionBarActivity {
                 return true;
             }
         });
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_my_vocab, menu);
+        getMenuInflater().inflate(R.menu.menu_my_word_bank, menu);
         return true;
     }
 
@@ -71,16 +73,16 @@ public class MyVocab extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.add_vocab_my_vocab_button) {
+        if (id == R.id.add_vocab_word_bank_button) {
             addVocabAlertDialog();
         }
         else if (id == R.id.del_my_vocab_button) {
             boolean checkBoxSelected = false;
-            for (int i = 0; i < mVocabListView.getChildCount(); i++) {
-                CheckBox checkBox = (CheckBox) mVocabListView.getChildAt(i).findViewById(R.id.editCheckbox);
+            for (int i = 0; i < mWordBankListView.getChildCount(); i++) {
+                CheckBox checkBox = (CheckBox) mWordBankListView.getChildAt(i).findViewById(R.id.editCheckbox);
                 if (checkBox.isChecked()) {
                     checkBoxSelected = true;
-                    TextView vocab = (TextView) mVocabListView.getChildAt(i).findViewById(R.id.vocabName);
+                    TextView vocab = (TextView) mWordBankListView.getChildAt(i).findViewById(R.id.vocabName);
                     String vocabText = (String) vocab.getText();
 
                     // Delete Vocab from Database*****************************************
@@ -90,19 +92,47 @@ public class MyVocab extends ActionBarActivity {
                     // Specify arguments in placeholder order
                     String[] selectionArgs = {vocabText};
                     // Issue SQL statement
-                    db.delete(VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
+                    db.delete(VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK, selection, selectionArgs);
                 }
             }
             if (checkBoxSelected) {
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK);
                 mVocabAdapter.changeCursor(mCursor);
             }
             else {
                 Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
             }
-            for (int i = 0; i < mVocabListView.getChildCount(); i++) {
-                CheckBox checkBox = (CheckBox) mVocabListView.getChildAt(i).findViewById(R.id.editCheckbox);
+            for (int i = 0; i < mWordBankListView.getChildCount(); i++) {
+                CheckBox checkBox = (CheckBox) mWordBankListView.getChildAt(i).findViewById(R.id.editCheckbox);
+                if (checkBox.isChecked()) {
+                    checkBox.setChecked(false);
+                }
+            }
+        }
+        else if (id == R.id.label_my_vocab_button) {
+            boolean checkBoxSelected = false;
+            for (int i = 0; i < mWordBankListView.getChildCount(); i++) {
+                CheckBox checkBox = (CheckBox) mWordBankListView.getChildAt(i).findViewById(R.id.editCheckbox);
+                if (checkBox.isChecked()) {
+                    checkBoxSelected = true;
+                    TextView vocab = (TextView) mWordBankListView.getChildAt(i).findViewById(R.id.vocabName);
+                    String vocabText = (String) vocab.getText();
+                    TextView definition = (TextView) mWordBankListView.getChildAt(i).findViewById(R.id.vocabDefinition);
+                    String definitionText = (String) definition.getText();
+                    ImageView level = (ImageView) mWordBankListView.getChildAt(i).findViewById(R.id.vocabLevel);
+                    int levelNum = (int) level.getTag();
+                    mDbHelper.insertVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB, vocabText, definitionText, levelNum);
+                }
+            }
+            if (!checkBoxSelected) {
+                Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(this, "Added to My Vocab", Toast.LENGTH_SHORT).show();
+            }
+            for (int i = 0; i < mWordBankListView.getChildCount(); i++) {
+                CheckBox checkBox = (CheckBox) mWordBankListView.getChildAt(i).findViewById(R.id.editCheckbox);
                 if (checkBox.isChecked()) {
                     checkBox.setChecked(false);
                 }
@@ -137,10 +167,9 @@ public class MyVocab extends ActionBarActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String vocab = vocabInput.getText().toString();
                 String definition = definitionInput.getText().toString();
-                mDbHelper.insertVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB, vocab, definition, 0);
                 mDbHelper.insertVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK, vocab, definition, 0);
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });
@@ -190,29 +219,26 @@ public class MyVocab extends ActionBarActivity {
                 String selection = VocabDbContract.DatabaseInfo._ID + " LIKE ?";
                 String[] selectionArgs = {String.valueOf(id)};
 
-                int countMyVocab = db.update(
-                        VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB,
+                int count = db.update(
+                        VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK,
                         values,
                         selection,
                         selectionArgs
                 );
 
-                // Update My Word Bank based on Vocab
-
                 // which row to update, based on the VOCAB
-                String selectionWordBank = VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB + " LIKE ?";
-                String[] selectionArgsWordBank = {selectedVocab};
+                String selectionMyVocab = VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB + " LIKE ?";
+                String[] selectionArgsMyVocab = {selectedVocab};
 
-                int countWordBank = db.update(
-                        VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK,
+                int countMyVocab = db.update(
+                        VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB,
                         values,
-                        selectionWordBank,
-                        selectionArgsWordBank
+                        selectionMyVocab,
+                        selectionArgsMyVocab
                 );
 
-
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });
@@ -226,17 +252,15 @@ public class MyVocab extends ActionBarActivity {
                 // Specify arguments in placeholder order
                 String[] selectionArgs = {String.valueOf(id)};
                 // Issue SQL statement
-                db.delete(VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
+                db.delete(VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK, selection, selectionArgs);
 
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB);
+                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });
 
         builder.show();
     }
-
-
 
 }
