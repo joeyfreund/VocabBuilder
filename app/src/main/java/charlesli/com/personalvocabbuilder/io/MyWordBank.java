@@ -122,7 +122,7 @@ public class MyWordBank extends ActionBarActivity {
                     String definitionText = (String) definition.getText();
                     ImageView level = (ImageView) mWordBankListView.getChildAt(i).findViewById(R.id.vocabLevel);
                     int levelNum = (int) level.getTag();
-                    mDbHelper.insertMyVocab(mDbHelper, vocabText, definitionText, levelNum);
+                    mDbHelper.insertVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB, vocabText, definitionText, levelNum);
                 }
             }
             if (!checkBoxSelected) {
@@ -167,7 +167,7 @@ public class MyWordBank extends ActionBarActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String vocab = vocabInput.getText().toString();
                 String definition = definitionInput.getText().toString();
-                mDbHelper.insertMyWordBank(mDbHelper, vocab, definition, 0);
+                mDbHelper.insertVocab(mDbHelper, VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK, vocab, definition, 0);
                 // Update Cursor
                 mCursor = mDbHelper.getCursorMyWordBank(mDbHelper);
                 mVocabAdapter.changeCursor(mCursor);

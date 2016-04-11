@@ -68,7 +68,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    public void insertMyVocab(VocabDbHelper dbHelper, String vocab, String definition, int level) {
+    public void insertVocab(VocabDbHelper dbHelper, String tableName, String vocab, String definition, int level) {
         // Gets the data repository in write mode
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -80,23 +80,9 @@ public class VocabDbHelper extends SQLiteOpenHelper {
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;
-        newRowId = db.insert(VocabDbContract.DatabaseInfo.TABLE_NAME_MY_VOCAB, null, values);
+        newRowId = db.insert(tableName, null, values);
     }
 
-    public void insertMyWordBank(VocabDbHelper dbHelper, String vocab, String definition, int level) {
-        // Gets the data repository in write mode
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        // Create a new vap of values, where column names are the keys
-        ContentValues values = new ContentValues();
-        values.put(VocabDbContract.DatabaseInfo.COLUMN_NAME_VOCAB, vocab);
-        values.put(VocabDbContract.DatabaseInfo.COLUMN_NAME_DEFINITION, definition);
-        values.put(VocabDbContract.DatabaseInfo.COLUMN_NAME_LEVEL, level);
-
-        // Insert the new row, returning the primary key value of the new row
-        long newRowId;
-        newRowId = db.insert(VocabDbContract.DatabaseInfo.TABLE_NAME_MY_WORD_BANK, null, values);
-    }
 
     public Cursor getCursorMyVocab(VocabDbHelper dbHelper) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
