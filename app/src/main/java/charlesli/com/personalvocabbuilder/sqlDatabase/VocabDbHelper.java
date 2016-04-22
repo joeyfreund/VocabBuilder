@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import charlesli.com.personalvocabbuilder.R;
+
 /**
  * Created by Li on 2015/4/13.
  */
@@ -74,109 +76,21 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_MY_WORD_BANK);
         db.execSQL(CREATE_TABLE_GMAT);
 
+        loadDefaultTable(db, VocabDbContract.TABLE_NAME_GMAT, DefaultVocab.vocabGMAT, DefaultVocab.definitionGMAT);
+    }
+
+    private void loadDefaultTable(SQLiteDatabase db, String table, String[] word, String[] definition) {
+        for (int i = 0; i < word.length; i++) {
+            loadDefaultValue(db, table, word[i], definition[i]);
+        }
+    }
+
+    private void loadDefaultValue(SQLiteDatabase db, String table, String word, String definition) {
         ContentValues cv = new ContentValues();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Abaft");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "adj: on or toward the rear of a ship");
+        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, word);
+        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, definition);
         cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Abandon");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "v: to leave behind");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Abase");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "v: to degrade, humiliate");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Abbreviate");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "v: to shorten, compress");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Abdicate");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "v: to reject, renounce");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Abhor");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "v: to hate");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Abject");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "v: to give up");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Abnegation");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "n: denial");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Abominate");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "v: to loathe, hate");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Abridge");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "v: to shorten, limit");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Abrogate");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "v: to cancel by authority");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Abrupt");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "adj: happening or ending unexpectedly");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Abscond");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "v: to go away hastily or secretly");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Absolve");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "v: to forgive");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Abstemious");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "adj: sparing in use of food or drinks");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Abstruse");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "adj: hard to understand");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Abysmal");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "adj: very deep");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Accede");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "v: to comply with");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Acclaim");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "v: loud approval");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-        cv.clear();
-        cv.put(VocabDbContract.COLUMN_NAME_VOCAB, "Accrue");
-        cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, "v: a natural growth; a periodic increase");
-        cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(VocabDbContract.TABLE_NAME_GMAT, null, cv);
-
-
-
+        db.insert(table, null, cv);
     }
 
     @Override
