@@ -36,7 +36,7 @@ public class WordDefinition extends ActionBarActivity {
     private static final int EASY = 2;
     private static final int PERFECT = 3;
 
-    private VocabDbHelper mDbHelper = new VocabDbHelper(this);
+    private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(WordDefinition.this);
     private Random mRandom = new Random();
     private ArrayList<Integer> mTracker = new ArrayList<Integer>();
 
@@ -58,7 +58,7 @@ public class WordDefinition extends ActionBarActivity {
         mPerLvlButton = (Button) findViewById(R.id.lvl_perfect_button);
         mAgaLvlButton = (Button) findViewById(R.id.lvl_again_button);
 
-        mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);
+        mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_MY_VOCAB);
 
         loadVocabInRandomOrder();
 

@@ -19,7 +19,7 @@ public class Review extends ActionBarActivity {
     private Button mDefinitionWordButton;
 
     private Cursor mCursor;
-    private VocabDbHelper mDbHelper = new VocabDbHelper(this);
+    private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(Review.this);
 
     private static final int WORDTODEF = 0;
     private static final int DEFTOWORD = 1;
@@ -32,7 +32,7 @@ public class Review extends ActionBarActivity {
         mWordDefinitionButton = (Button) findViewById(R.id.word_definition_button);
         mDefinitionWordButton = (Button) findViewById(R.id.definition_word_button);
 
-        mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);
+        mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_MY_VOCAB);
 
         mWordDefinitionButton.setOnClickListener(new View.OnClickListener() {
             @Override

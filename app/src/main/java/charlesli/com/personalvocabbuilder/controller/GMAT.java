@@ -35,7 +35,7 @@ public class GMAT extends ActionBarActivity {
     private Cursor mCursor;
     private String mSelectedVocab;
 
-    private VocabDbHelper mDbHelper = new VocabDbHelper(this);
+    private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(GMAT.this);
 
 
     @Override
@@ -46,7 +46,7 @@ public class GMAT extends ActionBarActivity {
         mGMATListView = (ListView) findViewById(R.id.mGMATList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mGMATListView.setEmptyView(emptyTextView);
-        mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT);
+        mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_GMAT);
         mVocabAdapter = new VocabCursorAdapter(this, mCursor, 0);
         mGMATListView.setAdapter(mVocabAdapter);
         mGMATListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -109,7 +109,7 @@ public class GMAT extends ActionBarActivity {
         }
         if (checkBoxSelected) {
             // Update Cursor
-            mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT);
+            mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_GMAT);
             mVocabAdapter.changeCursor(mCursor);
         }
         else {
@@ -135,7 +135,7 @@ public class GMAT extends ActionBarActivity {
                 String definitionText = (String) definition.getText();
                 ImageView level = (ImageView) mGMATListView.getChildAt(i).findViewById(R.id.vocabLevel);
                 int levelNum = (int) level.getTag();
-                mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, vocabText, definitionText, levelNum);
+                mDbHelper.insertVocab(VocabDbContract.TABLE_NAME_GMAT, vocabText, definitionText, levelNum);
             }
         }
         if (!checkBoxSelected) {
@@ -177,9 +177,9 @@ public class GMAT extends ActionBarActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String vocab = vocabInput.getText().toString();
                 String definition = definitionInput.getText().toString();
-                mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, vocab, definition, 0);
+                mDbHelper.insertVocab(VocabDbContract.TABLE_NAME_GMAT, vocab, definition, 0);
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT);
+                mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_GMAT);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });
@@ -248,7 +248,7 @@ public class GMAT extends ActionBarActivity {
                 );
 
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT);
+                mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_GMAT);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });
@@ -265,7 +265,7 @@ public class GMAT extends ActionBarActivity {
                 db.delete(VocabDbContract.TABLE_NAME_GMAT, selection, selectionArgs);
 
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT);
+                mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_GMAT);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });

@@ -1,5 +1,6 @@
 package charlesli.com.personalvocabbuilder.sqlDatabase;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,6 +11,9 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by Li on 2015/4/13.
  */
 public class VocabDbHelper extends SQLiteOpenHelper {
+
+    private Context context;
+    private static VocabDbHelper dbInstance;
 
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 2;
@@ -51,8 +55,15 @@ public class VocabDbHelper extends SQLiteOpenHelper {
     private static final String DELETE_TABLE_GMAT =
             "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_GMAT;
 
-    public VocabDbHelper(Context context) {
+    private VocabDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public static synchronized VocabDbHelper getDBHelper(Context context) {
+        if (dbInstance == null) {
+            dbInstance = new VocabDbHelper(context);
+        }
+        return dbInstance;
     }
 
     @Override
@@ -62,7 +73,10 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_MY_VOCAB);
         db.execSQL(CREATE_TABLE_MY_WORD_BANK);
         db.execSQL(CREATE_TABLE_GMAT);
+
+
         /*
+        VocabDbHelper mDbHelper = getDBHelper(context);
         mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abaft", "adj: on or toward the rear of a ship", 0);
         mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abandon", "v: to leave behind", 0);
         mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Abase", "v: to degrade, humiliate", 0);
@@ -84,6 +98,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Acclaim", "v: loud approval", 0);
         mDbHelper.insertVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, "Accrue", "v: a natural growth; a periodic increase", 0);
         */
+
     }
 
     @Override
@@ -103,9 +118,9 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    public void insertVocab(VocabDbHelper dbHelper, String tableName, String vocab, String definition, int level) {
+    public void insertVocab(String tableName, String vocab, String definition, int level) {
         // Gets the data repository in write mode
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
 
         // Create a new vap of values, where column names are the keys
         ContentValues values = new ContentValues();
@@ -119,8 +134,8 @@ public class VocabDbHelper extends SQLiteOpenHelper {
     }
 
 
-    public Cursor getCursorMyVocab(VocabDbHelper dbHelper, String tableName) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+    public Cursor getCursorMyVocab(String tableName) {
+        SQLiteDatabase db = this.getReadableDatabase();
 
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
