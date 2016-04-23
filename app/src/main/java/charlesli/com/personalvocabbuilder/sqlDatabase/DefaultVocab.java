@@ -333,7 +333,25 @@ public class DefaultVocab {
             "Extol",
             "Extraneous",
             "Extricable",
-            "Exultation"
+            "Exultation",
+            "Fastidious",
+            "Fatuous",
+            "Fealty",
+            "Feasible",
+            "Fecund",
+            "Feign",
+            "Foray",
+            "Forbearance",
+            "Forensic",
+            "Fortitude",
+            "Fortuitous",
+            "Foster",
+            "Frugality",
+            "Fulminate",
+            "Fulsome",
+            "Fundamental",
+            "Furtive",
+            "Fustian"
     };
     public static final String [] definitionGMAT = {
             "adj: on or toward the rear of a ship",
@@ -664,6 +682,24 @@ public class DefaultVocab {
             "v: to give great praise",
             "adj: irrelevant; not related",
             "adj: capable of being disentangled",
-            "n: the act of rejoicing"
+            "n: the act of rejoicing",
+            "adj: difficult to please; dainty",
+            "adj: lacking in seriousness; vain and silly",
+            "n: loyalty",
+            "adj: reasonable; practical",
+            "adj: productive",
+            "v: pretend",
+            "v: to raid for spoils, plunder",
+            "n: patience; self-restraint",
+            "adj: pertaining to legal or public argument",
+            "n: firm courage; strength",
+            "adj: happening accidentally",
+            "v: to encourage; nurture; support",
+            "n: thrift; economical use or expenditure",
+            "v: to blame",
+            "adj: disgusting due to excess",
+            "adj: basic; necessary",
+            "adj: secretive; sly",
+            "n: pompous talk or writing"
     };
 }
