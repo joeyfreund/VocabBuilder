@@ -351,7 +351,22 @@ public class DefaultVocab {
             "Fulsome",
             "Fundamental",
             "Furtive",
-            "Fustian"
+            "Fustian",
+            "Garrulous",
+            "Gauche",
+            "Gauntlet",
+            "Generic",
+            "Genial",
+            "Genre",
+            "Gnarled",
+            "Gourmand",
+            "Grandiose",
+            "Gravity",
+            "Gregarious",
+            "Guffaw",
+            "Guile",
+
+
     };
     public static final String [] definitionGMAT = {
             "adj: on or toward the rear of a ship",
@@ -700,6 +715,21 @@ public class DefaultVocab {
             "adj: disgusting due to excess",
             "adj: basic; necessary",
             "adj: secretive; sly",
-            "n: pompous talk or writing"
+            "n: pompous talk or writing",
+            "adj: extremely talkative or wordy",
+            "adj: awkward; lacking social grace",
+            "n: a protective glove",
+            "adj: common; general",
+            "adj: contributing to life; amiable",
+            "adj: designating a type of film or book",
+            "adj: full of knots; twisted",
+            "n: one who eats eagerly",
+            "adj: magnificent; flamboyant",
+            "n: seriousness",
+            "adj: fond of the company of others",
+            "n: boisterous laughter",
+            "n: slyness; deceit",
+
+
     };
 }
