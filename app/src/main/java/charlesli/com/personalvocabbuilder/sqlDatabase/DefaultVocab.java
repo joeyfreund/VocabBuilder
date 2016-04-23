@@ -365,8 +365,23 @@ public class DefaultVocab {
             "Gregarious",
             "Guffaw",
             "Guile",
-
-
+            "Halcyon",
+            "Hamper",
+            "Haphazard",
+            "Hapless",
+            "Harangue",
+            "Hedonistic",
+            "Heresy",
+            "Hiatus",
+            "Hoary",
+            "Homage",
+            "Homeostasis",
+            "Homily",
+            "Hubris",
+            "Humility",
+            "Hybrid",
+            "Hypocritical",
+            "Hypothetical"
     };
     public static final String [] definitionGMAT = {
             "adj: on or toward the rear of a ship",
@@ -729,6 +744,23 @@ public class DefaultVocab {
             "adj: fond of the company of others",
             "n: boisterous laughter",
             "n: slyness; deceit",
+            "adj: tranquil; happy",
+            "v: interfere with; hinder",
+            "adj: disorganized; random",
+            "adj: unlucky; unfortunate",
+            "n: a lengthy, heartfelt speech",
+            "adj: living for pleasure",
+            "n: opinion contrary to popular belief",
+            "n: interval; break; period of rest",
+            "adj: whitened by age",
+            "n: honor; respect",
+            "n: maintenance of stability",
+            "n: solemn moral talk; sermon",
+            "n: arrogance",
+            "n: lack of pride; modesty",
+            "n: anything of mixed origin",
+            "adj: two-faced; deceptive",
+            "adj: assumed; uncertain; conjectural"
 
 
     };
