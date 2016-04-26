@@ -1650,6 +1650,25 @@ public class DefaultVocab {
             "v: overlook at with selfish delight",
             "v: to fill especially with food to satiety",
             "v: waste away; bite steadily",
-            "n: something urging a person to action"
+            "n: something urging a person to action",
+            "n: something extremely light, flimsy, or delicate",
+            "n: tool for cutting grooves in wood",
+            "v: touch or scrape lightly in passing",
+            "adj: sociable",
+            "adj: causing grief or great sorrow",
+            "v: crawl; humble oneself",
+            "n: crafty or artful deception",
+            "adj: easily deceived or cheated",
+            "v: burst out suddenly; talk ardently",
+            "n: outburst of feeling; sudden rain or wind",
+            "v: cut roughly",
+            "adj: calm and peaceful",
+            "adj: arrogant; conceited",
+            "adj: having a space or cavity inside",
+            "n: leather case for a pistol",
+            "n: act of preaching",
+            "n: stone used for sharpening tools",
+            "n: arrogant pride",
+            "v: hush or become silent"
     };
 }
