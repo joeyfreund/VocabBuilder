@@ -18,7 +18,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
     private static VocabDbHelper dbInstance;
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "VocabDatabase.db";
 
 
@@ -38,9 +38,17 @@ public class VocabDbHelper extends SQLiteOpenHelper {
             VocabDbContract.COLUMN_NAME_DEFINITION + " TEXT, " +
             VocabDbContract.COLUMN_NAME_LEVEL + " INTEGER );";
 
-    // Table for My Word Bank
+    // Table for GMAT
     private String CREATE_TABLE_GMAT =
             "CREATE TABLE  " + VocabDbContract.TABLE_NAME_GMAT +
+                    " (" + VocabDbContract._ID + " INTEGER PRIMARY KEY," +
+                    VocabDbContract.COLUMN_NAME_VOCAB + " TEXT, " +
+                    VocabDbContract.COLUMN_NAME_DEFINITION + " TEXT, " +
+                    VocabDbContract.COLUMN_NAME_LEVEL + " INTEGER );";
+
+    // Table for GRE
+    private String CREATE_TABLE_GRE =
+            "CREATE TABLE  " + VocabDbContract.TABLE_NAME_GRE +
                     " (" + VocabDbContract._ID + " INTEGER PRIMARY KEY," +
                     VocabDbContract.COLUMN_NAME_VOCAB + " TEXT, " +
                     VocabDbContract.COLUMN_NAME_DEFINITION + " TEXT, " +
@@ -56,6 +64,9 @@ public class VocabDbHelper extends SQLiteOpenHelper {
 
     private static final String DELETE_TABLE_GMAT =
             "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_GMAT;
+
+    private static final String DELETE_TABLE_GRE =
+            "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_GRE;
 
     private VocabDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -75,8 +86,10 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_MY_VOCAB);
         db.execSQL(CREATE_TABLE_MY_WORD_BANK);
         db.execSQL(CREATE_TABLE_GMAT);
+        db.execSQL(CREATE_TABLE_GRE);
 
         loadDefaultTable(db, VocabDbContract.TABLE_NAME_GMAT, DefaultVocab.vocabGMAT, DefaultVocab.definitionGMAT);
+        loadDefaultTable(db, VocabDbContract.TABLE_NAME_GRE, DefaultVocab.vocabGRE, DefaultVocab.definitionGRE);
     }
 
     private void loadDefaultTable(SQLiteDatabase db, String table, String[] word, String[] definition) {
@@ -100,6 +113,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         db.execSQL(DELETE_TABLE_MY_VOCAB);
         db.execSQL(DELETE_TABLE_MY_WORD_BANK);
         db.execSQL(DELETE_TABLE_GMAT);
+        db.execSQL(DELETE_TABLE_GRE);
 
         // Create new tables
         onCreate(db);
