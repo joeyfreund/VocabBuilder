@@ -38,16 +38,8 @@
     <string name="categories_my_vocab">My Vocab</string>
     <string name="title_activity_my_word_bank">My Word Bank</string>
     <string name="title_activity_gmat">GMAT</string>
+    <string name="title_activity_gre">GRE</string>
     <string name="empty_text_view">Begin by adding vocab you want to learn! :)</string>
     <string name="label_vocab_button">Label Vocab</string>
 
-    <string-array name="word">
-        <item>Abase</item>
-        <item>Announce</item>
-    </string-array>
-
-    <string-array name="definition">
-        <item>Abase</item>
-        <item>Announce</item>
-    </string-array>
 </resources>

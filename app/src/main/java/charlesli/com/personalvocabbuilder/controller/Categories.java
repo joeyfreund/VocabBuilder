@@ -41,6 +41,10 @@ public class Categories extends ActionBarActivity {
                     Intent intent = new Intent(Categories.this, GMAT.class);
                     startActivity(intent);
                 }
+                else if (position == 2) {
+                    Intent intent = new Intent(Categories.this, GRE.class);
+                    startActivity(intent);
+                }
                 else {
                     Toast.makeText(Categories.this, "Coming soon...", Toast.LENGTH_SHORT).show();
                 }
