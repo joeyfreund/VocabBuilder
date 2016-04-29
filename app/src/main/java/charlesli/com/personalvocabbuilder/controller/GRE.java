@@ -35,7 +35,6 @@ public class GRE extends CategoryItem {
     private String mSelectedVocab;
     private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(GRE.this);
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

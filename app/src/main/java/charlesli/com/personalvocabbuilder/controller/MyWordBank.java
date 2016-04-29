@@ -33,7 +33,6 @@ public class MyWordBank extends CategoryItem {
     private String mSelectedVocab;
     private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(MyWordBank.this);
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
