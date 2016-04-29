@@ -33,7 +33,6 @@ public class GRE extends CategoryItem {
     private VocabCursorAdapter mVocabAdapter;
     private ListView mGREListView;
     private String mSelectedVocab;
-
     private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(GRE.this);
 
 

@@ -28,15 +28,12 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 /**
  * Created by charles on 2016-04-10.
  */
-public class GMAT extends ActionBarActivity {
+public class GMAT extends CategoryItem {
 
     private VocabCursorAdapter mVocabAdapter;
     private ListView mGMATListView;
-    private Cursor mCursor;
     private String mSelectedVocab;
-
     private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(GMAT.this);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +43,15 @@ public class GMAT extends ActionBarActivity {
         mGMATListView = (ListView) findViewById(R.id.mGMATList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mGMATListView.setEmptyView(emptyTextView);
-        mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_GMAT);
+        Cursor mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_GMAT);
         mVocabAdapter = new VocabCursorAdapter(this, mCursor, 0);
         mGMATListView.setAdapter(mVocabAdapter);
         mGMATListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 mSelectedVocab = (String) ((TextView) view.findViewById(R.id.vocabName)).getText();
-                editVocabAlertDialog(mSelectedVocab, view, position, id);
+                editVocabAlertDialog(mSelectedVocab, view, position, id, mDbHelper,
+                        VocabDbContract.TABLE_NAME_GMAT, mVocabAdapter);
                 return true;
             }
         });
@@ -76,200 +74,16 @@ public class GMAT extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.add_vocab_gmat_button) {
-            addVocabAlertDialog();
+            addVocabAlertDialog(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, mVocabAdapter);
         }
         else if (id == R.id.del_gmat_button) {
-            deleteVocab();
+            deleteVocab(mGMATListView, mDbHelper, VocabDbContract.TABLE_NAME_GMAT, mVocabAdapter);
         }
         else if (id == R.id.label_gmat_button) {
-            addVocabToMyVocab();
+            addVocabToMyVocab(mGMATListView, mDbHelper);
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void deleteVocab() {
-        boolean checkBoxSelected = false;
-        for (int i = 0; i < mGMATListView.getChildCount(); i++) {
-            CheckBox checkBox = (CheckBox) mGMATListView.getChildAt(i).findViewById(R.id.editCheckbox);
-            if (checkBox.isChecked()) {
-                checkBoxSelected = true;
-                TextView vocab = (TextView) mGMATListView.getChildAt(i).findViewById(R.id.vocabName);
-                String vocabText = (String) vocab.getText();
-
-                // Delete Vocab from Database*****************************************
-                SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                // Define 'where' part of query
-                String selection = VocabDbContract.COLUMN_NAME_VOCAB + " LIKE ?";
-                // Specify arguments in placeholder order
-                String[] selectionArgs = {vocabText};
-                // Issue SQL statement
-                db.delete(VocabDbContract.TABLE_NAME_GMAT, selection, selectionArgs);
-            }
-        }
-        if (checkBoxSelected) {
-            // Update Cursor
-            mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_GMAT);
-            mVocabAdapter.changeCursor(mCursor);
-        }
-        else {
-            Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
-        }
-        for (int i = 0; i < mGMATListView.getChildCount(); i++) {
-            CheckBox checkBox = (CheckBox) mGMATListView.getChildAt(i).findViewById(R.id.editCheckbox);
-            if (checkBox.isChecked()) {
-                checkBox.setChecked(false);
-            }
-        }
-    }
-
-    private void addVocabToMyVocab() {
-        boolean checkBoxSelected = false;
-        for (int i = 0; i < mGMATListView.getChildCount(); i++) {
-            CheckBox checkBox = (CheckBox) mGMATListView.getChildAt(i).findViewById(R.id.editCheckbox);
-            if (checkBox.isChecked()) {
-                checkBoxSelected = true;
-                TextView vocab = (TextView) mGMATListView.getChildAt(i).findViewById(R.id.vocabName);
-                String vocabText = (String) vocab.getText();
-                TextView definition = (TextView) mGMATListView.getChildAt(i).findViewById(R.id.vocabDefinition);
-                String definitionText = (String) definition.getText();
-                ImageView level = (ImageView) mGMATListView.getChildAt(i).findViewById(R.id.vocabLevel);
-                int levelNum = (int) level.getTag();
-                mDbHelper.insertVocab(VocabDbContract.TABLE_NAME_MY_VOCAB, vocabText, definitionText, levelNum);
-            }
-        }
-        if (!checkBoxSelected) {
-            Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(this, "Added to My Vocab", Toast.LENGTH_SHORT).show();
-        }
-        for (int i = 0; i < mGMATListView.getChildCount(); i++) {
-            CheckBox checkBox = (CheckBox) mGMATListView.getChildAt(i).findViewById(R.id.editCheckbox);
-            if (checkBox.isChecked()) {
-                checkBox.setChecked(false);
-            }
-        }
-    }
-
-    private void addVocabAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Add Vocab");
-        // Set up the input
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-
-        final EditText vocabInput = new EditText(this);
-        vocabInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
-        vocabInput.setHint("Vocab");
-        layout.addView(vocabInput);
-
-        final EditText definitionInput = new EditText(this);
-        definitionInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
-        definitionInput.setHint("Definition");
-        layout.addView(definitionInput);
-
-        builder.setView(layout);
-
-        // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String vocab = vocabInput.getText().toString();
-                String definition = definitionInput.getText().toString();
-                mDbHelper.insertVocab(VocabDbContract.TABLE_NAME_GMAT, vocab, definition, 0);
-                // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_GMAT);
-                mVocabAdapter.changeCursor(mCursor);
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.show();
-    }
-
-    private void editVocabAlertDialog(final String selectedVocab, View view, int position, final long id) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Edit Vocab");
-        builder.setMessage(selectedVocab);
-        // Set up the input
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-
-        final EditText definitionInput = new EditText(this);
-        definitionInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
-        definitionInput.setHint("New Definition");
-        layout.addView(definitionInput);
-
-        builder.setView(layout);
-
-        // Set up the buttons
-        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String definition = definitionInput.getText().toString();
-                SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-                // new value for one column
-                ContentValues values = new ContentValues();
-                values.put(VocabDbContract.COLUMN_NAME_DEFINITION, definition);
-
-                // which row to update, based on the ID
-                String selection = VocabDbContract._ID + " LIKE ?";
-                String[] selectionArgs = {String.valueOf(id)};
-
-                int count = db.update(
-                        VocabDbContract.TABLE_NAME_GMAT,
-                        values,
-                        selection,
-                        selectionArgs
-                );
-
-                // which row to update, based on the VOCAB
-                String selectionMyVocab = VocabDbContract.COLUMN_NAME_VOCAB + " LIKE ?";
-                String[] selectionArgsMyVocab = {selectedVocab};
-
-                int countMyVocab = db.update(
-                        VocabDbContract.TABLE_NAME_MY_VOCAB,
-                        values,
-                        selectionMyVocab,
-                        selectionArgsMyVocab
-                );
-
-                // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_GMAT);
-                mVocabAdapter.changeCursor(mCursor);
-            }
-        });
-        builder.setNegativeButton("Delete Vocab", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Delete Vocab from Database*****************************************
-                SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                // Define 'where' part of query
-                String selection = VocabDbContract._ID + " LIKE ?";
-                // Specify arguments in placeholder order
-                String[] selectionArgs = {String.valueOf(id)};
-                // Issue SQL statement
-                db.delete(VocabDbContract.TABLE_NAME_GMAT, selection, selectionArgs);
-
-                // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_GMAT);
-                mVocabAdapter.changeCursor(mCursor);
-            }
-        });
-
-        builder.show();
-    }
 }
