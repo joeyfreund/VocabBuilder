@@ -135,7 +135,7 @@ public class GMAT extends ActionBarActivity {
                 String definitionText = (String) definition.getText();
                 ImageView level = (ImageView) mGMATListView.getChildAt(i).findViewById(R.id.vocabLevel);
                 int levelNum = (int) level.getTag();
-                mDbHelper.insertVocab(VocabDbContract.TABLE_NAME_GMAT, vocabText, definitionText, levelNum);
+                mDbHelper.insertVocab(VocabDbContract.TABLE_NAME_MY_VOCAB, vocabText, definitionText, levelNum);
             }
         }
         if (!checkBoxSelected) {
