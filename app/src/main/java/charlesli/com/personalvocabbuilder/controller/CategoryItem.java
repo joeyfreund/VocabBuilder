@@ -30,8 +30,8 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
  */
 public abstract class CategoryItem extends ActionBarActivity {
 
-    private void deleteVocab(ListView listView, VocabDbHelper dbHelper, String tableName,
-                             VocabCursorAdapter cursorAdapter, Cursor cursor) {
+    protected void deleteVocab(ListView listView, VocabDbHelper dbHelper, String tableName,
+                             VocabCursorAdapter cursorAdapter) {
         boolean checkBoxSelected = false;
         for (int i = 0; i < listView.getChildCount(); i++) {
             CheckBox checkBox = (CheckBox) listView.getChildAt(i).findViewById(R.id.editCheckbox);
@@ -52,8 +52,7 @@ public abstract class CategoryItem extends ActionBarActivity {
         }
         if (checkBoxSelected) {
             // Update Cursor
-            cursor = dbHelper.getCursorMyVocab(tableName);
-            cursorAdapter.changeCursor(cursor);
+            cursorAdapter.changeCursor(dbHelper.getCursorMyVocab(tableName));
         }
         else {
             Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
@@ -66,7 +65,7 @@ public abstract class CategoryItem extends ActionBarActivity {
         }
     }
 
-    private void addVocabToMyVocab(ListView listView, VocabDbHelper dbHelper) {
+    protected void addVocabToMyVocab(ListView listView, VocabDbHelper dbHelper) {
         boolean checkBoxSelected = false;
         for (int i = 0; i < listView.getChildCount(); i++) {
             CheckBox checkBox = (CheckBox) listView.getChildAt(i).findViewById(R.id.editCheckbox);
@@ -95,7 +94,7 @@ public abstract class CategoryItem extends ActionBarActivity {
         }
     }
 
-    private void addVocabAlertDialog(final VocabDbHelper dbHelper, final String tableName,
+    protected void addVocabAlertDialog(final VocabDbHelper dbHelper, final String tableName,
                                      final VocabCursorAdapter cursorAdapter) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add Vocab");
@@ -137,7 +136,7 @@ public abstract class CategoryItem extends ActionBarActivity {
         builder.show();
     }
 
-    private void editVocabAlertDialog(final String selectedVocab, View view, int position,
+    protected void editVocabAlertDialog(final String selectedVocab, View view, int position,
                                       final long id, final VocabDbHelper dbHelper,
                                       final String tableName, final VocabCursorAdapter cursorAdapter) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
