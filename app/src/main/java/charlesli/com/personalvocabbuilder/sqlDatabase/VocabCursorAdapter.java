@@ -2,12 +2,18 @@ package charlesli.com.personalvocabbuilder.sqlDatabase;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import charlesli.com.personalvocabbuilder.R;
 
@@ -21,9 +27,13 @@ public class VocabCursorAdapter extends CursorAdapter {
     private static final int EASY = 2;
     private static final int PERFECT = 3;
 
+    private List<Integer> selectedItemsPositions;
+
 
     public VocabCursorAdapter(Context context, Cursor c, int flags) {
         super(context, c, 0);
+
+        selectedItemsPositions = new ArrayList<>();
     }
 
 
@@ -31,7 +41,23 @@ public class VocabCursorAdapter extends CursorAdapter {
     // you don't bind any data to the view at this point.
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.item_vocab, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_vocab, parent, false);
+        CheckBox box = (CheckBox) view.findViewById(R.id.editCheckbox);
+        box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                int position = (int) compoundButton.getTag();
+                if (b) {
+                    //check whether its already selected or not
+                    if (!selectedItemsPositions.contains(position))
+                        selectedItemsPositions.add(position);
+                } else {
+                    //remove position if unchecked checked item
+                    selectedItemsPositions.remove((Object) position);
+                }
+            }
+        });
+        return view;
     }
 
 
@@ -67,5 +93,13 @@ public class VocabCursorAdapter extends CursorAdapter {
             tvVocabLevel.setImageResource(R.drawable.level_bars_perfect);
             tvVocabLevel.setTag(PERFECT);
         }
+
+        CheckBox box = (CheckBox) view.findViewById(R.id.editCheckbox);
+        box.setTag(cursor.getPosition());
+
+        if (selectedItemsPositions.contains(cursor.getPosition()))
+            box.setChecked(true);
+        else
+            box.setChecked(false);
     }
 }
