@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabCursorAdapter;
@@ -82,6 +87,7 @@ public class MyVocab extends ActionBarActivity {
     }
 
     private void deleteVocab() {
+        /*
         boolean checkBoxSelected = false;
         for (int i = 0; i < mVocabListView.getChildCount(); i++) {
             CheckBox checkBox = (CheckBox) mVocabListView.getChildAt(i).findViewById(R.id.editCheckbox);
@@ -113,6 +119,27 @@ public class MyVocab extends ActionBarActivity {
             if (checkBox.isChecked()) {
                 checkBox.setChecked(false);
             }
+        }
+        */
+        Iterator<Integer> posIt = mVocabAdapter.selectedItemsPositions.iterator();
+        if (mVocabAdapter.selectedItemsPositions.isEmpty()) {
+            Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            while (posIt.hasNext()) {
+                Integer posInt = posIt.next();
+                // Define 'where' part of query
+                String selection = VocabDbContract._ID + " LIKE ?";
+                // Specify arguments in placeholder order
+                String[] selectionArgs = {String.valueOf(mVocabAdapter.getItemId(posInt))};
+                // Issue SQL statement
+                db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
+            }
+            mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_MY_VOCAB);
+            mVocabAdapter.changeCursor(mCursor);
+
+            mVocabAdapter.selectedItemsPositions.clear();
         }
     }
 

@@ -27,7 +27,10 @@ public class VocabCursorAdapter extends CursorAdapter {
     private static final int EASY = 2;
     private static final int PERFECT = 3;
 
-    private List<Integer> selectedItemsPositions;
+    public List<Integer> selectedItemsPositions;
+    // Add getter and setter for selectedItemsPositions
+    // Iterate through when option item clicked and delete items at given positions.
+    // Empty selectedItemsPosition when action is performed
 
 
     public VocabCursorAdapter(Context context, Cursor c, int flags) {
