@@ -51,37 +51,44 @@ public abstract class CategoryItem extends ActionBarActivity {
         }
     }
 
-    protected void addVocabToMyVocab(VocabCursorAdapter cursorAdapter, VocabDbHelper dbHelper) {
+    protected void addVocabToMyVocab(VocabCursorAdapter cursorAdapter, VocabDbHelper dbHelper,
+                                     String tableName) {
         Iterator<Integer> posIt = cursorAdapter.selectedItemsPositions.iterator();
         if (cursorAdapter.selectedItemsPositions.isEmpty()) {
             Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
         }
         else {
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
             while (posIt.hasNext()) {
                 Integer posInt = posIt.next();
                 Integer idInt = (int) cursorAdapter.getItemId(posInt);
+                String[] projection = {
+                        VocabDbContract._ID,
+                        VocabDbContract.COLUMN_NAME_VOCAB,
+                        VocabDbContract.COLUMN_NAME_DEFINITION,
+                        VocabDbContract.COLUMN_NAME_LEVEL
+                };
+                String[] selectionArg = {
+                        String.valueOf(idInt)
+                };
+                Cursor cursor = db.query(
+                        tableName,
+                        projection,
+                        VocabDbContract._ID + "=?",
+                        selectionArg,
+                        null,
+                        null,
+                        null
+                );
+                cursor.moveToFirst();
+                String vocab = cursor.getString(cursor.getColumnIndex(VocabDbContract.COLUMN_NAME_VOCAB));
+                String definition = cursor.getString(cursor.getColumnIndex(VocabDbContract.COLUMN_NAME_DEFINITION));
+                Integer level = cursor.getInt(cursor.getColumnIndex(VocabDbContract.COLUMN_NAME_LEVEL));
+                dbHelper.insertVocab(VocabDbContract.TABLE_NAME_MY_VOCAB, vocab, definition, level);
             }
-
             cursorAdapter.selectedItemsPositions.clear();
             Toast.makeText(this, "Added to My Vocab", Toast.LENGTH_SHORT).show();
         }
-        /*
-        boolean checkBoxSelected = false;
-        for (int i = 0; i < listView.getChildCount(); i++) {
-            CheckBox checkBox = (CheckBox) listView.getChildAt(i).findViewById(R.id.editCheckbox);
-            if (checkBox.isChecked()) {
-                checkBoxSelected = true;
-                TextView vocab = (TextView) listView.getChildAt(i).findViewById(R.id.vocabName);
-                String vocabText = (String) vocab.getText();
-                TextView definition = (TextView) listView.getChildAt(i).findViewById(R.id.vocabDefinition);
-                String definitionText = (String) definition.getText();
-                ImageView level = (ImageView) listView.getChildAt(i).findViewById(R.id.vocabLevel);
-                int levelNum = (int) level.getTag();
-                dbHelper.insertVocab(VocabDbContract.TABLE_NAME_MY_VOCAB, vocabText, definitionText, levelNum);
-            }
-        }
-        */
     }
 
     protected void addVocabAlertDialog(final VocabDbHelper dbHelper, final String tableName,

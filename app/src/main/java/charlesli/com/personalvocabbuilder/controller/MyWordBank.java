@@ -66,7 +66,7 @@ public class MyWordBank extends CategoryItem {
             deleteVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK, mVocabAdapter);
         }
         else if (id == R.id.label_my_vocab_button) {
-            addVocabToMyVocab(mVocabAdapter, mDbHelper);
+            addVocabToMyVocab(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK);
         }
 
         return super.onOptionsItemSelected(item);
