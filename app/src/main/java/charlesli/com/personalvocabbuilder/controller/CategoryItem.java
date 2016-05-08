@@ -5,13 +5,9 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Iterator;
 
 import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabCursorAdapter;
@@ -30,42 +28,45 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
  */
 public abstract class CategoryItem extends ActionBarActivity {
 
-    protected void deleteVocab(ListView listView, VocabDbHelper dbHelper, String tableName,
-                             VocabCursorAdapter cursorAdapter) {
-        boolean checkBoxSelected = false;
-        for (int i = 0; i < listView.getChildCount(); i++) {
-            CheckBox checkBox = (CheckBox) listView.getChildAt(i).findViewById(R.id.editCheckbox);
-            if (checkBox.isChecked()) {
-                checkBoxSelected = true;
-                TextView vocab = (TextView) listView.getChildAt(i).findViewById(R.id.vocabName);
-                String vocabText = (String) vocab.getText();
-
-                // Delete Vocab from Database*****************************************
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
+    protected void deleteVocab(VocabDbHelper dbHelper, String tableName, VocabCursorAdapter cursorAdapter) {
+        Iterator<Integer> posIt = cursorAdapter.selectedItemsPositions.iterator();
+        if (cursorAdapter.selectedItemsPositions.isEmpty()) {
+            Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            while (posIt.hasNext()) {
+                Integer posInt = posIt.next();
                 // Define 'where' part of query
-                String selection = VocabDbContract.COLUMN_NAME_VOCAB + " LIKE ?";
+                String selection = VocabDbContract._ID + " LIKE ?";
                 // Specify arguments in placeholder order
-                String[] selectionArgs = {vocabText};
+                String[] selectionArgs = {String.valueOf(cursorAdapter.getItemId(posInt))};
                 // Issue SQL statement
                 db.delete(tableName, selection, selectionArgs);
             }
-        }
-        if (checkBoxSelected) {
-            // Update Cursor
-            cursorAdapter.changeCursor(dbHelper.getCursorMyVocab(tableName));
-        }
-        else {
-            Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
-        }
-        for (int i = 0; i < listView.getChildCount(); i++) {
-            CheckBox checkBox = (CheckBox) listView.getChildAt(i).findViewById(R.id.editCheckbox);
-            if (checkBox.isChecked()) {
-                checkBox.setChecked(false);
-            }
+            Cursor cursor = dbHelper.getCursor(tableName);
+            cursorAdapter.changeCursor(cursor);
+
+            cursorAdapter.selectedItemsPositions.clear();
         }
     }
 
-    protected void addVocabToMyVocab(ListView listView, VocabDbHelper dbHelper) {
+    protected void addVocabToMyVocab(VocabCursorAdapter cursorAdapter, VocabDbHelper dbHelper) {
+        Iterator<Integer> posIt = cursorAdapter.selectedItemsPositions.iterator();
+        if (cursorAdapter.selectedItemsPositions.isEmpty()) {
+            Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            while (posIt.hasNext()) {
+                Integer posInt = posIt.next();
+                Integer idInt = (int) cursorAdapter.getItemId(posInt);
+            }
+
+            cursorAdapter.selectedItemsPositions.clear();
+            Toast.makeText(this, "Added to My Vocab", Toast.LENGTH_SHORT).show();
+        }
+        /*
         boolean checkBoxSelected = false;
         for (int i = 0; i < listView.getChildCount(); i++) {
             CheckBox checkBox = (CheckBox) listView.getChildAt(i).findViewById(R.id.editCheckbox);
@@ -80,18 +81,7 @@ public abstract class CategoryItem extends ActionBarActivity {
                 dbHelper.insertVocab(VocabDbContract.TABLE_NAME_MY_VOCAB, vocabText, definitionText, levelNum);
             }
         }
-        if (!checkBoxSelected) {
-            Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(this, "Added to My Vocab", Toast.LENGTH_SHORT).show();
-        }
-        for (int i = 0; i < listView.getChildCount(); i++) {
-            CheckBox checkBox = (CheckBox) listView.getChildAt(i).findViewById(R.id.editCheckbox);
-            if (checkBox.isChecked()) {
-                checkBox.setChecked(false);
-            }
-        }
+        */
     }
 
     protected void addVocabAlertDialog(final VocabDbHelper dbHelper, final String tableName,
@@ -122,7 +112,7 @@ public abstract class CategoryItem extends ActionBarActivity {
                 String definition = definitionInput.getText().toString();
                 dbHelper.insertVocab(tableName, vocab, definition, 0);
                 // Update Cursor
-                Cursor cursor = dbHelper.getCursorMyVocab(tableName);
+                Cursor cursor = dbHelper.getCursor(tableName);
                 cursorAdapter.changeCursor(cursor);
             }
         });
@@ -193,7 +183,7 @@ public abstract class CategoryItem extends ActionBarActivity {
                 );
 
                 // Update Cursor
-                cursorAdapter.changeCursor(dbHelper.getCursorMyVocab(tableName));
+                cursorAdapter.changeCursor(dbHelper.getCursor(tableName));
             }
         });
         builder.setNegativeButton("Delete Vocab", new DialogInterface.OnClickListener() {
@@ -209,7 +199,7 @@ public abstract class CategoryItem extends ActionBarActivity {
                 db.delete(tableName, selection, selectionArgs);
 
                 // Update Cursor
-                cursorAdapter.changeCursor(dbHelper.getCursorMyVocab(tableName));
+                cursorAdapter.changeCursor(dbHelper.getCursor(tableName));
             }
         });
 

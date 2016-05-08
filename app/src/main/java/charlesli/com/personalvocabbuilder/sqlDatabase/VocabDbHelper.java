@@ -140,7 +140,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
     }
 
 
-    public Cursor getCursorMyVocab(String tableName) {
+    public Cursor getCursor(String tableName) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Define a projection that specifies which columns from the database

@@ -1,24 +1,13 @@
 package charlesli.com.personalvocabbuilder.controller;
 
-import android.app.AlertDialog;
-import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabCursorAdapter;
@@ -41,7 +30,7 @@ public class MyWordBank extends CategoryItem {
         mWordBankListView = (ListView) findViewById(R.id.mWordBankList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mWordBankListView.setEmptyView(emptyTextView);
-        Cursor mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_MY_WORD_BANK);
+        Cursor mCursor = mDbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_WORD_BANK);
         mVocabAdapter = new VocabCursorAdapter(this, mCursor, 0);
         mWordBankListView.setAdapter(mVocabAdapter);
         mWordBankListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -74,11 +63,10 @@ public class MyWordBank extends CategoryItem {
             addVocabAlertDialog(mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK, mVocabAdapter);
         }
         else if (id == R.id.del_my_vocab_button) {
-            deleteVocab(mWordBankListView, mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK,
-                    mVocabAdapter);
+            deleteVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK, mVocabAdapter);
         }
         else if (id == R.id.label_my_vocab_button) {
-            addVocabToMyVocab(mWordBankListView, mDbHelper);
+            addVocabToMyVocab(mVocabAdapter, mDbHelper);
         }
 
         return super.onOptionsItemSelected(item);

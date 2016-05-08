@@ -1,24 +1,13 @@
 package charlesli.com.personalvocabbuilder.controller;
 
-import android.app.AlertDialog;
-import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabCursorAdapter;
@@ -43,7 +32,7 @@ public class GMAT extends CategoryItem {
         mGMATListView = (ListView) findViewById(R.id.mGMATList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mGMATListView.setEmptyView(emptyTextView);
-        Cursor mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_GMAT);
+        Cursor mCursor = mDbHelper.getCursor(VocabDbContract.TABLE_NAME_GMAT);
         mVocabAdapter = new VocabCursorAdapter(this, mCursor, 0);
         mGMATListView.setAdapter(mVocabAdapter);
         mGMATListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -77,10 +66,10 @@ public class GMAT extends CategoryItem {
             addVocabAlertDialog(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, mVocabAdapter);
         }
         else if (id == R.id.del_gmat_button) {
-            deleteVocab(mGMATListView, mDbHelper, VocabDbContract.TABLE_NAME_GMAT, mVocabAdapter);
+            deleteVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, mVocabAdapter);
         }
         else if (id == R.id.label_gmat_button) {
-            addVocabToMyVocab(mGMATListView, mDbHelper);
+            addVocabToMyVocab(mVocabAdapter, mDbHelper);
         }
 
         return super.onOptionsItemSelected(item);

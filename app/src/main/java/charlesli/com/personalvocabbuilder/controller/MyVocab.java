@@ -8,21 +8,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabCursorAdapter;
@@ -47,7 +43,7 @@ public class MyVocab extends ActionBarActivity {
         mVocabListView = (ListView) findViewById(R.id.mVocabList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mVocabListView.setEmptyView(emptyTextView);
-        mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_MY_VOCAB);
+        mCursor = mDbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_VOCAB);
         mVocabAdapter = new VocabCursorAdapter(this, mCursor, 0);
         mVocabListView.setAdapter(mVocabAdapter);
         mVocabListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -87,40 +83,6 @@ public class MyVocab extends ActionBarActivity {
     }
 
     private void deleteVocab() {
-        /*
-        boolean checkBoxSelected = false;
-        for (int i = 0; i < mVocabListView.getChildCount(); i++) {
-            CheckBox checkBox = (CheckBox) mVocabListView.getChildAt(i).findViewById(R.id.editCheckbox);
-            if (checkBox.isChecked()) {
-                checkBoxSelected = true;
-                TextView vocab = (TextView) mVocabListView.getChildAt(i).findViewById(R.id.vocabName);
-                String vocabText = (String) vocab.getText();
-
-                // Delete Vocab from Database*****************************************
-                SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                // Define 'where' part of query
-                String selection = VocabDbContract.COLUMN_NAME_VOCAB + " LIKE ?";
-                // Specify arguments in placeholder order
-                String[] selectionArgs = {vocabText};
-                // Issue SQL statement
-                db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
-            }
-        }
-        if (checkBoxSelected) {
-            // Update Cursor
-            mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_MY_VOCAB);
-            mVocabAdapter.changeCursor(mCursor);
-        }
-        else {
-            Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
-        }
-        for (int i = 0; i < mVocabListView.getChildCount(); i++) {
-            CheckBox checkBox = (CheckBox) mVocabListView.getChildAt(i).findViewById(R.id.editCheckbox);
-            if (checkBox.isChecked()) {
-                checkBox.setChecked(false);
-            }
-        }
-        */
         Iterator<Integer> posIt = mVocabAdapter.selectedItemsPositions.iterator();
         if (mVocabAdapter.selectedItemsPositions.isEmpty()) {
             Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
@@ -136,7 +98,7 @@ public class MyVocab extends ActionBarActivity {
                 // Issue SQL statement
                 db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
             }
-            mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_MY_VOCAB);
+            mCursor = mDbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_VOCAB);
             mVocabAdapter.changeCursor(mCursor);
 
             mVocabAdapter.selectedItemsPositions.clear();
@@ -171,7 +133,7 @@ public class MyVocab extends ActionBarActivity {
                 mDbHelper.insertVocab(VocabDbContract.TABLE_NAME_MY_VOCAB, vocab, definition, 0);
                 mDbHelper.insertVocab(VocabDbContract.TABLE_NAME_MY_WORD_BANK, vocab, definition, 0);
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_MY_VOCAB);
+                mCursor = mDbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_VOCAB);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });
@@ -243,7 +205,7 @@ public class MyVocab extends ActionBarActivity {
 
 
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_MY_VOCAB);
+                mCursor = mDbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_VOCAB);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });
@@ -260,7 +222,7 @@ public class MyVocab extends ActionBarActivity {
                 db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
 
                 // Update Cursor
-                mCursor = mDbHelper.getCursorMyVocab(VocabDbContract.TABLE_NAME_MY_VOCAB);
+                mCursor = mDbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_VOCAB);
                 mVocabAdapter.changeCursor(mCursor);
             }
         });
