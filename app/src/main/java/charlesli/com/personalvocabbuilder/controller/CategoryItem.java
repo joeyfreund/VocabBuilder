@@ -87,6 +87,9 @@ public abstract class CategoryItem extends ActionBarActivity {
                 dbHelper.insertVocab(VocabDbContract.TABLE_NAME_MY_VOCAB, vocab, definition, level);
             }
             cursorAdapter.selectedItemsPositions.clear();
+            Cursor cursor = dbHelper.getCursor(tableName);
+            cursorAdapter.changeCursor(cursor);
+
             Toast.makeText(this, "Added to My Vocab", Toast.LENGTH_SHORT).show();
         }
     }
