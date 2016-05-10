@@ -4,7 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/vocab_builder_icon"
+        android:icon="@drawable/icon_vocabbuilder"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
