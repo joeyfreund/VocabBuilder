@@ -121,6 +121,9 @@ public abstract class CategoryItem extends ActionBarActivity {
                 String vocab = vocabInput.getText().toString();
                 String definition = definitionInput.getText().toString();
                 dbHelper.insertVocab(tableName, vocab, definition, 0);
+                if (!tableName.equals(VocabDbContract.TABLE_NAME_MY_WORD_BANK)) {
+                    dbHelper.insertVocab(VocabDbContract.TABLE_NAME_MY_WORD_BANK, vocab, definition, 0);
+                }
                 // Update Cursor
                 Cursor cursor = dbHelper.getCursor(tableName);
                 cursorAdapter.changeCursor(cursor);
