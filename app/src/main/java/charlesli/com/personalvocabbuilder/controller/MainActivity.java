@@ -35,7 +35,7 @@ public class MainActivity extends ActionBarActivity {
 
         mDictionaryButton.setVisibility(View.INVISIBLE);
         mSettingsButton.setVisibility(View.INVISIBLE);
-        mTestButton.setVisibility(View.INVISIBLE);
+        //mTestButton.setVisibility(View.INVISIBLE);
 
         mMyVocabButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +58,13 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Categories.class);
                 startActivity(intent);
+            }
+        });
+
+        mTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
