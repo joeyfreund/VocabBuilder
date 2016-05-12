@@ -42,4 +42,12 @@
     <string name="empty_text_view">Begin by adding vocab you want to learn! :)</string>
     <string name="label_vocab_button">Label Vocab</string>
 
+    <string-array name="table_array">
+        <item>My Vocab</item>
+        <item>My Word Bank</item>
+        <item>GMAT</item>
+        <item>GRE</item>
+    </string-array>
+
+
 </resources>
