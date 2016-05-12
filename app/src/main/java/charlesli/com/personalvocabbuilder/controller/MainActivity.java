@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import charlesli.com.personalvocabbuilder.R;
@@ -92,11 +93,33 @@ public class MainActivity extends ActionBarActivity {
                 LayoutInflater li = LayoutInflater.from(MainActivity.this);
                 View promptsView = li.inflate(R.layout.alert_dialog_review, null);
 
+                // Spinner
                 Spinner spinner = (Spinner) promptsView.findViewById(R.id.spinner);
                 ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MainActivity.this,
                         R.array.table_array, android.R.layout.simple_spinner_item);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
+
+                // Radio Button
+                final RadioButton wordDef = (RadioButton) promptsView.findViewById(R.id.wordDef);
+                final RadioButton defWord = (RadioButton) promptsView.findViewById(R.id.defWord);
+
+                wordDef.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        wordDef.setChecked(true);
+                        defWord.setChecked(false);
+                    }
+                });
+
+                defWord.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        wordDef.setChecked(false);
+                        defWord.setChecked(true);
+                    }
+                });
+
 
                 builder.setView(promptsView);
 
