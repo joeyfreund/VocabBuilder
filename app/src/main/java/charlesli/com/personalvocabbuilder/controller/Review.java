@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,7 +18,7 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
 
-public class WordDefinition extends ActionBarActivity {
+public class Review extends ActionBarActivity {
 
     private int mReviewMode;
     private String mReviewTable;
@@ -40,14 +39,14 @@ public class WordDefinition extends ActionBarActivity {
     private static final int EASY = 2;
     private static final int PERFECT = 3;
 
-    private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(WordDefinition.this);
+    private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(Review.this);
     private Random mRandom = new Random();
     private ArrayList<Integer> mTracker = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_word_definition);
+        setContentView(R.layout.activity_review);
 
         Intent intent = getIntent();
         // default value, 0, indicates Word -> Definition review option

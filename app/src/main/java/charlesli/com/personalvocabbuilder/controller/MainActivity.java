@@ -4,19 +4,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -212,7 +206,7 @@ public class MainActivity extends ActionBarActivity {
                 if (reviewNumOfWords == 0) {
                     Toast.makeText(MainActivity.this, "There are no words to be reviewed", Toast.LENGTH_LONG).show();
                 } else {
-                    Intent intent = new Intent(MainActivity.this, WordDefinition.class);
+                    Intent intent = new Intent(MainActivity.this, Review.class);
                     intent.putExtra("Mode", reviewMode);
                     intent.putExtra("Table", reviewTable);
                     intent.putExtra("NumOfWords", reviewNumOfWords);

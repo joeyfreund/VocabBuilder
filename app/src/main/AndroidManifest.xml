@@ -34,7 +34,7 @@
                 android:value=".controller.MainActivity" />
         </activity>
         <activity
-            android:name=".controller.WordDefinition"
+            android:name=".controller.Review"
             android:label="@string/title_activity_word_definition"
             android:parentActivityName=".controller.MainActivity" >
             <meta-data
