@@ -65,7 +65,7 @@ public class WordDefinition extends ActionBarActivity {
         mPerLvlButton = (Button) findViewById(R.id.lvl_perfect_button);
         mAgaLvlButton = (Button) findViewById(R.id.lvl_again_button);
 
-        mCursor = mDbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_VOCAB);
+        mCursor = mDbHelper.getCursor(mReviewTable);
 
         loadVocabInRandomOrder();
     }
@@ -180,7 +180,7 @@ public class WordDefinition extends ActionBarActivity {
         String[] selectionArgs = {String.valueOf(rowId)};
 
         int countMyVocab = db.update(
-                VocabDbContract.TABLE_NAME_MY_VOCAB,
+                mReviewTable,
                 values,
                 selection,
                 selectionArgs

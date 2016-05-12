@@ -102,7 +102,7 @@ public class MainActivity extends ActionBarActivity {
 
         VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
         Cursor cursor = dbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_VOCAB);
-        Integer maxRow = cursor.getCount();
+        final Integer maxRow = cursor.getCount();
         reviewNumOfWords = maxRow;
 
         LayoutInflater li = LayoutInflater.from(MainActivity.this);
@@ -112,6 +112,7 @@ public class MainActivity extends ActionBarActivity {
         Spinner spinner = (Spinner) promptsView.findViewById(R.id.spinner);
         final RadioButton wordDef = (RadioButton) promptsView.findViewById(R.id.wordDef);
         final RadioButton defWord = (RadioButton) promptsView.findViewById(R.id.defWord);
+        final SeekBar seekBar = (SeekBar) promptsView.findViewById(R.id.seekBar);
 
 
         // TextView
@@ -128,15 +129,39 @@ public class MainActivity extends ActionBarActivity {
                 String table = (String) parent.getItemAtPosition(position);
                 if (table.equals("My Vocab")) {
                     reviewTable = VocabDbContract.TABLE_NAME_MY_VOCAB;
+                    VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
+                    Cursor cursor = dbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_VOCAB);
+                    Integer maxRow = cursor.getCount();
+                    numText.setText(String.valueOf(maxRow));
+                    seekBar.setMax(maxRow);
+                    seekBar.setProgress(maxRow);
                 }
                 else if (table.equals("My Word Bank")) {
                     reviewTable = VocabDbContract.TABLE_NAME_MY_WORD_BANK;
+                    VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
+                    Cursor cursor = dbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_WORD_BANK);
+                    Integer maxRow = cursor.getCount();
+                    numText.setText(String.valueOf(maxRow));
+                    seekBar.setMax(maxRow);
+                    seekBar.setProgress(maxRow);
                 }
                 else if (table.equals("GMAT")) {
                     reviewTable = VocabDbContract.TABLE_NAME_GMAT;
+                    VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
+                    Cursor cursor = dbHelper.getCursor(VocabDbContract.TABLE_NAME_GMAT);
+                    Integer maxRow = cursor.getCount();
+                    numText.setText(String.valueOf(maxRow));
+                    seekBar.setMax(maxRow);
+                    seekBar.setProgress(maxRow);
                 }
                 else if (table.equals("GRE")) {
                     reviewTable = VocabDbContract.TABLE_NAME_GRE;
+                    VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
+                    Cursor cursor = dbHelper.getCursor(VocabDbContract.TABLE_NAME_GRE);
+                    Integer maxRow = cursor.getCount();
+                    numText.setText(String.valueOf(maxRow));
+                    seekBar.setMax(maxRow);
+                    seekBar.setProgress(maxRow);
                 }
             }
 
@@ -166,7 +191,6 @@ public class MainActivity extends ActionBarActivity {
         });
 
         // SeekBar
-        SeekBar seekBar = (SeekBar) promptsView.findViewById(R.id.seekBar);
         seekBar.setMax(maxRow);
         seekBar.setProgress(maxRow);
 
