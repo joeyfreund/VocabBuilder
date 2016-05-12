@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,7 +21,10 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
 public class WordDefinition extends ActionBarActivity {
 
-    private int mReviewOptionSelected;
+    private int mReviewMode;
+    private String mReviewTable;
+    private int mReviewNumOfWords;
+
     private TextView mTopTextView;
     private TextView mBottomTextView;
     private Button mRevealButton;
@@ -47,7 +51,10 @@ public class WordDefinition extends ActionBarActivity {
 
         Intent intent = getIntent();
         // default value, 0, indicates Word -> Definition review option
-        mReviewOptionSelected = intent.getIntExtra(getString(R.string.review_option_selected), 0);
+        mReviewMode = intent.getIntExtra("Mode", 0);
+        mReviewTable = intent.getStringExtra("Table");
+        mReviewNumOfWords = intent.getIntExtra("NumOfWords", 0);
+
 
         mTopTextView = (TextView) findViewById(R.id.topTextView);
         mBottomTextView = (TextView) findViewById(R.id.bottomTextView);
@@ -61,7 +68,6 @@ public class WordDefinition extends ActionBarActivity {
         mCursor = mDbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_VOCAB);
 
         loadVocabInRandomOrder();
-
     }
 
 
@@ -85,7 +91,7 @@ public class WordDefinition extends ActionBarActivity {
         final int rowId = mCursor.getInt(mCursor.getColumnIndexOrThrow(VocabDbContract._ID));
 
         // if 0 (word - > definition): ********
-        if (mReviewOptionSelected == 0) {
+        if (mReviewMode == 0) {
             // Set mTopView to Word
             mTopTextView.setText(word);
             // Set mBottomView to Definition
