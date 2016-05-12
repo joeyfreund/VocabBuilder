@@ -3,9 +3,13 @@ package charlesli.com.personalvocabbuilder.controller;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,10 +17,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
+import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -93,6 +100,13 @@ public class MainActivity extends ActionBarActivity {
                 LayoutInflater li = LayoutInflater.from(MainActivity.this);
                 View promptsView = li.inflate(R.layout.alert_dialog_review, null);
 
+                // TextView
+                final TextView numText = (TextView) promptsView.findViewById(R.id.numberText);
+                VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
+                Cursor cursor = dbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_VOCAB);
+                Integer maxRow = cursor.getCount();
+                numText.setText(String.valueOf(maxRow));
+
                 // Spinner
                 Spinner spinner = (Spinner) promptsView.findViewById(R.id.spinner);
                 ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MainActivity.this,
@@ -117,6 +131,27 @@ public class MainActivity extends ActionBarActivity {
                     public void onClick(View v) {
                         wordDef.setChecked(false);
                         defWord.setChecked(true);
+                    }
+                });
+
+                // SeekBar
+                SeekBar seekBar = (SeekBar) promptsView.findViewById(R.id.seekBar);
+                seekBar.setMax(maxRow);
+
+                seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        numText.setText(String.valueOf(progress));
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
                     }
                 });
 

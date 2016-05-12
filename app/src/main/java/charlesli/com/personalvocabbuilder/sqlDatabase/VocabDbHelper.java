@@ -14,7 +14,6 @@ import charlesli.com.personalvocabbuilder.R;
  */
 public class VocabDbHelper extends SQLiteOpenHelper {
 
-    private Context context;
     private static VocabDbHelper dbInstance;
 
     // If you change the database schema, you must increment the database version.
