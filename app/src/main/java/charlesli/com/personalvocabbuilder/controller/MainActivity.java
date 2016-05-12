@@ -1,12 +1,19 @@
 package charlesli.com.personalvocabbuilder.controller;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import charlesli.com.personalvocabbuilder.R;
+import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -64,7 +71,40 @@ public class MainActivity extends ActionBarActivity {
         mTestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Review Vocab");
+                // Set up the input
+                LinearLayout layout = new LinearLayout(MainActivity.this);
+                layout.setOrientation(LinearLayout.VERTICAL);
 
+                final EditText vocabInput = new EditText(MainActivity.this);
+                vocabInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+                vocabInput.setHint("Vocab");
+                layout.addView(vocabInput);
+
+                final EditText definitionInput = new EditText(MainActivity.this);
+                definitionInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+                definitionInput.setHint("Definition");
+                layout.addView(definitionInput);
+
+                LayoutInflater li = LayoutInflater.from(MainActivity.this);
+                View promptsView = li.inflate(R.layout.alert_dialog_review, null);
+
+                builder.setView(promptsView);
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
             }
         });
 
