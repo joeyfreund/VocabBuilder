@@ -197,8 +197,8 @@ public class WordDefinition extends ActionBarActivity {
                 selectionWordBank,
                 selectionArgsWordBank
         );
-        // If this is not last row
-        if (mTracker.size() < mCursor.getCount()) {
+        // If this is not last word to be reviewed
+        if (mTracker.size() < mReviewNumOfWords) {
             // Do the same thing / loadPage(int) again (recursive)
             loadVocabInRandomOrder();
 
