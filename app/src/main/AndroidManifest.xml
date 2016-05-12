@@ -26,14 +26,6 @@
                 android:value=".controller.MainActivity" />
         </activity>
         <activity
-            android:name=".controller.Review"
-            android:label="@string/title_activity_review"
-            android:parentActivityName=".controller.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controller.MainActivity" />
-        </activity>
-        <activity
             android:name=".controller.Categories"
             android:label="@string/title_activity_categories"
             android:parentActivityName=".controller.MainActivity" >
@@ -44,10 +36,10 @@
         <activity
             android:name=".controller.WordDefinition"
             android:label="@string/title_activity_word_definition"
-            android:parentActivityName=".controller.Review" >
+            android:parentActivityName=".controller.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controller.Review" />
+                android:value=".controller.MainActivity" />
         </activity>
         <activity
             android:name=".controller.MyWordBank"
