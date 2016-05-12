@@ -83,19 +83,6 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Review Vocab");
-                // Set up the input
-                LinearLayout layout = new LinearLayout(MainActivity.this);
-                layout.setOrientation(LinearLayout.VERTICAL);
-
-                final EditText vocabInput = new EditText(MainActivity.this);
-                vocabInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
-                vocabInput.setHint("Vocab");
-                layout.addView(vocabInput);
-
-                final EditText definitionInput = new EditText(MainActivity.this);
-                definitionInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
-                definitionInput.setHint("Definition");
-                layout.addView(definitionInput);
 
                 LayoutInflater li = LayoutInflater.from(MainActivity.this);
                 View promptsView = li.inflate(R.layout.alert_dialog_review, null);
@@ -137,6 +124,7 @@ public class MainActivity extends ActionBarActivity {
                 // SeekBar
                 SeekBar seekBar = (SeekBar) promptsView.findViewById(R.id.seekBar);
                 seekBar.setMax(maxRow);
+                seekBar.setProgress(maxRow);
 
                 seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
