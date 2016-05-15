@@ -149,8 +149,8 @@ public abstract class CategoryItem extends ActionBarActivity {
         builder.show();
     }
 
-    protected void editVocabAlertDialog(final String selectedVocab, View view, int position,
-                                      final long id, final VocabDbHelper dbHelper,
+    protected void editVocabAlertDialog(final String selectedVocab, final String selectedDefinition,
+                                        View view, int position, final long id, final VocabDbHelper dbHelper,
                                       final String tableName, final VocabCursorAdapter cursorAdapter) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit Vocab");
@@ -184,7 +184,7 @@ public abstract class CategoryItem extends ActionBarActivity {
                 values.put(VocabDbContract.COLUMN_NAME_DEFINITION, definition);
 
                 // which row to update, based on the ID
-                String selection = VocabDbContract._ID + " LIKE ?";
+                /*String selection = VocabDbContract._ID + " LIKE ?";
                 String[] selectionArgs = {String.valueOf(id)};
 
                 int count = db.update(
@@ -193,13 +193,36 @@ public abstract class CategoryItem extends ActionBarActivity {
                         selection,
                         selectionArgs
                 );
+                */
 
                 // which row to update, based on the VOCAB
-                String selectionMyVocab = VocabDbContract.COLUMN_NAME_VOCAB + " LIKE ?";
-                String[] selectionArgsMyVocab = {selectedVocab};
+                String selectionMyVocab = VocabDbContract.COLUMN_NAME_VOCAB + " = ? AND " +
+                        VocabDbContract.COLUMN_NAME_DEFINITION + " = ?";
+                String[] selectionArgsMyVocab = {selectedVocab, selectedDefinition};
 
-                int countMyVocab = db.update(
+                db.update(
                         VocabDbContract.TABLE_NAME_MY_VOCAB,
+                        values,
+                        selectionMyVocab,
+                        selectionArgsMyVocab
+                );
+
+                db.update(
+                        VocabDbContract.TABLE_NAME_MY_WORD_BANK,
+                        values,
+                        selectionMyVocab,
+                        selectionArgsMyVocab
+                );
+
+                db.update(
+                        VocabDbContract.TABLE_NAME_GMAT,
+                        values,
+                        selectionMyVocab,
+                        selectionArgsMyVocab
+                );
+
+                db.update(
+                        VocabDbContract.TABLE_NAME_GRE,
                         values,
                         selectionMyVocab,
                         selectionArgsMyVocab

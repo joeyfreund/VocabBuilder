@@ -30,14 +30,15 @@ public class MyWordBank extends CategoryItem {
         mWordBankListView = (ListView) findViewById(R.id.mWordBankList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mWordBankListView.setEmptyView(emptyTextView);
-        Cursor mCursor = mDbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_WORD_BANK);
-        mVocabAdapter = new VocabCursorAdapter(this, mCursor, 0);
+        Cursor cursor = mDbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_WORD_BANK);
+        mVocabAdapter = new VocabCursorAdapter(this, cursor, 0);
         mWordBankListView.setAdapter(mVocabAdapter);
         mWordBankListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 mSelectedVocab = (String) ((TextView) view.findViewById(R.id.vocabName)).getText();
-                editVocabAlertDialog(mSelectedVocab, view, position, id, mDbHelper,
+                String selectedDefinition = (String) ((TextView) view.findViewById(R.id.vocabDefinition)).getText();
+                editVocabAlertDialog(mSelectedVocab, selectedDefinition, view, position, id, mDbHelper,
                         VocabDbContract.TABLE_NAME_MY_WORD_BANK, mVocabAdapter);
                 return true;
             }
@@ -62,7 +63,7 @@ public class MyWordBank extends CategoryItem {
         if (id == R.id.add_vocab_my_word_bank_button) {
             addVocabAlertDialog(mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK, mVocabAdapter);
         }
-        else if (id == R.id.del_my_word_bank_button) {
+        else if (id == R.id.del_my_vocab_button) {
             deleteVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK, mVocabAdapter);
         }
         else if (id == R.id.label_my_word_bank_button) {
