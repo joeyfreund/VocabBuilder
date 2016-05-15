@@ -21,7 +21,6 @@ public class GRE extends CategoryItem {
 
     private VocabCursorAdapter mVocabAdapter;
     private ListView mGREListView;
-    private String mSelectedVocab;
     private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(GRE.this);
 
     @Override
@@ -38,9 +37,9 @@ public class GRE extends CategoryItem {
         mGREListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                mSelectedVocab = (String) ((TextView) view.findViewById(R.id.vocabName)).getText();
+                String selectedVocab = (String) ((TextView) view.findViewById(R.id.vocabName)).getText();
                 String selectedDefinition = (String) ((TextView) view.findViewById(R.id.vocabDefinition)).getText();
-                editVocabAlertDialog(mSelectedVocab, selectedDefinition, view, position, id, mDbHelper,
+                editVocabAlertDialog(selectedVocab, selectedDefinition, view, position, id, mDbHelper,
                         VocabDbContract.TABLE_NAME_GRE, mVocabAdapter);
                 return true;
             }

@@ -21,7 +21,6 @@ public class GMAT extends CategoryItem {
 
     private VocabCursorAdapter mVocabAdapter;
     private ListView mGMATListView;
-    private String mSelectedVocab;
     private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(GMAT.this);
 
     @Override
@@ -38,9 +37,9 @@ public class GMAT extends CategoryItem {
         mGMATListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                mSelectedVocab = (String) ((TextView) view.findViewById(R.id.vocabName)).getText();
+                String selectedVocab = (String) ((TextView) view.findViewById(R.id.vocabName)).getText();
                 String selectedDefinition = (String) ((TextView) view.findViewById(R.id.vocabDefinition)).getText();
-                editVocabAlertDialog(mSelectedVocab, selectedDefinition, view, position, id, mDbHelper,
+                editVocabAlertDialog(selectedVocab, selectedDefinition, view, position, id, mDbHelper,
                         VocabDbContract.TABLE_NAME_GMAT, mVocabAdapter);
                 return true;
             }

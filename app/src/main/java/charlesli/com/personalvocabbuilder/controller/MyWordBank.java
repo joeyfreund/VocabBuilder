@@ -19,7 +19,6 @@ public class MyWordBank extends CategoryItem {
 
     private VocabCursorAdapter mVocabAdapter;
     private ListView mWordBankListView;
-    private String mSelectedVocab;
     private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(MyWordBank.this);
 
     @Override
@@ -36,9 +35,9 @@ public class MyWordBank extends CategoryItem {
         mWordBankListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                mSelectedVocab = (String) ((TextView) view.findViewById(R.id.vocabName)).getText();
+                String selectedVocab = (String) ((TextView) view.findViewById(R.id.vocabName)).getText();
                 String selectedDefinition = (String) ((TextView) view.findViewById(R.id.vocabDefinition)).getText();
-                editVocabAlertDialog(mSelectedVocab, selectedDefinition, view, position, id, mDbHelper,
+                editVocabAlertDialog(selectedVocab, selectedDefinition, view, position, id, mDbHelper,
                         VocabDbContract.TABLE_NAME_MY_WORD_BANK, mVocabAdapter);
                 return true;
             }
