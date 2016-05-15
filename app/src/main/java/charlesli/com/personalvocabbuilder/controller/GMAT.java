@@ -39,7 +39,7 @@ public class GMAT extends CategoryItem {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedVocab = (String) ((TextView) view.findViewById(R.id.vocabName)).getText();
                 String selectedDefinition = (String) ((TextView) view.findViewById(R.id.vocabDefinition)).getText();
-                editVocabAlertDialog(selectedVocab, selectedDefinition, view, position, id, mDbHelper,
+                editVocabAlertDialog(selectedVocab, selectedDefinition, id, mDbHelper,
                         VocabDbContract.TABLE_NAME_GMAT, mVocabAdapter);
                 return true;
             }

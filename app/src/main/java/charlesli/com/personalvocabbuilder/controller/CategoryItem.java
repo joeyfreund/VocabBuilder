@@ -151,8 +151,8 @@ public abstract class CategoryItem extends ActionBarActivity {
     }
 
     protected void editVocabAlertDialog(final String selectedVocab, final String selectedDefinition,
-                                        View view, int position, final long id, final VocabDbHelper dbHelper,
-                                      final String tableName, final VocabCursorAdapter cursorAdapter) {
+                                        final long id, final VocabDbHelper dbHelper,
+                                        final String tableName, final VocabCursorAdapter cursorAdapter) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit Vocab");
         builder.setMessage(selectedVocab);
