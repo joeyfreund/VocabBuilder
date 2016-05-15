@@ -9,17 +9,24 @@
         android:orderInCategory="100"
         app:showAsAction="always"/>
 
-    <item android:id="@+id/label_gmat_button"
-        android:title="@string/label_vocab_button"
-        android:icon="@drawable/ic_action_labels"
-        android:orderInCategory="200"
-        app:showAsAction="ifRoom"/>
-
     <item android:id="@+id/del_gmat_button"
         android:title="@string/del_vocab_button"
         android:icon="@drawable/ic_action_discard"
+        android:orderInCategory="200"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/label_gmat_button"
+        android:title="@string/label_vocab_button"
+        android:icon="@drawable/ic_action_labels"
         android:orderInCategory="300"
         app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/select_all_gmat_button"
+        android:title="@string/select_all_button"
+        android:icon="@drawable/ic_action_select_all"
+        android:orderInCategory="400"
+        app:showAsAction="ifRoom"/>
+
 
 
 </menu>

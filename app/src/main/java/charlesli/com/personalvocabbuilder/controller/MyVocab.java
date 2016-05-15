@@ -75,7 +75,7 @@ public class MyVocab extends ActionBarActivity {
         if (id == R.id.add_vocab_my_vocab_button) {
             addVocabAlertDialog();
         }
-        else if (id == R.id.del_my_vocab_button) {
+        else if (id == R.id.del_my_word_bank_button) {
             deleteVocab();
         }
 

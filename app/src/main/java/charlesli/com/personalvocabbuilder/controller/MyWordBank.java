@@ -59,13 +59,13 @@ public class MyWordBank extends CategoryItem {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.add_vocab_word_bank_button) {
+        if (id == R.id.add_vocab_my_word_bank_button) {
             addVocabAlertDialog(mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK, mVocabAdapter);
         }
-        else if (id == R.id.del_my_vocab_button) {
+        else if (id == R.id.del_my_word_bank_button) {
             deleteVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK, mVocabAdapter);
         }
-        else if (id == R.id.label_my_vocab_button) {
+        else if (id == R.id.label_my_word_bank_button) {
             addVocabToMyVocab(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK);
         }
 
