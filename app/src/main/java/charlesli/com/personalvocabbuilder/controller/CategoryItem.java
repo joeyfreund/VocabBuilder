@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import charlesli.com.personalvocabbuilder.R;
@@ -182,18 +183,6 @@ public abstract class CategoryItem extends ActionBarActivity {
                 // new value for one column
                 ContentValues values = new ContentValues();
                 values.put(VocabDbContract.COLUMN_NAME_DEFINITION, definition);
-
-                // which row to update, based on the ID
-                /*String selection = VocabDbContract._ID + " LIKE ?";
-                String[] selectionArgs = {String.valueOf(id)};
-
-                int count = db.update(
-                        tableName,
-                        values,
-                        selection,
-                        selectionArgs
-                );
-                */
 
                 // which row to update, based on the VOCAB
                 String selectionMyVocab = VocabDbContract.COLUMN_NAME_VOCAB + " = ? AND " +
