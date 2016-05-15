@@ -69,7 +69,7 @@ public class GMAT extends CategoryItem {
             deleteVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, mVocabAdapter);
         }
         else if (id == R.id.label_gmat_button) {
-            addVocabToMyVocab(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_GMAT);
+            addVocabToSelectedTable(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_GMAT);
         }
         else if (id == R.id.select_all_gmat_button) {
             selectAll(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_GMAT);

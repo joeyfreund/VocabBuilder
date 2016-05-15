@@ -8,11 +8,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,8 +65,69 @@ public abstract class CategoryItem extends ActionBarActivity {
         }
     }
 
-    protected void addVocabToMyVocab(VocabCursorAdapter cursorAdapter, VocabDbHelper dbHelper,
-                                     String tableName) {
+    protected void selectTableToAddVocabTo(final VocabCursorAdapter cursorAdapter, final VocabDbHelper dbHelper) {
+        if (cursorAdapter.selectedItemsPositions.isEmpty()) {
+            Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            // Set up alert dialog
+            final String[] selectedTable = new String[1];
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Add Vocab To...");
+            // Set up the input
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.VERTICAL);
+
+            // Add Spinner to alert dialog
+            final Spinner spinner = new Spinner(this);
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                    R.array.table_array, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    String table = (String) parent.getItemAtPosition(position);
+                    if (table.equals("My Vocab")) {
+                        selectedTable[0] = VocabDbContract.TABLE_NAME_MY_VOCAB;
+                    } else if (table.equals("My Word Bank")) {
+                        selectedTable[0] = VocabDbContract.TABLE_NAME_MY_WORD_BANK;
+                    } else if (table.equals("GMAT")) {
+                        selectedTable[0] = VocabDbContract.TABLE_NAME_GMAT;
+                    } else if (table.equals("GRE")) {
+                        selectedTable[0] = VocabDbContract.TABLE_NAME_GRE;
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            layout.addView(spinner);
+            builder.setView(layout);
+
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    addVocabToSelectedTable(cursorAdapter, dbHelper, selectedTable[0]);
+                }
+            });
+            builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            builder.show();
+        }
+    }
+
+
+    protected void addVocabToSelectedTable(VocabCursorAdapter cursorAdapter, VocabDbHelper dbHelper,
+                                           String tableName) {
         Iterator<Integer> posIt = cursorAdapter.selectedItemsPositions.iterator();
         if (cursorAdapter.selectedItemsPositions.isEmpty()) {
             Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
