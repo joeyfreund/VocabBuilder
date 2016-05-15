@@ -71,6 +71,9 @@ public class GRE extends CategoryItem {
         else if (id == R.id.label_gre_button) {
             addVocabToMyVocab(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_GRE);
         }
+        else if (id == R.id.select_all_gre_button) {
+            selectAll(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_GRE);
+        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -68,6 +68,9 @@ public class MyWordBank extends CategoryItem {
         else if (id == R.id.label_my_word_bank_button) {
             addVocabToMyVocab(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK);
         }
+        else if (id == R.id.select_all_my_word_bank_button) {
+            selectAll(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK);
+        }
 
         return super.onOptionsItemSelected(item);
     }

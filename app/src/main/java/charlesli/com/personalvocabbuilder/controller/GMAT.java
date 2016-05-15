@@ -71,6 +71,9 @@ public class GMAT extends CategoryItem {
         else if (id == R.id.label_gmat_button) {
             addVocabToMyVocab(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_GMAT);
         }
+        else if (id == R.id.select_all_gmat_button) {
+            selectAll(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_GMAT);
+        }
 
         return super.onOptionsItemSelected(item);
     }

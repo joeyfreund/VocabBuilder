@@ -28,6 +28,16 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
  */
 public abstract class CategoryItem extends ActionBarActivity {
 
+    protected void selectAll(VocabCursorAdapter cursorAdapter, VocabDbHelper dbHelper,
+                             String tableName) {
+        Cursor cursor = dbHelper.getCursor(tableName);
+        int numOfRows = cursor.getCount();
+        for (int i = 0; i < numOfRows; i++) {
+            cursorAdapter.selectedItemsPositions.add(i);
+        }
+        cursorAdapter.changeCursor(cursor);
+    }
+
     protected void deleteVocab(VocabDbHelper dbHelper, String tableName, VocabCursorAdapter cursorAdapter) {
         Iterator<Integer> posIt = cursorAdapter.selectedItemsPositions.iterator();
         if (cursorAdapter.selectedItemsPositions.isEmpty()) {
