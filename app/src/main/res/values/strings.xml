@@ -40,7 +40,7 @@
     <string name="title_activity_gmat">GMAT</string>
     <string name="title_activity_gre">GRE</string>
     <string name="empty_text_view">Begin by adding vocab you want to learn! :)</string>
-    <string name="label_vocab_button">Label Vocab</string>
+    <string name="label_vocab_button">Add Vocab To</string>
     <string name="select_all_button">Select All</string>
 
     <string-array name="table_array">

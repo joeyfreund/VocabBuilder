@@ -99,7 +99,6 @@ public abstract class CategoryItem extends ActionBarActivity {
                     } else if (table.equals("GRE")) {
                         selectedTable[0] = VocabDbContract.TABLE_NAME_GRE;
                     }
-                    Log.i("In my vocab ", table + selectedTable[0]);
                 }
 
                 @Override
@@ -168,7 +167,7 @@ public abstract class CategoryItem extends ActionBarActivity {
             Cursor cursor = dbHelper.getCursor(fromTableName);
             cursorAdapter.changeCursor(cursor);
 
-            Toast.makeText(this, "Added to My Vocab", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Vocab added successfully", Toast.LENGTH_SHORT).show();
         }
     }
 
