@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -65,7 +66,8 @@ public abstract class CategoryItem extends ActionBarActivity {
         }
     }
 
-    protected void selectTableToAddVocabTo(final VocabCursorAdapter cursorAdapter, final VocabDbHelper dbHelper) {
+    protected void selectTableToAddVocabTo(final VocabCursorAdapter cursorAdapter, final VocabDbHelper dbHelper,
+                                           final String fromTableName) {
         if (cursorAdapter.selectedItemsPositions.isEmpty()) {
             Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
         }
@@ -97,6 +99,7 @@ public abstract class CategoryItem extends ActionBarActivity {
                     } else if (table.equals("GRE")) {
                         selectedTable[0] = VocabDbContract.TABLE_NAME_GRE;
                     }
+                    Log.i("In my vocab ", table + selectedTable[0]);
                 }
 
                 @Override
@@ -111,7 +114,7 @@ public abstract class CategoryItem extends ActionBarActivity {
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    addVocabToSelectedTable(cursorAdapter, dbHelper, selectedTable[0]);
+                    addVocabToSelectedTable(cursorAdapter, dbHelper, fromTableName, selectedTable[0]);
                 }
             });
             builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -127,7 +130,7 @@ public abstract class CategoryItem extends ActionBarActivity {
 
 
     protected void addVocabToSelectedTable(VocabCursorAdapter cursorAdapter, VocabDbHelper dbHelper,
-                                           String tableName) {
+                                           String fromTableName, String toTableName) {
         Iterator<Integer> posIt = cursorAdapter.selectedItemsPositions.iterator();
         if (cursorAdapter.selectedItemsPositions.isEmpty()) {
             Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
@@ -147,7 +150,7 @@ public abstract class CategoryItem extends ActionBarActivity {
                         String.valueOf(idInt)
                 };
                 Cursor cursor = db.query(
-                        tableName,
+                        fromTableName,
                         projection,
                         VocabDbContract._ID + "=?",
                         selectionArg,
@@ -159,10 +162,10 @@ public abstract class CategoryItem extends ActionBarActivity {
                 String vocab = cursor.getString(cursor.getColumnIndex(VocabDbContract.COLUMN_NAME_VOCAB));
                 String definition = cursor.getString(cursor.getColumnIndex(VocabDbContract.COLUMN_NAME_DEFINITION));
                 Integer level = cursor.getInt(cursor.getColumnIndex(VocabDbContract.COLUMN_NAME_LEVEL));
-                dbHelper.insertVocab(VocabDbContract.TABLE_NAME_MY_VOCAB, vocab, definition, level);
+                dbHelper.insertVocab(toTableName, vocab, definition, level);
             }
             cursorAdapter.selectedItemsPositions.clear();
-            Cursor cursor = dbHelper.getCursor(tableName);
+            Cursor cursor = dbHelper.getCursor(fromTableName);
             cursorAdapter.changeCursor(cursor);
 
             Toast.makeText(this, "Added to My Vocab", Toast.LENGTH_SHORT).show();

@@ -68,7 +68,7 @@ public class MyVocab extends CategoryItem {
         }
         else if (id == R.id.label_my_vocab_button) {
             //addVocabToSelectedTable(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);
-            selectTableToAddVocabTo(mVocabAdapter, mDbHelper);
+            selectTableToAddVocabTo(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);
         }
         else if (id == R.id.select_all_my_vocab_button) {
             selectAll(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);

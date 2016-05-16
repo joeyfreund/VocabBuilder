@@ -69,7 +69,7 @@ public class GRE extends CategoryItem {
             deleteVocab(mDbHelper, VocabDbContract.TABLE_NAME_GRE, mVocabAdapter);
         }
         else if (id == R.id.label_gre_button) {
-            addVocabToSelectedTable(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_GRE);
+            selectTableToAddVocabTo(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_GRE);;
         }
         else if (id == R.id.select_all_gre_button) {
             selectAll(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_GRE);
