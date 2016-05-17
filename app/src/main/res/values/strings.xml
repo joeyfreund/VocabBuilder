@@ -42,6 +42,7 @@
     <string name="empty_text_view">Begin by adding vocab you want to learn! :)</string>
     <string name="label_vocab_button">Add Vocab To</string>
     <string name="select_all_button">Select All</string>
+    <string name="search_vocab">Search Vocab</string>
 
     <string-array name="table_array">
         <item>My Vocab</item>
