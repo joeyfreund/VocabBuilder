@@ -4,12 +4,16 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabCursorAdapter;
@@ -17,7 +21,7 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
 
-public class MyVocab extends CategoryItem {
+public class MyVocab extends CategoryItem implements SearchView.OnQueryTextListener{
 
     private VocabCursorAdapter mVocabAdapter;
     private ListView mVocabListView;
@@ -59,6 +63,11 @@ public class MyVocab extends CategoryItem {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_my_vocab, menu);
+
+        MenuItem search = menu.findItem(R.id.search_my_vocab_button);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
+        searchView.setOnQueryTextListener(this);
+
         return true;
     }
 
@@ -86,4 +95,15 @@ public class MyVocab extends CategoryItem {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        Log.i("Search", s);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        Log.i("Search", s);
+        return true;
+    }
 }
