@@ -1,5 +1,7 @@
 package charlesli.com.personalvocabbuilder.controller;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,6 +27,14 @@ public class MyVocab extends CategoryItem {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_vocab);
+
+        /* Search
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            //doMySearch(query);
+        }
+        */
 
         mVocabListView = (ListView) findViewById(R.id.mVocabList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);

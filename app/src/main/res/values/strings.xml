@@ -43,6 +43,7 @@
     <string name="label_vocab_button">Add Vocab To</string>
     <string name="select_all_button">Select All</string>
     <string name="search_vocab">Search Vocab</string>
+    <string name="search_button">Search Vocab</string>
 
     <string-array name="table_array">
         <item>My Vocab</item>
