@@ -1,6 +1,7 @@
 package charlesli.com.personalvocabbuilder.controller;
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -68,6 +69,21 @@ public class MyVocab extends CategoryItem implements SearchView.OnQueryTextListe
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
         searchView.setOnQueryTextListener(this);
 
+        // Detect when search bar collapses
+        searchView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View v) {
+
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View v) {
+                Log.i("In my vocab", "hello");
+                mVocabAdapter.changeCursor(mDbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_VOCAB));
+            }
+        });
+
+
         return true;
     }
 
@@ -98,6 +114,8 @@ public class MyVocab extends CategoryItem implements SearchView.OnQueryTextListe
     @Override
     public boolean onQueryTextSubmit(String s) {
         Log.i("Search", s);
+        Cursor cursor = mDbHelper.getCursorWithStringPattern(VocabDbContract.TABLE_NAME_MY_VOCAB, s);
+        mVocabAdapter.changeCursor(cursor);
         return true;
     }
 
