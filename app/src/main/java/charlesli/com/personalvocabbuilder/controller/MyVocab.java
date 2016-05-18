@@ -33,14 +33,6 @@ public class MyVocab extends CategoryItem implements SearchView.OnQueryTextListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_vocab);
 
-        /* Search
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            //doMySearch(query);
-        }
-        */
-
         mVocabListView = (ListView) findViewById(R.id.mVocabList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mVocabListView.setEmptyView(emptyTextView);
@@ -78,7 +70,6 @@ public class MyVocab extends CategoryItem implements SearchView.OnQueryTextListe
 
             @Override
             public void onViewDetachedFromWindow(View v) {
-                Log.i("In my vocab", "hello");
                 mVocabAdapter.changeCursor(mDbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_VOCAB));
             }
         });
@@ -113,7 +104,6 @@ public class MyVocab extends CategoryItem implements SearchView.OnQueryTextListe
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-        Log.i("Search", s);
         Cursor cursor = mDbHelper.getCursorWithStringPattern(VocabDbContract.TABLE_NAME_MY_VOCAB, s);
         mVocabAdapter.changeCursor(cursor);
         return true;
@@ -121,7 +111,6 @@ public class MyVocab extends CategoryItem implements SearchView.OnQueryTextListe
 
     @Override
     public boolean onQueryTextChange(String s) {
-        Log.i("Search", s);
-        return true;
+        return false;
     }
 }
