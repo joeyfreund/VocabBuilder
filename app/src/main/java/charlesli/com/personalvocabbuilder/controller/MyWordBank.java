@@ -48,6 +48,10 @@ public class MyWordBank extends CategoryItem {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_my_word_bank, menu);
+
+        implementSearchBar(menu, R.id.search_my_word_bank_button, VocabDbContract.TABLE_NAME_MY_WORD_BANK,
+                mVocabAdapter, mDbHelper);
+
         return true;
     }
 

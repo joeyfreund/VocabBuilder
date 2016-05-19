@@ -51,6 +51,10 @@ public class GRE extends CategoryItem {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_gre, menu);
+
+        implementSearchBar(menu, R.id.search_gre_button, VocabDbContract.TABLE_NAME_GRE,
+                mVocabAdapter, mDbHelper);
+
         return true;
     }
 

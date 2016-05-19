@@ -51,6 +51,10 @@ public class GMAT extends CategoryItem {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_gmat, menu);
+
+        implementSearchBar(menu, R.id.search_gmat_button, VocabDbContract.TABLE_NAME_GMAT,
+                mVocabAdapter, mDbHelper);
+
         return true;
     }
 
