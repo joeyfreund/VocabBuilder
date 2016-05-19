@@ -22,7 +22,7 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
 
-public class MyVocab extends CategoryItem implements SearchView.OnQueryTextListener{
+public class MyVocab extends CategoryItem{
 
     private VocabCursorAdapter mVocabAdapter;
     private ListView mVocabListView;
@@ -57,23 +57,8 @@ public class MyVocab extends CategoryItem implements SearchView.OnQueryTextListe
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_my_vocab, menu);
 
-        MenuItem search = menu.findItem(R.id.search_my_vocab_button);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
-        searchView.setOnQueryTextListener(this);
-
-        // Detect when search bar collapses
-        searchView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-            @Override
-            public void onViewAttachedToWindow(View v) {
-
-            }
-
-            @Override
-            public void onViewDetachedFromWindow(View v) {
-                mVocabAdapter.changeCursor(mDbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_VOCAB));
-            }
-        });
-
+        implementSearchBar(menu, R.id.search_my_vocab_button, VocabDbContract.TABLE_NAME_MY_VOCAB,
+                mVocabAdapter, mDbHelper);
 
         return true;
     }
@@ -100,19 +85,5 @@ public class MyVocab extends CategoryItem implements SearchView.OnQueryTextListe
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String s) {
-        Cursor cursor = mDbHelper.getCursorWithStringPattern(VocabDbContract.TABLE_NAME_MY_VOCAB, s);
-        mVocabAdapter.changeCursor(cursor);
-        return true;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String s) {
-        Cursor cursor = mDbHelper.getCursorWithStringPattern(VocabDbContract.TABLE_NAME_MY_VOCAB, s);
-        mVocabAdapter.changeCursor(cursor);
-        return true;
     }
 }

@@ -5,9 +5,13 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -305,6 +309,40 @@ public abstract class CategoryItem extends ActionBarActivity {
         });
 
         builder.show();
+    }
+
+    protected void implementSearchBar(Menu menu, int menuItemId, final String tableName,
+                                    final VocabCursorAdapter cursorAdapter, final VocabDbHelper dbHelper) {
+        MenuItem search = menu.findItem(menuItemId);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Cursor cursor = dbHelper.getCursorWithStringPattern(tableName, s);
+                cursorAdapter.changeCursor(cursor);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                Cursor cursor = dbHelper.getCursorWithStringPattern(tableName, s);
+                cursorAdapter.changeCursor(cursor);
+                return true;
+            }
+        });
+
+        // Detect when search bar collapses
+        searchView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View v) {
+
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View v) {
+                cursorAdapter.changeCursor(dbHelper.getCursor(tableName));
+            }
+        });
     }
 
 }
