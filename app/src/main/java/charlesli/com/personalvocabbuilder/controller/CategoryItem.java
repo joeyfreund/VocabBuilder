@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.text.InputType;
 import android.util.Log;
@@ -35,7 +36,7 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 /**
  * Created by charles on 2016-04-28.
  */
-public abstract class CategoryItem extends ActionBarActivity {
+public abstract class CategoryItem extends AppCompatActivity {
 
     protected void selectAll(VocabCursorAdapter cursorAdapter, VocabDbHelper dbHelper,
                              String tableName) {
