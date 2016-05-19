@@ -5,25 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".controller.MainActivity">
 
-    <ImageButton
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:id="@+id/myVocabButton"
-        android:src="@drawable/my_vocab_button"
-        android:contentDescription="@string/title_section2"
-        android:scaleType="fitXY"
-        android:layout_above="@+id/categories_button"
-        android:layout_centerHorizontal="true" />
-
-    <ImageButton
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:id="@+id/categories_button"
-        android:contentDescription="@string/title_section6"
-        android:src="@drawable/categories_button"
-        android:scaleType="fitXY"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/myVocabButton"
-        android:layout_alignStart="@+id/myVocabButton" />
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainListView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 
 </RelativeLayout>

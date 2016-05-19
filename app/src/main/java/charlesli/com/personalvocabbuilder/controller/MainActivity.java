@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -26,9 +27,6 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
 
 public class MainActivity extends ActionBarActivity {
-
-    private ImageButton mMyVocabButton;
-    private ImageButton mCategoriesButton;
 
     // Review Mode
     private final int WORDTODEF = 0;
@@ -43,22 +41,37 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mMyVocabButton = (ImageButton) findViewById(R.id.myVocabButton);
-        mCategoriesButton = (ImageButton) findViewById(R.id.categories_button);
+        ListView listView = (ListView) findViewById(R.id.mainListView);
 
-        mMyVocabButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MyVocab.class);
-                startActivity(intent);
-            }
-        });
+        String[] categories = {"My Vocab", "My Word Bank", "GMAT", "GRE"};
 
-        mCategoriesButton.setOnClickListener(new View.OnClickListener() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, categories);
+
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Categories.class);
-                startActivity(intent);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    Intent intent = new Intent(MainActivity.this, MyVocab.class);
+                    startActivity(intent);
+                }
+                else if (position == 1) {
+                    Intent intent = new Intent(MainActivity.this, MyWordBank.class);
+                    startActivity(intent);
+                }
+                else if (position == 2) {
+                    Intent intent = new Intent(MainActivity.this, GMAT.class);
+                    startActivity(intent);
+                }
+                else if (position == 3) {
+                    Intent intent = new Intent(MainActivity.this, GRE.class);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(MainActivity.this, "Coming soon...", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
