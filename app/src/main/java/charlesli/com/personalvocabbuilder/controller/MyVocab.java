@@ -111,6 +111,8 @@ public class MyVocab extends CategoryItem implements SearchView.OnQueryTextListe
 
     @Override
     public boolean onQueryTextChange(String s) {
-        return false;
+        Cursor cursor = mDbHelper.getCursorWithStringPattern(VocabDbContract.TABLE_NAME_MY_VOCAB, s);
+        mVocabAdapter.changeCursor(cursor);
+        return true;
     }
 }
