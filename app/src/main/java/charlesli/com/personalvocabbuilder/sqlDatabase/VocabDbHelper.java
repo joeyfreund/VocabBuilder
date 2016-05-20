@@ -117,12 +117,18 @@ public class VocabDbHelper extends SQLiteOpenHelper {
                     " ADD COLUMN " + VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT DEFAULT 'GMAT'");
             db.execSQL("ALTER TABLE " + VocabDbContract.TABLE_NAME_GRE +
                     " ADD COLUMN " + VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT DEFAULT 'GRE'");
+            // Combine all table data into My Vocab table
+            db.execSQL("INSERT INTO " + VocabDbContract.TABLE_NAME_MY_VOCAB +
+                    " (" + VocabDbContract.COLUMN_NAME_VOCAB +
+                    ", " + VocabDbContract.COLUMN_NAME_DEFINITION +
+                    ", " + VocabDbContract.COLUMN_NAME_LEVEL +
+                    ", " + VocabDbContract.COLUMN_NAME_CATEGORY + ") " +
+                    " SELECT " + VocabDbContract.COLUMN_NAME_VOCAB +
+                    ", " + VocabDbContract.COLUMN_NAME_DEFINITION +
+                    ", " + VocabDbContract.COLUMN_NAME_LEVEL +
+                    ", " + VocabDbContract.COLUMN_NAME_CATEGORY +
+                    " FROM " + VocabDbContract.TABLE_NAME_MY_WORD_BANK);
         }
-    }
-
-    @Override
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onUpgrade(db, oldVersion, newVersion);
     }
 
     public void insertVocab(String tableName, String vocab, String definition, int level) {
