@@ -22,6 +22,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
@@ -47,10 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.mainListView);
 
-        String[] categories = {"My Vocab", "My Word Bank", "GMAT", "GRE"};
+        List<String> categoriesList = new ArrayList<String>();
+        categoriesList.add("My Vocab");
+        categoriesList.add("My Word Bank");
+        categoriesList.add("GMAT");
+        categoriesList.add("GRE");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, categories);
+                android.R.layout.simple_list_item_1, categoriesList);
 
         listView.setAdapter(adapter);
 
