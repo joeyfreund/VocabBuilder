@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     private Integer reviewMode = WORDTODEF;
     private Integer reviewNumOfWords = 0;
 
+    // Only one activity, change displayed information based on list item clicked
+    // category will be the name of the list item
+    // all methods will be modified to have that list item.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
