@@ -1,13 +1,10 @@
 package charlesli.com.personalvocabbuilder.sqlDatabase;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import charlesli.com.personalvocabbuilder.R;
 
 /**
  * Created by Li on 2015/4/13.
@@ -118,7 +115,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         if (newVersion > oldVersion) {
             db.execSQL("ALTER TABLE " + VocabDbContract.TABLE_NAME_MY_VOCAB +
                     " ADD COLUMN " + VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT DEFAULT '" +
-                    VocabDbContract.CATEGORY_NAME_VOCAB + "'");
+                    VocabDbContract.CATEGORY_NAME_MY_VOCAB + "'");
             db.execSQL("ALTER TABLE " + VocabDbContract.TABLE_NAME_MY_WORD_BANK +
                     " ADD COLUMN " + VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT DEFAULT '" +
                     VocabDbContract.CATEGORY_NAME_MY_WORD_BANK + "'");

@@ -29,7 +29,7 @@ public class MyWordBank extends CategoryItem {
         mWordBankListView = (ListView) findViewById(R.id.mWordBankList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mWordBankListView.setEmptyView(emptyTextView);
-        Cursor cursor = mDbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_WORD_BANK);
+        Cursor cursor = mDbHelper.getCursor(VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
         mVocabAdapter = new VocabCursorAdapter(this, cursor, 0);
         mWordBankListView.setAdapter(mVocabAdapter);
         mWordBankListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -38,7 +38,7 @@ public class MyWordBank extends CategoryItem {
                 String selectedVocab = (String) ((TextView) view.findViewById(R.id.vocabName)).getText();
                 String selectedDefinition = (String) ((TextView) view.findViewById(R.id.vocabDefinition)).getText();
                 editVocabAlertDialog(selectedVocab, selectedDefinition, id, mDbHelper,
-                        VocabDbContract.TABLE_NAME_MY_WORD_BANK, mVocabAdapter);
+                        VocabDbContract.CATEGORY_NAME_MY_WORD_BANK, mVocabAdapter);
                 return true;
             }
         });
@@ -49,7 +49,7 @@ public class MyWordBank extends CategoryItem {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_my_word_bank, menu);
 
-        implementSearchBar(menu, R.id.search_my_word_bank_button, VocabDbContract.TABLE_NAME_MY_WORD_BANK,
+        implementSearchBar(menu, R.id.search_my_word_bank_button, VocabDbContract.CATEGORY_NAME_MY_WORD_BANK,
                 mVocabAdapter, mDbHelper);
 
         return true;
@@ -64,16 +64,16 @@ public class MyWordBank extends CategoryItem {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.add_vocab_my_word_bank_button) {
-            addVocabAlertDialog(mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK, mVocabAdapter);
+            addVocabAlertDialog(mDbHelper, VocabDbContract.CATEGORY_NAME_MY_WORD_BANK, mVocabAdapter);
         }
         else if (id == R.id.del_my_vocab_button) {
-            deleteVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK, mVocabAdapter);
+            deleteVocab(mDbHelper, VocabDbContract.CATEGORY_NAME_MY_WORD_BANK, mVocabAdapter);
         }
         else if (id == R.id.label_my_word_bank_button) {
-            selectTableToAddVocabTo(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK);
+            selectTableToAddVocabTo(mVocabAdapter, mDbHelper, VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
         }
         else if (id == R.id.select_all_my_word_bank_button) {
-            selectAll(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_MY_WORD_BANK);
+            selectAll(mVocabAdapter, mDbHelper, VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
         }
 
         return super.onOptionsItemSelected(item);

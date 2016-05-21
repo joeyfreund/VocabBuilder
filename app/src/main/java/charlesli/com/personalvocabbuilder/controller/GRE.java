@@ -31,7 +31,7 @@ public class GRE extends CategoryItem {
         mGREListView = (ListView) findViewById(R.id.mGREList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mGREListView.setEmptyView(emptyTextView);
-        Cursor mCursor = mDbHelper.getCursor(VocabDbContract.TABLE_NAME_GRE);
+        Cursor mCursor = mDbHelper.getCursor(VocabDbContract.CATEGORY_NAME_GRE);
         mVocabAdapter = new VocabCursorAdapter(this, mCursor, 0);
         mGREListView.setAdapter(mVocabAdapter);
         mGREListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -40,7 +40,7 @@ public class GRE extends CategoryItem {
                 String selectedVocab = (String) ((TextView) view.findViewById(R.id.vocabName)).getText();
                 String selectedDefinition = (String) ((TextView) view.findViewById(R.id.vocabDefinition)).getText();
                 editVocabAlertDialog(selectedVocab, selectedDefinition, id, mDbHelper,
-                        VocabDbContract.TABLE_NAME_GRE, mVocabAdapter);
+                        VocabDbContract.CATEGORY_NAME_GRE, mVocabAdapter);
                 return true;
             }
         });
@@ -52,7 +52,7 @@ public class GRE extends CategoryItem {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_gre, menu);
 
-        implementSearchBar(menu, R.id.search_gre_button, VocabDbContract.TABLE_NAME_GRE,
+        implementSearchBar(menu, R.id.search_gre_button, VocabDbContract.CATEGORY_NAME_GRE,
                 mVocabAdapter, mDbHelper);
 
         return true;
@@ -67,16 +67,16 @@ public class GRE extends CategoryItem {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.add_vocab_gre_button) {
-            addVocabAlertDialog(mDbHelper, VocabDbContract.TABLE_NAME_GRE, mVocabAdapter);
+            addVocabAlertDialog(mDbHelper, VocabDbContract.CATEGORY_NAME_GRE, mVocabAdapter);
         }
         else if (id == R.id.del_gre_button) {
-            deleteVocab(mDbHelper, VocabDbContract.TABLE_NAME_GRE, mVocabAdapter);
+            deleteVocab(mDbHelper, VocabDbContract.CATEGORY_NAME_GRE, mVocabAdapter);
         }
         else if (id == R.id.label_gre_button) {
-            selectTableToAddVocabTo(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_GRE);;
+            selectTableToAddVocabTo(mVocabAdapter, mDbHelper, VocabDbContract.CATEGORY_NAME_GRE);;
         }
         else if (id == R.id.select_all_gre_button) {
-            selectAll(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_GRE);
+            selectAll(mVocabAdapter, mDbHelper, VocabDbContract.CATEGORY_NAME_GRE);
         }
 
         return super.onOptionsItemSelected(item);

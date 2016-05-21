@@ -18,7 +18,7 @@ public final class VocabDbContract implements BaseColumns{
     public static final String COLUMN_NAME_LEVEL = "level";
     public static final String COLUMN_NAME_CATEGORY = "category";
     // category names
-    public static final String CATEGORY_NAME_VOCAB = "My Vocab";
+    public static final String CATEGORY_NAME_MY_VOCAB = "My Vocab";
     public static final String CATEGORY_NAME_MY_WORD_BANK = "My Word Bank";
     public static final String CATEGORY_NAME_GMAT = "GMAT";
     public static final String CATEGORY_NAME_GRE = "GRE";

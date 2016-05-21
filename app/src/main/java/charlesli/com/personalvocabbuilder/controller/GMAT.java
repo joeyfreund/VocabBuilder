@@ -31,7 +31,7 @@ public class GMAT extends CategoryItem {
         mGMATListView = (ListView) findViewById(R.id.mGMATList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mGMATListView.setEmptyView(emptyTextView);
-        Cursor mCursor = mDbHelper.getCursor(VocabDbContract.TABLE_NAME_GMAT);
+        Cursor mCursor = mDbHelper.getCursor(VocabDbContract.CATEGORY_NAME_GMAT);
         mVocabAdapter = new VocabCursorAdapter(this, mCursor, 0);
         mGMATListView.setAdapter(mVocabAdapter);
         mGMATListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -40,7 +40,7 @@ public class GMAT extends CategoryItem {
                 String selectedVocab = (String) ((TextView) view.findViewById(R.id.vocabName)).getText();
                 String selectedDefinition = (String) ((TextView) view.findViewById(R.id.vocabDefinition)).getText();
                 editVocabAlertDialog(selectedVocab, selectedDefinition, id, mDbHelper,
-                        VocabDbContract.TABLE_NAME_GMAT, mVocabAdapter);
+                        VocabDbContract.CATEGORY_NAME_GMAT, mVocabAdapter);
                 return true;
             }
         });
@@ -52,7 +52,7 @@ public class GMAT extends CategoryItem {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_gmat, menu);
 
-        implementSearchBar(menu, R.id.search_gmat_button, VocabDbContract.TABLE_NAME_GMAT,
+        implementSearchBar(menu, R.id.search_gmat_button, VocabDbContract.CATEGORY_NAME_GMAT,
                 mVocabAdapter, mDbHelper);
 
         return true;
@@ -67,16 +67,16 @@ public class GMAT extends CategoryItem {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.add_vocab_gmat_button) {
-            addVocabAlertDialog(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, mVocabAdapter);
+            addVocabAlertDialog(mDbHelper, VocabDbContract.CATEGORY_NAME_GMAT, mVocabAdapter);
         }
         else if (id == R.id.del_gmat_button) {
-            deleteVocab(mDbHelper, VocabDbContract.TABLE_NAME_GMAT, mVocabAdapter);
+            deleteVocab(mDbHelper, VocabDbContract.CATEGORY_NAME_GMAT, mVocabAdapter);
         }
         else if (id == R.id.label_gmat_button) {
-            selectTableToAddVocabTo(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_GMAT);
+            selectTableToAddVocabTo(mVocabAdapter, mDbHelper, VocabDbContract.CATEGORY_NAME_GMAT);
         }
         else if (id == R.id.select_all_gmat_button) {
-            selectAll(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_GMAT);
+            selectAll(mVocabAdapter, mDbHelper, VocabDbContract.CATEGORY_NAME_GMAT);
         }
 
         return super.onOptionsItemSelected(item);

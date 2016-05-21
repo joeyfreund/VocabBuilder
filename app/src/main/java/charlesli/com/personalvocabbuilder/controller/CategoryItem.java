@@ -6,26 +6,19 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import charlesli.com.personalvocabbuilder.R;
@@ -97,7 +90,7 @@ public abstract class CategoryItem extends AppCompatActivity {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     String table = (String) parent.getItemAtPosition(position);
                     if (table.equals("My Vocab")) {
-                        selectedCategory[0] = VocabDbContract.CATEGORY_NAME_VOCAB;
+                        selectedCategory[0] = VocabDbContract.CATEGORY_NAME_MY_VOCAB;
                     } else if (table.equals("My Word Bank")) {
                         selectedCategory[0] = VocabDbContract.CATEGORY_NAME_MY_WORD_BANK;
                     } else if (table.equals("GMAT")) {

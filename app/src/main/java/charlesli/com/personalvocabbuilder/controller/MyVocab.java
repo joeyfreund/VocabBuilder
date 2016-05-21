@@ -1,20 +1,13 @@
 package charlesli.com.personalvocabbuilder.controller;
 
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabCursorAdapter;
@@ -36,7 +29,7 @@ public class MyVocab extends CategoryItem{
         mVocabListView = (ListView) findViewById(R.id.mVocabList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mVocabListView.setEmptyView(emptyTextView);
-        Cursor cursor = mDbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_VOCAB);
+        Cursor cursor = mDbHelper.getCursor(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
         mVocabAdapter = new VocabCursorAdapter(this, cursor, 0);
         mVocabListView.setAdapter(mVocabAdapter);
         mVocabListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -45,7 +38,7 @@ public class MyVocab extends CategoryItem{
                 String selectedVocab = (String) ((TextView) view.findViewById(R.id.vocabName)).getText();
                 String selectedDefinition = (String) ((TextView) view.findViewById(R.id.vocabDefinition)).getText();
                 editVocabAlertDialog(selectedVocab, selectedDefinition, id, mDbHelper,
-                        VocabDbContract.TABLE_NAME_MY_VOCAB, mVocabAdapter);
+                        VocabDbContract.CATEGORY_NAME_MY_VOCAB, mVocabAdapter);
                 return true;
             }
         });
@@ -57,7 +50,7 @@ public class MyVocab extends CategoryItem{
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_my_vocab, menu);
 
-        implementSearchBar(menu, R.id.search_my_vocab_button, VocabDbContract.TABLE_NAME_MY_VOCAB,
+        implementSearchBar(menu, R.id.search_my_vocab_button, VocabDbContract.CATEGORY_NAME_MY_VOCAB,
                 mVocabAdapter, mDbHelper);
 
         return true;
@@ -72,16 +65,16 @@ public class MyVocab extends CategoryItem{
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.add_vocab_my_vocab_button) {
-            addVocabAlertDialog(mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB, mVocabAdapter);
+            addVocabAlertDialog(mDbHelper, VocabDbContract.CATEGORY_NAME_MY_VOCAB, mVocabAdapter);
         }
         else if (id == R.id.del_my_vocab_button) {
-            deleteVocab(mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB, mVocabAdapter);
+            deleteVocab(mDbHelper, VocabDbContract.CATEGORY_NAME_MY_VOCAB, mVocabAdapter);
         }
         else if (id == R.id.label_my_vocab_button) {
-            selectTableToAddVocabTo(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);
+            selectTableToAddVocabTo(mVocabAdapter, mDbHelper, VocabDbContract.CATEGORY_NAME_MY_VOCAB);
         }
         else if (id == R.id.select_all_my_vocab_button) {
-            selectAll(mVocabAdapter, mDbHelper, VocabDbContract.TABLE_NAME_MY_VOCAB);
+            selectAll(mVocabAdapter, mDbHelper, VocabDbContract.CATEGORY_NAME_MY_VOCAB);
         }
 
         return super.onOptionsItemSelected(item);
