@@ -108,7 +108,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (newVersion > oldVersion && oldVersion == 3) {
+        if (newVersion > oldVersion) {
             db.execSQL("ALTER TABLE " + VocabDbContract.TABLE_NAME_MY_VOCAB +
                     " ADD COLUMN " + VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT DEFAULT 'My Vocab'");
             db.execSQL("ALTER TABLE " + VocabDbContract.TABLE_NAME_MY_WORD_BANK +
@@ -128,6 +128,30 @@ public class VocabDbHelper extends SQLiteOpenHelper {
                     ", " + VocabDbContract.COLUMN_NAME_LEVEL +
                     ", " + VocabDbContract.COLUMN_NAME_CATEGORY +
                     " FROM " + VocabDbContract.TABLE_NAME_MY_WORD_BANK);
+            db.execSQL("INSERT INTO " + VocabDbContract.TABLE_NAME_MY_VOCAB +
+                    " (" + VocabDbContract.COLUMN_NAME_VOCAB +
+                    ", " + VocabDbContract.COLUMN_NAME_DEFINITION +
+                    ", " + VocabDbContract.COLUMN_NAME_LEVEL +
+                    ", " + VocabDbContract.COLUMN_NAME_CATEGORY + ") " +
+                    " SELECT " + VocabDbContract.COLUMN_NAME_VOCAB +
+                    ", " + VocabDbContract.COLUMN_NAME_DEFINITION +
+                    ", " + VocabDbContract.COLUMN_NAME_LEVEL +
+                    ", " + VocabDbContract.COLUMN_NAME_CATEGORY +
+                    " FROM " + VocabDbContract.TABLE_NAME_GMAT);
+            db.execSQL("INSERT INTO " + VocabDbContract.TABLE_NAME_MY_VOCAB +
+                    " (" + VocabDbContract.COLUMN_NAME_VOCAB +
+                    ", " + VocabDbContract.COLUMN_NAME_DEFINITION +
+                    ", " + VocabDbContract.COLUMN_NAME_LEVEL +
+                    ", " + VocabDbContract.COLUMN_NAME_CATEGORY + ") " +
+                    " SELECT " + VocabDbContract.COLUMN_NAME_VOCAB +
+                    ", " + VocabDbContract.COLUMN_NAME_DEFINITION +
+                    ", " + VocabDbContract.COLUMN_NAME_LEVEL +
+                    ", " + VocabDbContract.COLUMN_NAME_CATEGORY +
+                    " FROM " + VocabDbContract.TABLE_NAME_GRE);
+            // Delete unnecessary tables
+            db.execSQL(DELETE_TABLE_MY_WORD_BANK);
+            db.execSQL(DELETE_TABLE_GMAT);
+            db.execSQL(DELETE_TABLE_GRE);
         }
     }
 
