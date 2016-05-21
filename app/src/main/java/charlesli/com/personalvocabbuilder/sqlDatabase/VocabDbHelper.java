@@ -31,29 +31,32 @@ public class VocabDbHelper extends SQLiteOpenHelper {
                     VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT );";
 
     // Table for My Word Bank
+    /*
     private String CREATE_TABLE_MY_WORD_BANK =
             "CREATE TABLE  " + VocabDbContract.TABLE_NAME_MY_WORD_BANK +
             " (" + VocabDbContract._ID + " INTEGER PRIMARY KEY," +
             VocabDbContract.COLUMN_NAME_VOCAB + " TEXT, " +
             VocabDbContract.COLUMN_NAME_DEFINITION + " TEXT, " +
             VocabDbContract.COLUMN_NAME_LEVEL + " INTEGER );";
-
+    */
     // Table for GMAT
+    /*
     private String CREATE_TABLE_GMAT =
             "CREATE TABLE  " + VocabDbContract.TABLE_NAME_GMAT +
                     " (" + VocabDbContract._ID + " INTEGER PRIMARY KEY," +
                     VocabDbContract.COLUMN_NAME_VOCAB + " TEXT, " +
                     VocabDbContract.COLUMN_NAME_DEFINITION + " TEXT, " +
                     VocabDbContract.COLUMN_NAME_LEVEL + " INTEGER );";
-
+    */
     // Table for GRE
+    /*
     private String CREATE_TABLE_GRE =
             "CREATE TABLE  " + VocabDbContract.TABLE_NAME_GRE +
                     " (" + VocabDbContract._ID + " INTEGER PRIMARY KEY," +
                     VocabDbContract.COLUMN_NAME_VOCAB + " TEXT, " +
                     VocabDbContract.COLUMN_NAME_DEFINITION + " TEXT, " +
                     VocabDbContract.COLUMN_NAME_LEVEL + " INTEGER );";
-
+    */
 
 
     private static final String DELETE_TABLE_MY_VOCAB =
@@ -84,39 +87,47 @@ public class VocabDbHelper extends SQLiteOpenHelper {
 
         // Creating required tables
         db.execSQL(CREATE_TABLE_MY_VOCAB);
+        /*
         db.execSQL(CREATE_TABLE_MY_WORD_BANK);
         db.execSQL(CREATE_TABLE_GMAT);
         db.execSQL(CREATE_TABLE_GRE);
-
-        loadDefaultTable(db, VocabDbContract.TABLE_NAME_GMAT, DefaultVocab.vocabGMAT, DefaultVocab.definitionGMAT);
-        loadDefaultTable(db, VocabDbContract.TABLE_NAME_GRE, DefaultVocab.vocabGRE, DefaultVocab.definitionGRE);
+        */
+        loadDefaultTable(db, VocabDbContract.CATEGORY_NAME_GMAT, DefaultVocab.vocabGMAT, DefaultVocab.definitionGMAT);
+        loadDefaultTable(db, VocabDbContract.CATEGORY_NAME_GRE, DefaultVocab.vocabGRE, DefaultVocab.definitionGRE);
     }
 
-    private void loadDefaultTable(SQLiteDatabase db, String table, String[] word, String[] definition) {
+    private void loadDefaultTable(SQLiteDatabase db, String category, String[] word, String[] definition) {
         for (int i = 0; i < word.length; i++) {
-            loadDefaultValue(db, table, word[i], definition[i]);
+            loadDefaultValue(db, category, word[i], definition[i]);
         }
     }
 
-    private void loadDefaultValue(SQLiteDatabase db, String table, String word, String definition) {
+    private void loadDefaultValue(SQLiteDatabase db, String category, String word, String definition) {
         ContentValues cv = new ContentValues();
         cv.put(VocabDbContract.COLUMN_NAME_VOCAB, word);
         cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, definition);
         cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        db.insert(table, null, cv);
+        // NEW ADDITION
+        cv.put(VocabDbContract.COLUMN_NAME_CATEGORY, category);
+        // NEW ADDITION
+        db.insert(VocabDbContract.TABLE_NAME_MY_VOCAB, null, cv);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (newVersion > oldVersion) {
             db.execSQL("ALTER TABLE " + VocabDbContract.TABLE_NAME_MY_VOCAB +
-                    " ADD COLUMN " + VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT DEFAULT 'My Vocab'");
+                    " ADD COLUMN " + VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT DEFAULT '" +
+                    VocabDbContract.CATEGORY_NAME_VOCAB + "'");
             db.execSQL("ALTER TABLE " + VocabDbContract.TABLE_NAME_MY_WORD_BANK +
-                    " ADD COLUMN " + VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT DEFAULT 'My Word Bank'");
+                    " ADD COLUMN " + VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT DEFAULT '" +
+                    VocabDbContract.CATEGORY_NAME_MY_WORD_BANK + "'");
             db.execSQL("ALTER TABLE " + VocabDbContract.TABLE_NAME_GMAT +
-                    " ADD COLUMN " + VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT DEFAULT 'GMAT'");
+                    " ADD COLUMN " + VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT DEFAULT '" +
+                    VocabDbContract.CATEGORY_NAME_GMAT + "'");
             db.execSQL("ALTER TABLE " + VocabDbContract.TABLE_NAME_GRE +
-                    " ADD COLUMN " + VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT DEFAULT 'GRE'");
+                    " ADD COLUMN " + VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT DEFAULT '" +
+                    VocabDbContract.CATEGORY_NAME_GRE + "'");
             // Combine all table data into My Vocab table
             db.execSQL("INSERT INTO " + VocabDbContract.TABLE_NAME_MY_VOCAB +
                     " (" + VocabDbContract.COLUMN_NAME_VOCAB +
@@ -155,23 +166,20 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void insertVocab(String tableName, String vocab, String definition, int level) {
-        // Gets the data repository in write mode
+    public void insertVocab(String category, String vocab, String definition, int level) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // Create a new vap of values, where column names are the keys
         ContentValues values = new ContentValues();
         values.put(VocabDbContract.COLUMN_NAME_VOCAB, vocab);
         values.put(VocabDbContract.COLUMN_NAME_DEFINITION, definition);
         values.put(VocabDbContract.COLUMN_NAME_LEVEL, level);
+        values.put(VocabDbContract.COLUMN_NAME_CATEGORY, category);
 
-        // Insert the new row, returning the primary key value of the new row
-        long newRowId;
-        newRowId = db.insert(tableName, null, values);
+        db.insert(VocabDbContract.TABLE_NAME_MY_VOCAB, null, values);
     }
 
 
-    public Cursor getCursor(String tableName) {
+    public Cursor getCursor(String category) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Define a projection that specifies which columns from the database
@@ -183,10 +191,12 @@ public class VocabDbHelper extends SQLiteOpenHelper {
             VocabDbContract.COLUMN_NAME_LEVEL
         };
 
+        String selection = VocabDbContract.COLUMN_NAME_CATEGORY + " LIKE " + "'" + category + "'";
+
         Cursor cursor = db.query(
-                tableName, // The table to query
+                VocabDbContract.TABLE_NAME_MY_VOCAB, // The table to query
                 projection,                                 // The columns for the WHERE clause
-                null,                                        // The rows to return for the WHERE clause
+                selection,                                   // The rows to return for the WHERE clause
                 null,                                        // selectionArgs
                 null,                                        // groupBy
                 null,                                        // having
@@ -196,7 +206,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Cursor getCursorWithStringPattern(String tableName, String pattern) {
+    public Cursor getCursorWithStringPattern(String category, String pattern) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Define a projection that specifies which columns from the database
@@ -208,10 +218,11 @@ public class VocabDbHelper extends SQLiteOpenHelper {
                 VocabDbContract.COLUMN_NAME_LEVEL
         };
 
-        String selection = VocabDbContract.COLUMN_NAME_VOCAB + " LIKE " + "'%" + pattern + "%'";
+        String selection = VocabDbContract.COLUMN_NAME_CATEGORY + " LIKE " + "'" + category + "'" +
+                " AND " + VocabDbContract.COLUMN_NAME_VOCAB + " LIKE " + "'%" + pattern + "%'";
 
         Cursor cursor = db.query(
-                tableName, // The table to query
+                VocabDbContract.TABLE_NAME_MY_VOCAB, // The table to query
                 projection,                                 // The columns for the WHERE clause
                 selection,                                   // The rows to return for the WHERE clause
                 null,                                        // selectionArgs
