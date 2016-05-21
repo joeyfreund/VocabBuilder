@@ -5,8 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
@@ -35,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     // Review Mode
     private final int WORDTODEF = 0;
     private final int DEFTOWORD = 1;
-    private String reviewTable = VocabDbContract.TABLE_NAME_MY_VOCAB;
+    private String reviewCategory = VocabDbContract.CATEGORY_NAME_MY_VOCAB;
     private Integer reviewMode = WORDTODEF;
     private Integer reviewNumOfWords = 0;
 
@@ -51,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.mainListView);
 
         List<String> categoriesList = new ArrayList<String>();
-        categoriesList.add("My Vocab");
-        categoriesList.add("My Word Bank");
-        categoriesList.add("GMAT");
-        categoriesList.add("GRE");
+        categoriesList.add(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
+        categoriesList.add(VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
+        categoriesList.add(VocabDbContract.CATEGORY_NAME_GMAT);
+        categoriesList.add(VocabDbContract.CATEGORY_NAME_GRE);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, categoriesList);
@@ -108,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle("Review Vocab");
 
         VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-        Cursor cursor = dbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_VOCAB);
+        Cursor cursor = dbHelper.getCursor(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
         final Integer maxRow = cursor.getCount();
         reviewNumOfWords = maxRow;
 
@@ -135,36 +132,36 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String table = (String) parent.getItemAtPosition(position);
                 if (table.equals("My Vocab")) {
-                    reviewTable = VocabDbContract.TABLE_NAME_MY_VOCAB;
+                    reviewCategory = VocabDbContract.CATEGORY_NAME_MY_VOCAB;
                     VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-                    Cursor cursor = dbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_VOCAB);
+                    Cursor cursor = dbHelper.getCursor(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
                     Integer maxRow = cursor.getCount();
                     numText.setText(String.valueOf(maxRow));
                     seekBar.setMax(maxRow);
                     seekBar.setProgress(maxRow);
                 }
                 else if (table.equals("My Word Bank")) {
-                    reviewTable = VocabDbContract.TABLE_NAME_MY_WORD_BANK;
+                    reviewCategory = VocabDbContract.CATEGORY_NAME_MY_WORD_BANK;
                     VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-                    Cursor cursor = dbHelper.getCursor(VocabDbContract.TABLE_NAME_MY_WORD_BANK);
+                    Cursor cursor = dbHelper.getCursor(VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
                     Integer maxRow = cursor.getCount();
                     numText.setText(String.valueOf(maxRow));
                     seekBar.setMax(maxRow);
                     seekBar.setProgress(maxRow);
                 }
                 else if (table.equals("GMAT")) {
-                    reviewTable = VocabDbContract.TABLE_NAME_GMAT;
+                    reviewCategory = VocabDbContract.CATEGORY_NAME_GMAT;
                     VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-                    Cursor cursor = dbHelper.getCursor(VocabDbContract.TABLE_NAME_GMAT);
+                    Cursor cursor = dbHelper.getCursor(VocabDbContract.CATEGORY_NAME_GRE);
                     Integer maxRow = cursor.getCount();
                     numText.setText(String.valueOf(maxRow));
                     seekBar.setMax(maxRow);
                     seekBar.setProgress(maxRow);
                 }
                 else if (table.equals("GRE")) {
-                    reviewTable = VocabDbContract.TABLE_NAME_GRE;
+                    reviewCategory = VocabDbContract.CATEGORY_NAME_GRE;
                     VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-                    Cursor cursor = dbHelper.getCursor(VocabDbContract.TABLE_NAME_GRE);
+                    Cursor cursor = dbHelper.getCursor(VocabDbContract.CATEGORY_NAME_GRE);
                     Integer maxRow = cursor.getCount();
                     numText.setText(String.valueOf(maxRow));
                     seekBar.setMax(maxRow);
@@ -230,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(MainActivity.this, Review.class);
                     intent.putExtra("Mode", reviewMode);
-                    intent.putExtra("Table", reviewTable);
+                    intent.putExtra("Table", reviewCategory);
                     intent.putExtra("NumOfWords", reviewNumOfWords);
                     startActivity(intent);
                 }
