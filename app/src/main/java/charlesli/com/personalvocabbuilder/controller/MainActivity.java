@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
@@ -36,9 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private Integer reviewMode = WORDTODEF;
     private Integer reviewNumOfWords = 0;
 
-    // Only one activity, change displayed information based on list item clicked
-    // category will be the name of the list item
-    // all methods will be modified to have that list item.
+    private List<String> categoriesList = new ArrayList<String>();
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +49,12 @@ public class MainActivity extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.mainListView);
 
-        List<String> categoriesList = new ArrayList<String>();
         categoriesList.add(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
         categoriesList.add(VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
         categoriesList.add(VocabDbContract.CATEGORY_NAME_GMAT);
         categoriesList.add(VocabDbContract.CATEGORY_NAME_GRE);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, categoriesList);
 
         listView.setAdapter(adapter);
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
-                    Toast.makeText(MainActivity.this, "Coming soon...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -97,7 +98,43 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.review_button) {
             createReviewDialog();
         }
+        if (id == R.id.add_category_button) {
+            createAddCategoryDialog();
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void createAddCategoryDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Add Category");
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText categoryInput = new EditText(this);
+        categoryInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+        categoryInput.setHint("Category name");
+        layout.addView(categoryInput);
+
+        builder.setView(layout);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String category = categoryInput.getText().toString();
+                categoriesList.add(category);
+                adapter.notifyDataSetChanged();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
     private void createReviewDialog() {
