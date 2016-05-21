@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(MainActivity.this, Review.class);
                     intent.putExtra("Mode", reviewMode);
-                    intent.putExtra("Table", reviewCategory);
+                    intent.putExtra("Category", reviewCategory);
                     intent.putExtra("NumOfWords", reviewNumOfWords);
                     startActivity(intent);
                 }

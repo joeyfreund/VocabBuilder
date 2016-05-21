@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +21,7 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 public class Review extends AppCompatActivity {
 
     private int mReviewMode;
-    private String mReviewTable;
+    private String mReviewCategory;
     private int mReviewNumOfWords;
 
     private TextView mTopTextView;
@@ -52,7 +51,7 @@ public class Review extends AppCompatActivity {
         Intent intent = getIntent();
         // default value, 0, indicates Word -> Definition review option
         mReviewMode = intent.getIntExtra("Mode", 0);
-        mReviewTable = intent.getStringExtra("Table");
+        mReviewCategory = intent.getStringExtra("Category");
         mReviewNumOfWords = intent.getIntExtra("NumOfWords", 0);
 
 
@@ -65,7 +64,7 @@ public class Review extends AppCompatActivity {
         mPerLvlButton = (Button) findViewById(R.id.lvl_perfect_button);
         mAgaLvlButton = (Button) findViewById(R.id.lvl_again_button);
 
-        mCursor = mDbHelper.getCursor(mReviewTable);
+        mCursor = mDbHelper.getCursor(mReviewCategory);
 
         loadVocabInRandomOrder();
     }
@@ -87,8 +86,6 @@ public class Review extends AppCompatActivity {
         String word = mCursor.getString(mCursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_VOCAB));
         // Get Definition from Desired Random Row
         String definition = mCursor.getString(mCursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_DEFINITION));
-        // Get row ID from Desired Random Row
-        final int rowId = mCursor.getInt(mCursor.getColumnIndexOrThrow(VocabDbContract._ID));
 
         // if 0 (word - > definition): ********
         if (mReviewMode == 0) {
@@ -132,28 +129,28 @@ public class Review extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         mTracker.add(finalRandomNum);
-                        selectRLevel(rowId, DIFFICULT);
+                        selectRLevel(DIFFICULT);
                     }
                 });
                 mFamLvlButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mTracker.add(finalRandomNum);
-                        selectRLevel(rowId, FAMILIAR);
+                        selectRLevel(FAMILIAR);
                     }
                 });
                 mEasLvlButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mTracker.add(finalRandomNum);
-                        selectRLevel(rowId, EASY);
+                        selectRLevel(EASY);
                     }
                 });
                 mPerLvlButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mTracker.add(finalRandomNum);
-                        selectRLevel(rowId, PERFECT);
+                        selectRLevel(PERFECT);
                     }
                 });
                 mAgaLvlButton.setOnClickListener(new View.OnClickListener() {
@@ -167,7 +164,7 @@ public class Review extends AppCompatActivity {
 
     }
 
-    private void selectRLevel(int rowId, int level) {
+    private void selectRLevel(int level) {
         // Update level information of the word to the SQLite database ****
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
@@ -176,23 +173,14 @@ public class Review extends AppCompatActivity {
         values.put(VocabDbContract.COLUMN_NAME_LEVEL, level);
 
         // Which row to update, based on the ID
-        String selection = VocabDbContract._ID + " LIKE ?";
-        String[] selectionArgs = {String.valueOf(rowId)};
-
-        int countMyVocab = db.update(
-                mReviewTable,
-                values,
-                selection,
-                selectionArgs
-        );
-
-        // Which row to update, based on the ID
-        String selectionWordBank = VocabDbContract.COLUMN_NAME_VOCAB + " LIKE ?";
+        String selectionWordBank = VocabDbContract.COLUMN_NAME_VOCAB + " = ? AND " +
+                VocabDbContract.COLUMN_NAME_DEFINITION + " = ?";
         String word = mCursor.getString(mCursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_VOCAB));
-        String[] selectionArgsWordBank = {word};
+        String definition = mCursor.getString(mCursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_DEFINITION));
+        String[] selectionArgsWordBank = {word, definition};
 
-        int countMyWordBank = db.update(
-                VocabDbContract.TABLE_NAME_MY_WORD_BANK,
+        db.update(
+                VocabDbContract.TABLE_NAME_MY_VOCAB,
                 values,
                 selectionWordBank,
                 selectionArgsWordBank
