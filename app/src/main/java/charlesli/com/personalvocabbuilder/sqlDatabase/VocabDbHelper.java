@@ -14,7 +14,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
     private static VocabDbHelper dbInstance;
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 4; // previously 3
+    public static final int DATABASE_VERSION = 5; // previously 3
     public static final String DATABASE_NAME = "VocabDatabase.db";
 
 
@@ -27,33 +27,12 @@ public class VocabDbHelper extends SQLiteOpenHelper {
             VocabDbContract.COLUMN_NAME_LEVEL + " INTEGER, " +
                     VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT );";
 
-    // Table for My Word Bank
-    /*
-    private String CREATE_TABLE_MY_WORD_BANK =
-            "CREATE TABLE  " + VocabDbContract.TABLE_NAME_MY_WORD_BANK +
-            " (" + VocabDbContract._ID + " INTEGER PRIMARY KEY," +
-            VocabDbContract.COLUMN_NAME_VOCAB + " TEXT, " +
-            VocabDbContract.COLUMN_NAME_DEFINITION + " TEXT, " +
-            VocabDbContract.COLUMN_NAME_LEVEL + " INTEGER );";
-    */
-    // Table for GMAT
-    /*
-    private String CREATE_TABLE_GMAT =
-            "CREATE TABLE  " + VocabDbContract.TABLE_NAME_GMAT +
+    // Table for Category
+    private String CREATE_TABLE_CATEGORY =
+            "CREATE TABLE  " + VocabDbContract.TABLE_NAME_CATEGORY +
                     " (" + VocabDbContract._ID + " INTEGER PRIMARY KEY," +
-                    VocabDbContract.COLUMN_NAME_VOCAB + " TEXT, " +
-                    VocabDbContract.COLUMN_NAME_DEFINITION + " TEXT, " +
-                    VocabDbContract.COLUMN_NAME_LEVEL + " INTEGER );";
-    */
-    // Table for GRE
-    /*
-    private String CREATE_TABLE_GRE =
-            "CREATE TABLE  " + VocabDbContract.TABLE_NAME_GRE +
-                    " (" + VocabDbContract._ID + " INTEGER PRIMARY KEY," +
-                    VocabDbContract.COLUMN_NAME_VOCAB + " TEXT, " +
-                    VocabDbContract.COLUMN_NAME_DEFINITION + " TEXT, " +
-                    VocabDbContract.COLUMN_NAME_LEVEL + " INTEGER );";
-    */
+                    VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT );";
+
 
 
     private static final String DELETE_TABLE_MY_VOCAB =
@@ -67,6 +46,9 @@ public class VocabDbHelper extends SQLiteOpenHelper {
 
     private static final String DELETE_TABLE_GRE =
             "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_GRE;
+
+    private static final String DELETE_TABLE_CATEGORY =
+            "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_CATEGORY;
 
     private VocabDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -84,35 +66,46 @@ public class VocabDbHelper extends SQLiteOpenHelper {
 
         // Creating required tables
         db.execSQL(CREATE_TABLE_MY_VOCAB);
-        /*
-        db.execSQL(CREATE_TABLE_MY_WORD_BANK);
-        db.execSQL(CREATE_TABLE_GMAT);
-        db.execSQL(CREATE_TABLE_GRE);
-        */
-        loadDefaultTable(db, VocabDbContract.CATEGORY_NAME_GMAT, DefaultVocab.vocabGMAT, DefaultVocab.definitionGMAT);
-        loadDefaultTable(db, VocabDbContract.CATEGORY_NAME_GRE, DefaultVocab.vocabGRE, DefaultVocab.definitionGRE);
+        db.execSQL(CREATE_TABLE_CATEGORY);
+
+        loadDefaultVocabTable(db, VocabDbContract.CATEGORY_NAME_GMAT, DefaultVocab.vocabGMAT, DefaultVocab.definitionGMAT);
+        loadDefaultVocabTable(db, VocabDbContract.CATEGORY_NAME_GRE, DefaultVocab.vocabGRE, DefaultVocab.definitionGRE);
+        loadDefaultCategoryTable(db);
     }
 
-    private void loadDefaultTable(SQLiteDatabase db, String category, String[] word, String[] definition) {
+    private void loadDefaultVocabTable(SQLiteDatabase db, String category, String[] word, String[] definition) {
         for (int i = 0; i < word.length; i++) {
-            loadDefaultValue(db, category, word[i], definition[i]);
+            loadDefaultVocabValue(db, category, word[i], definition[i]);
         }
     }
 
-    private void loadDefaultValue(SQLiteDatabase db, String category, String word, String definition) {
+    private void loadDefaultVocabValue(SQLiteDatabase db, String category, String word, String definition) {
         ContentValues cv = new ContentValues();
         cv.put(VocabDbContract.COLUMN_NAME_VOCAB, word);
         cv.put(VocabDbContract.COLUMN_NAME_DEFINITION, definition);
         cv.put(VocabDbContract.COLUMN_NAME_LEVEL, 0);
-        // NEW ADDITION
+        cv.put(VocabDbContract.COLUMN_NAME_CATEGORY, category);
+
+        db.insert(VocabDbContract.TABLE_NAME_MY_VOCAB, null, cv);
+    }
+
+    private void loadDefaultCategoryTable(SQLiteDatabase db) {
+        loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_MY_VOCAB);
+        loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
+        loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_GMAT);
+        loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_GRE);
+    }
+
+    private void loadDefaultCategoryValue(SQLiteDatabase db, String category) {
+        ContentValues cv = new ContentValues();
         cv.put(VocabDbContract.COLUMN_NAME_CATEGORY, category);
         // NEW ADDITION
-        db.insert(VocabDbContract.TABLE_NAME_MY_VOCAB, null, cv);
+        db.insert(VocabDbContract.TABLE_NAME_CATEGORY, null, cv);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (newVersion > oldVersion) {
+        if (oldVersion == 3) {
             db.execSQL("ALTER TABLE " + VocabDbContract.TABLE_NAME_MY_VOCAB +
                     " ADD COLUMN " + VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT DEFAULT '" +
                     VocabDbContract.CATEGORY_NAME_MY_VOCAB + "'");
