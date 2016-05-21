@@ -31,7 +31,7 @@ public class GRE extends CategoryItem {
         mGREListView = (ListView) findViewById(R.id.mGREList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mGREListView.setEmptyView(emptyTextView);
-        Cursor mCursor = mDbHelper.getCursor(VocabDbContract.CATEGORY_NAME_GRE);
+        Cursor mCursor = mDbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_GRE);
         mVocabAdapter = new VocabCursorAdapter(this, mCursor, 0);
         mGREListView.setAdapter(mVocabAdapter);
         mGREListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

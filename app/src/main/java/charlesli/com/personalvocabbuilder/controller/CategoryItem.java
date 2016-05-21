@@ -33,7 +33,7 @@ public abstract class CategoryItem extends AppCompatActivity {
 
     protected void selectAll(VocabCursorAdapter cursorAdapter, VocabDbHelper dbHelper,
                              String category) {
-        Cursor cursor = dbHelper.getCursor(category);
+        Cursor cursor = dbHelper.getVocabCursor(category);
         int numOfRows = cursor.getCount();
         for (int i = 0; i < numOfRows; i++) {
             cursorAdapter.selectedItemsPositions.add(i);
@@ -58,7 +58,7 @@ public abstract class CategoryItem extends AppCompatActivity {
                 // Issue SQL statement
                 db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
             }
-            Cursor cursor = dbHelper.getCursor(category);
+            Cursor cursor = dbHelper.getVocabCursor(category);
             cursorAdapter.changeCursor(cursor);
 
             cursorAdapter.selectedItemsPositions.clear();
@@ -163,7 +163,7 @@ public abstract class CategoryItem extends AppCompatActivity {
                 dbHelper.insertVocab(toCategory, vocab, definition, level);
             }
             cursorAdapter.selectedItemsPositions.clear();
-            Cursor cursor = dbHelper.getCursor(fromCategory);
+            Cursor cursor = dbHelper.getVocabCursor(fromCategory);
             cursorAdapter.changeCursor(cursor);
 
             Toast.makeText(this, "Vocab added successfully", Toast.LENGTH_SHORT).show();
@@ -201,7 +201,7 @@ public abstract class CategoryItem extends AppCompatActivity {
                     dbHelper.insertVocab(VocabDbContract.CATEGORY_NAME_MY_WORD_BANK, vocab, definition, 0);
                 }
                 // Update Cursor
-                Cursor cursor = dbHelper.getCursor(category);
+                Cursor cursor = dbHelper.getVocabCursor(category);
                 cursorAdapter.changeCursor(cursor);
             }
         });
@@ -284,7 +284,7 @@ public abstract class CategoryItem extends AppCompatActivity {
                 */
 
                 // Update Cursor
-                cursorAdapter.changeCursor(dbHelper.getCursor(category));
+                cursorAdapter.changeCursor(dbHelper.getVocabCursor(category));
             }
         });
         builder.setNegativeButton("Delete Vocab", new DialogInterface.OnClickListener() {
@@ -300,7 +300,7 @@ public abstract class CategoryItem extends AppCompatActivity {
                 db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
 
                 // Update Cursor
-                cursorAdapter.changeCursor(dbHelper.getCursor(category));
+                cursorAdapter.changeCursor(dbHelper.getVocabCursor(category));
             }
         });
 
@@ -314,14 +314,14 @@ public abstract class CategoryItem extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Cursor cursor = dbHelper.getCursorWithStringPattern(category, s);
+                Cursor cursor = dbHelper.getVocabCursorWithStringPattern(category, s);
                 cursorAdapter.changeCursor(cursor);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                Cursor cursor = dbHelper.getCursorWithStringPattern(category, s);
+                Cursor cursor = dbHelper.getVocabCursorWithStringPattern(category, s);
                 cursorAdapter.changeCursor(cursor);
                 return true;
             }
@@ -336,7 +336,7 @@ public abstract class CategoryItem extends AppCompatActivity {
 
             @Override
             public void onViewDetachedFromWindow(View v) {
-                cursorAdapter.changeCursor(dbHelper.getCursor(category));
+                cursorAdapter.changeCursor(dbHelper.getVocabCursor(category));
             }
         });
     }

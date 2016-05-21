@@ -29,7 +29,7 @@ public class MyVocab extends CategoryItem{
         mVocabListView = (ListView) findViewById(R.id.mVocabList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mVocabListView.setEmptyView(emptyTextView);
-        Cursor cursor = mDbHelper.getCursor(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
+        Cursor cursor = mDbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
         mVocabAdapter = new VocabCursorAdapter(this, cursor, 0);
         mVocabListView.setAdapter(mVocabAdapter);
         mVocabListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

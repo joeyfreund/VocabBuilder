@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle("Review Vocab");
 
         VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-        Cursor cursor = dbHelper.getCursor(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
+        Cursor cursor = dbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
         final Integer maxRow = cursor.getCount();
         reviewNumOfWords = maxRow;
 
@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 if (table.equals("My Vocab")) {
                     reviewCategory = VocabDbContract.CATEGORY_NAME_MY_VOCAB;
                     VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-                    Cursor cursor = dbHelper.getCursor(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
+                    Cursor cursor = dbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
                     Integer maxRow = cursor.getCount();
                     numText.setText(String.valueOf(maxRow));
                     seekBar.setMax(maxRow);
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 else if (table.equals("My Word Bank")) {
                     reviewCategory = VocabDbContract.CATEGORY_NAME_MY_WORD_BANK;
                     VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-                    Cursor cursor = dbHelper.getCursor(VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
+                    Cursor cursor = dbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
                     Integer maxRow = cursor.getCount();
                     numText.setText(String.valueOf(maxRow));
                     seekBar.setMax(maxRow);
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 else if (table.equals("GMAT")) {
                     reviewCategory = VocabDbContract.CATEGORY_NAME_GMAT;
                     VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-                    Cursor cursor = dbHelper.getCursor(VocabDbContract.CATEGORY_NAME_GRE);
+                    Cursor cursor = dbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_GRE);
                     Integer maxRow = cursor.getCount();
                     numText.setText(String.valueOf(maxRow));
                     seekBar.setMax(maxRow);
@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                 else if (table.equals("GRE")) {
                     reviewCategory = VocabDbContract.CATEGORY_NAME_GRE;
                     VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-                    Cursor cursor = dbHelper.getCursor(VocabDbContract.CATEGORY_NAME_GRE);
+                    Cursor cursor = dbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_GRE);
                     Integer maxRow = cursor.getCount();
                     numText.setText(String.valueOf(maxRow));
                     seekBar.setMax(maxRow);

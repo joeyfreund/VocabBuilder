@@ -63,8 +63,6 @@ public class VocabDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-        // Creating required tables
         db.execSQL(CREATE_TABLE_MY_VOCAB);
         db.execSQL(CREATE_TABLE_CATEGORY);
 
@@ -99,7 +97,6 @@ public class VocabDbHelper extends SQLiteOpenHelper {
     private void loadDefaultCategoryValue(SQLiteDatabase db, String category) {
         ContentValues cv = new ContentValues();
         cv.put(VocabDbContract.COLUMN_NAME_CATEGORY, category);
-        // NEW ADDITION
         db.insert(VocabDbContract.TABLE_NAME_CATEGORY, null, cv);
     }
 
@@ -154,6 +151,10 @@ public class VocabDbHelper extends SQLiteOpenHelper {
             db.execSQL(DELETE_TABLE_GMAT);
             db.execSQL(DELETE_TABLE_GRE);
         }
+        else if (oldVersion == 4) {
+            db.execSQL(CREATE_TABLE_CATEGORY);
+            loadDefaultCategoryTable(db);
+        }
     }
 
     public void insertVocab(String category, String vocab, String definition, int level) {
@@ -169,11 +170,9 @@ public class VocabDbHelper extends SQLiteOpenHelper {
     }
 
 
-    public Cursor getCursor(String category) {
+    public Cursor getVocabCursor(String category) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
         String[] projection = {
             VocabDbContract._ID,
             VocabDbContract.COLUMN_NAME_VOCAB,
@@ -196,11 +195,9 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Cursor getCursorWithStringPattern(String category, String pattern) {
+    public Cursor getVocabCursorWithStringPattern(String category, String pattern) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
         String[] projection = {
                 VocabDbContract._ID,
                 VocabDbContract.COLUMN_NAME_VOCAB,
@@ -223,6 +220,37 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         );
         return cursor;
     }
+
+    public void insertCategory(String category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(VocabDbContract.COLUMN_NAME_CATEGORY, category);
+
+        db.insert(VocabDbContract.TABLE_NAME_CATEGORY, null, values);
+    }
+
+    public Cursor getCategoryCursor(String category) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                VocabDbContract._ID,
+                VocabDbContract.COLUMN_NAME_CATEGORY
+        };
+
+        Cursor cursor = db.query(
+                VocabDbContract.TABLE_NAME_CATEGORY, // The table to query
+                projection,                                 // The columns for the WHERE clause
+                null,                                   // The rows to return for the WHERE clause
+                null,                                        // selectionArgs
+                null,                                        // groupBy
+                null,                                        // having
+                null,                                        // orderBy
+                null                                         // limit (the number of rows)
+        );
+        return cursor;
+    }
+
 
 }
 

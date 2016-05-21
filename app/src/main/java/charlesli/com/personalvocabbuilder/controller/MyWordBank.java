@@ -29,7 +29,7 @@ public class MyWordBank extends CategoryItem {
         mWordBankListView = (ListView) findViewById(R.id.mWordBankList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mWordBankListView.setEmptyView(emptyTextView);
-        Cursor cursor = mDbHelper.getCursor(VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
+        Cursor cursor = mDbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
         mVocabAdapter = new VocabCursorAdapter(this, cursor, 0);
         mWordBankListView.setAdapter(mVocabAdapter);
         mWordBankListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
