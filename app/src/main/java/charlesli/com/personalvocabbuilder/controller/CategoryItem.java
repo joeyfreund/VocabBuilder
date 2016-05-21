@@ -39,8 +39,8 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 public abstract class CategoryItem extends AppCompatActivity {
 
     protected void selectAll(VocabCursorAdapter cursorAdapter, VocabDbHelper dbHelper,
-                             String tableName) {
-        Cursor cursor = dbHelper.getCursor(tableName);
+                             String category) {
+        Cursor cursor = dbHelper.getCursor(category);
         int numOfRows = cursor.getCount();
         for (int i = 0; i < numOfRows; i++) {
             cursorAdapter.selectedItemsPositions.add(i);
@@ -48,7 +48,7 @@ public abstract class CategoryItem extends AppCompatActivity {
         cursorAdapter.changeCursor(cursor);
     }
 
-    protected void deleteVocab(VocabDbHelper dbHelper, String tableName, VocabCursorAdapter cursorAdapter) {
+    protected void deleteVocab(VocabDbHelper dbHelper, String category, VocabCursorAdapter cursorAdapter) {
         Iterator<Integer> posIt = cursorAdapter.selectedItemsPositions.iterator();
         if (cursorAdapter.selectedItemsPositions.isEmpty()) {
             Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
@@ -58,13 +58,14 @@ public abstract class CategoryItem extends AppCompatActivity {
             while (posIt.hasNext()) {
                 Integer posInt = posIt.next();
                 // Define 'where' part of query
-                String selection = VocabDbContract._ID + " LIKE ?";
+                String selection = VocabDbContract._ID + " LIKE ?" + " AND " +
+                        VocabDbContract.COLUMN_NAME_CATEGORY + " LIKE ?";
                 // Specify arguments in placeholder order
-                String[] selectionArgs = {String.valueOf(cursorAdapter.getItemId(posInt))};
+                String[] selectionArgs = {String.valueOf(cursorAdapter.getItemId(posInt)), category};
                 // Issue SQL statement
-                db.delete(tableName, selection, selectionArgs);
+                db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
             }
-            Cursor cursor = dbHelper.getCursor(tableName);
+            Cursor cursor = dbHelper.getCursor(category);
             cursorAdapter.changeCursor(cursor);
 
             cursorAdapter.selectedItemsPositions.clear();
@@ -72,13 +73,13 @@ public abstract class CategoryItem extends AppCompatActivity {
     }
 
     protected void selectTableToAddVocabTo(final VocabCursorAdapter cursorAdapter, final VocabDbHelper dbHelper,
-                                           final String fromTableName) {
+                                           final String fromCategory) {
         if (cursorAdapter.selectedItemsPositions.isEmpty()) {
             Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
         }
         else {
             // Set up alert dialog
-            final String[] selectedTable = new String[1];
+            final String[] selectedCategory = new String[1];
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Add Vocab To...");
             // Set up the input
@@ -96,13 +97,13 @@ public abstract class CategoryItem extends AppCompatActivity {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     String table = (String) parent.getItemAtPosition(position);
                     if (table.equals("My Vocab")) {
-                        selectedTable[0] = VocabDbContract.TABLE_NAME_MY_VOCAB;
+                        selectedCategory[0] = VocabDbContract.CATEGORY_NAME_VOCAB;
                     } else if (table.equals("My Word Bank")) {
-                        selectedTable[0] = VocabDbContract.TABLE_NAME_MY_WORD_BANK;
+                        selectedCategory[0] = VocabDbContract.CATEGORY_NAME_MY_WORD_BANK;
                     } else if (table.equals("GMAT")) {
-                        selectedTable[0] = VocabDbContract.TABLE_NAME_GMAT;
+                        selectedCategory[0] = VocabDbContract.CATEGORY_NAME_GMAT;
                     } else if (table.equals("GRE")) {
-                        selectedTable[0] = VocabDbContract.TABLE_NAME_GRE;
+                        selectedCategory[0] = VocabDbContract.CATEGORY_NAME_GRE;
                     }
                 }
 
@@ -118,7 +119,7 @@ public abstract class CategoryItem extends AppCompatActivity {
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    addVocabToSelectedTable(cursorAdapter, dbHelper, fromTableName, selectedTable[0]);
+                    addVocabToSelectedTable(cursorAdapter, dbHelper, fromCategory, selectedCategory[0]);
                 }
             });
             builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -134,7 +135,7 @@ public abstract class CategoryItem extends AppCompatActivity {
 
 
     protected void addVocabToSelectedTable(VocabCursorAdapter cursorAdapter, VocabDbHelper dbHelper,
-                                           String fromTableName, String toTableName) {
+                                           String fromCategory, String toCategory) {
         Iterator<Integer> posIt = cursorAdapter.selectedItemsPositions.iterator();
         if (cursorAdapter.selectedItemsPositions.isEmpty()) {
             Toast.makeText(this, "No words are selected", Toast.LENGTH_SHORT).show();
@@ -154,7 +155,7 @@ public abstract class CategoryItem extends AppCompatActivity {
                         String.valueOf(idInt)
                 };
                 Cursor cursor = db.query(
-                        fromTableName,
+                        VocabDbContract.TABLE_NAME_MY_VOCAB,
                         projection,
                         VocabDbContract._ID + "=?",
                         selectionArg,
@@ -166,17 +167,17 @@ public abstract class CategoryItem extends AppCompatActivity {
                 String vocab = cursor.getString(cursor.getColumnIndex(VocabDbContract.COLUMN_NAME_VOCAB));
                 String definition = cursor.getString(cursor.getColumnIndex(VocabDbContract.COLUMN_NAME_DEFINITION));
                 Integer level = cursor.getInt(cursor.getColumnIndex(VocabDbContract.COLUMN_NAME_LEVEL));
-                dbHelper.insertVocab(toTableName, vocab, definition, level);
+                dbHelper.insertVocab(toCategory, vocab, definition, level);
             }
             cursorAdapter.selectedItemsPositions.clear();
-            Cursor cursor = dbHelper.getCursor(fromTableName);
+            Cursor cursor = dbHelper.getCursor(fromCategory);
             cursorAdapter.changeCursor(cursor);
 
             Toast.makeText(this, "Vocab added successfully", Toast.LENGTH_SHORT).show();
         }
     }
 
-    protected void addVocabAlertDialog(final VocabDbHelper dbHelper, final String tableName,
+    protected void addVocabAlertDialog(final VocabDbHelper dbHelper, final String category,
                                      final VocabCursorAdapter cursorAdapter) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add Vocab");
@@ -202,12 +203,12 @@ public abstract class CategoryItem extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String vocab = vocabInput.getText().toString();
                 String definition = definitionInput.getText().toString();
-                dbHelper.insertVocab(tableName, vocab, definition, 0);
-                if (!tableName.equals(VocabDbContract.TABLE_NAME_MY_WORD_BANK)) {
-                    dbHelper.insertVocab(VocabDbContract.TABLE_NAME_MY_WORD_BANK, vocab, definition, 0);
+                dbHelper.insertVocab(category, vocab, definition, 0);
+                if (!category.equals(VocabDbContract.CATEGORY_NAME_MY_WORD_BANK)) {
+                    dbHelper.insertVocab(VocabDbContract.CATEGORY_NAME_MY_WORD_BANK, vocab, definition, 0);
                 }
                 // Update Cursor
-                Cursor cursor = dbHelper.getCursor(tableName);
+                Cursor cursor = dbHelper.getCursor(category);
                 cursorAdapter.changeCursor(cursor);
             }
         });
@@ -223,7 +224,7 @@ public abstract class CategoryItem extends AppCompatActivity {
 
     protected void editVocabAlertDialog(final String selectedVocab, final String selectedDefinition,
                                         final long id, final VocabDbHelper dbHelper,
-                                        final String tableName, final VocabCursorAdapter cursorAdapter) {
+                                        final String category, final VocabCursorAdapter cursorAdapter) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit Vocab");
         builder.setMessage(selectedVocab);
@@ -266,7 +267,7 @@ public abstract class CategoryItem extends AppCompatActivity {
                         selectionMyVocab,
                         selectionArgsMyVocab
                 );
-
+                /*
                 db.update(
                         VocabDbContract.TABLE_NAME_MY_WORD_BANK,
                         values,
@@ -287,9 +288,10 @@ public abstract class CategoryItem extends AppCompatActivity {
                         selectionMyVocab,
                         selectionArgsMyVocab
                 );
+                */
 
                 // Update Cursor
-                cursorAdapter.changeCursor(dbHelper.getCursor(tableName));
+                cursorAdapter.changeCursor(dbHelper.getCursor(category));
             }
         });
         builder.setNegativeButton("Delete Vocab", new DialogInterface.OnClickListener() {
@@ -302,31 +304,31 @@ public abstract class CategoryItem extends AppCompatActivity {
                 // Specify arguments in placeholder order
                 String[] selectionArgs = {String.valueOf(id)};
                 // Issue SQL statement
-                db.delete(tableName, selection, selectionArgs);
+                db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
 
                 // Update Cursor
-                cursorAdapter.changeCursor(dbHelper.getCursor(tableName));
+                cursorAdapter.changeCursor(dbHelper.getCursor(category));
             }
         });
 
         builder.show();
     }
 
-    protected void implementSearchBar(Menu menu, int menuItemId, final String tableName,
+    protected void implementSearchBar(Menu menu, int menuItemId, final String category,
                                     final VocabCursorAdapter cursorAdapter, final VocabDbHelper dbHelper) {
         MenuItem search = menu.findItem(menuItemId);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Cursor cursor = dbHelper.getCursorWithStringPattern(tableName, s);
+                Cursor cursor = dbHelper.getCursorWithStringPattern(category, s);
                 cursorAdapter.changeCursor(cursor);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                Cursor cursor = dbHelper.getCursorWithStringPattern(tableName, s);
+                Cursor cursor = dbHelper.getCursorWithStringPattern(category, s);
                 cursorAdapter.changeCursor(cursor);
                 return true;
             }
@@ -341,7 +343,7 @@ public abstract class CategoryItem extends AppCompatActivity {
 
             @Override
             public void onViewDetachedFromWindow(View v) {
-                cursorAdapter.changeCursor(dbHelper.getCursor(tableName));
+                cursorAdapter.changeCursor(dbHelper.getCursor(category));
             }
         });
     }

@@ -191,7 +191,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
             VocabDbContract.COLUMN_NAME_LEVEL
         };
 
-        String selection = VocabDbContract.COLUMN_NAME_CATEGORY + " LIKE " + "'" + category + "'";
+        String selection = VocabDbContract.COLUMN_NAME_CATEGORY + " = " + "'" + category + "'";
 
         Cursor cursor = db.query(
                 VocabDbContract.TABLE_NAME_MY_VOCAB, // The table to query
@@ -218,7 +218,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
                 VocabDbContract.COLUMN_NAME_LEVEL
         };
 
-        String selection = VocabDbContract.COLUMN_NAME_CATEGORY + " LIKE " + "'" + category + "'" +
+        String selection = VocabDbContract.COLUMN_NAME_CATEGORY + " = " + "'" + category + "'" +
                 " AND " + VocabDbContract.COLUMN_NAME_VOCAB + " LIKE " + "'%" + pattern + "%'";
 
         Cursor cursor = db.query(
