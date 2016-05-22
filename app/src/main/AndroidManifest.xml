@@ -33,33 +33,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".controller.MainActivity" />
         </activity>
-        <activity
-            android:name=".controller.MyWordBank"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_my_word_bank"
-            android:parentActivityName=".controller.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controller.MainActivity" />
-        </activity>
-        <activity
-            android:name=".controller.GMAT"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_gmat"
-            android:parentActivityName=".controller.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controller.MainActivity" />
-        </activity>
-        <activity
-            android:name=".controller.GRE"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_gre"
-            android:parentActivityName=".controller.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controller.MainActivity" />
-        </activity>
     </application>
 
 </manifest>
