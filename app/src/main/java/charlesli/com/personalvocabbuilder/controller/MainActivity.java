@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private ListView mCategoryListView;
     private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
 
-    private ArrayAdapter<CharSequence> spinnerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +54,6 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = mDbHelper.getCategoryCursor();
         mCategoryAdapter = new CategoryCursorAdapter(this, cursor, 0);
         mCategoryListView.setAdapter(mCategoryAdapter);
-
-        spinnerAdapter = ArrayAdapter.createFromResource(MainActivity.this,
-                R.array.table_array, android.R.layout.simple_spinner_item);
-
 
         mCategoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -164,15 +160,20 @@ public class MainActivity extends AppCompatActivity {
         // Spinner
         //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MainActivity.this,
         //        R.array.table_array, android.R.layout.simple_spinner_item);
+        String[] from = {VocabDbContract.COLUMN_NAME_CATEGORY};
+        int[] to = {android.R.id.text1};
+        final Cursor categoryCursor = mDbHelper.getCategoryCursor();
+        SimpleCursorAdapter spinnerAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item,
+                categoryCursor, from, to, 0);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String category = (String) parent.getItemAtPosition(position);
-                reviewCategory = category;
+                categoryCursor.moveToPosition(position);
+                reviewCategory = categoryCursor.getString(categoryCursor.getColumnIndex(VocabDbContract.COLUMN_NAME_CATEGORY));
                 VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-                Cursor cursor = dbHelper.getVocabCursor(category);
+                Cursor cursor = dbHelper.getVocabCursor(reviewCategory);
                 Integer maxRow = cursor.getCount();
                 numText.setText(String.valueOf(maxRow));
                 seekBar.setMax(maxRow);
