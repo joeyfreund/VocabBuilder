@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import charlesli.com.personalvocabbuilder.R;
+import charlesli.com.personalvocabbuilder.sqlDatabase.CategoryCursorAdapter;
+import charlesli.com.personalvocabbuilder.sqlDatabase.VocabCursorAdapter;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
@@ -39,27 +41,22 @@ public class MainActivity extends AppCompatActivity {
     private Integer reviewMode = WORDTODEF;
     private Integer reviewNumOfWords = 0;
 
-    private List<String> categoriesList = new ArrayList<String>();
-    private ArrayAdapter<String> adapter;
+    private CategoryCursorAdapter mCategoryAdapter;
+    private ListView mCategoryListView;
+    private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ListView listView = (ListView) findViewById(R.id.mainListView);
+        mCategoryListView = (ListView) findViewById(R.id.mainListView);
+        Cursor cursor = mDbHelper.getCategoryCursor();
+        mCategoryAdapter = new CategoryCursorAdapter(this, cursor, 0);
+        mCategoryListView.setAdapter(mCategoryAdapter);
 
-        categoriesList.add(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
-        categoriesList.add(VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
-        categoriesList.add(VocabDbContract.CATEGORY_NAME_GMAT);
-        categoriesList.add(VocabDbContract.CATEGORY_NAME_GRE);
 
-        adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, categoriesList);
-
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mCategoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
@@ -79,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
-                    Toast.makeText(MainActivity.this, ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, (int) id, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -123,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String category = categoryInput.getText().toString();
-                categoriesList.add(category);
-                adapter.notifyDataSetChanged();
+                mDbHelper.insertCategory(category);
+                mCategoryAdapter.changeCursor(mDbHelper.getCategoryCursor());
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

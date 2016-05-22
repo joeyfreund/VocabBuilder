@@ -230,7 +230,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         db.insert(VocabDbContract.TABLE_NAME_CATEGORY, null, values);
     }
 
-    public Cursor getCategoryCursor(String category) {
+    public Cursor getCategoryCursor() {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String[] projection = {
