@@ -62,28 +62,12 @@ public class MainActivity extends AppCompatActivity {
         mCategoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    Intent intent = new Intent(MainActivity.this, MyVocab.class);
-                    startActivity(intent);
-                }
-                else if (position == 1) {
-                    Intent intent = new Intent(MainActivity.this, MyWordBank.class);
-                    startActivity(intent);
-                }
-                else if (position == 2) {
-                    Intent intent = new Intent(MainActivity.this, GMAT.class);
-                    startActivity(intent);
-                }
-                else if (position == 3) {
-                    Intent intent = new Intent(MainActivity.this, GRE.class);
-                    startActivity(intent);
-                }
-                else {
-                    Cursor categoryCursor = mDbHelper.getCategoryCursor();
-                    categoryCursor.moveToPosition(position);
-                    String categoryName = categoryCursor.getString(categoryCursor.getColumnIndex(VocabDbContract.COLUMN_NAME_CATEGORY));
-                    Toast.makeText(MainActivity.this, categoryName, Toast.LENGTH_SHORT).show();
-                }
+                Cursor categoryCursor = mDbHelper.getCategoryCursor();
+                categoryCursor.moveToPosition(position);
+                String categoryName = categoryCursor.getString(categoryCursor.getColumnIndex(VocabDbContract.COLUMN_NAME_CATEGORY));
+                Intent intent = new Intent(MainActivity.this, MyVocab.class);
+                intent.putExtra("Category", categoryName);
+                startActivity(intent);
             }
         });
 
