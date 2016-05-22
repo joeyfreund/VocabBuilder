@@ -158,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
         final RadioButton defWord = (RadioButton) promptsView.findViewById(R.id.defWord);
         final SeekBar seekBar = (SeekBar) promptsView.findViewById(R.id.seekBar);
 
-
         // TextView
         numText.setText(String.valueOf(maxRow));
 
@@ -170,43 +169,14 @@ public class MainActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String table = (String) parent.getItemAtPosition(position);
-                if (table.equals("My Vocab")) {
-                    reviewCategory = VocabDbContract.CATEGORY_NAME_MY_VOCAB;
-                    VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-                    Cursor cursor = dbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
-                    Integer maxRow = cursor.getCount();
-                    numText.setText(String.valueOf(maxRow));
-                    seekBar.setMax(maxRow);
-                    seekBar.setProgress(maxRow);
-                }
-                else if (table.equals("My Word Bank")) {
-                    reviewCategory = VocabDbContract.CATEGORY_NAME_MY_WORD_BANK;
-                    VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-                    Cursor cursor = dbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
-                    Integer maxRow = cursor.getCount();
-                    numText.setText(String.valueOf(maxRow));
-                    seekBar.setMax(maxRow);
-                    seekBar.setProgress(maxRow);
-                }
-                else if (table.equals("GMAT")) {
-                    reviewCategory = VocabDbContract.CATEGORY_NAME_GMAT;
-                    VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-                    Cursor cursor = dbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_GRE);
-                    Integer maxRow = cursor.getCount();
-                    numText.setText(String.valueOf(maxRow));
-                    seekBar.setMax(maxRow);
-                    seekBar.setProgress(maxRow);
-                }
-                else if (table.equals("GRE")) {
-                    reviewCategory = VocabDbContract.CATEGORY_NAME_GRE;
-                    VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-                    Cursor cursor = dbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_GRE);
-                    Integer maxRow = cursor.getCount();
-                    numText.setText(String.valueOf(maxRow));
-                    seekBar.setMax(maxRow);
-                    seekBar.setProgress(maxRow);
-                }
+                String category = (String) parent.getItemAtPosition(position);
+                reviewCategory = category;
+                VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
+                Cursor cursor = dbHelper.getVocabCursor(category);
+                Integer maxRow = cursor.getCount();
+                numText.setText(String.valueOf(maxRow));
+                seekBar.setMax(maxRow);
+                seekBar.setProgress(maxRow);
             }
 
             @Override
