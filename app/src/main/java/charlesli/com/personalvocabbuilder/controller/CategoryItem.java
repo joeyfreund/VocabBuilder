@@ -260,28 +260,6 @@ public abstract class CategoryItem extends AppCompatActivity {
                         selectionMyVocab,
                         selectionArgsMyVocab
                 );
-                /*
-                db.update(
-                        VocabDbContract.TABLE_NAME_MY_WORD_BANK,
-                        values,
-                        selectionMyVocab,
-                        selectionArgsMyVocab
-                );
-
-                db.update(
-                        VocabDbContract.TABLE_NAME_GMAT,
-                        values,
-                        selectionMyVocab,
-                        selectionArgsMyVocab
-                );
-
-                db.update(
-                        VocabDbContract.TABLE_NAME_GRE,
-                        values,
-                        selectionMyVocab,
-                        selectionArgsMyVocab
-                );
-                */
 
                 // Update Cursor
                 cursorAdapter.changeCursor(dbHelper.getVocabCursor(category));

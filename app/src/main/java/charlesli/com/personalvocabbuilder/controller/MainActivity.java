@@ -1,9 +1,11 @@
 package charlesli.com.personalvocabbuilder.controller;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -13,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -76,8 +79,22 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
-                    Toast.makeText(MainActivity.this, (int) id, Toast.LENGTH_SHORT).show();
+                    Cursor categoryCursor = mDbHelper.getCategoryCursor();
+                    categoryCursor.moveToPosition(position);
+                    String categoryName = categoryCursor.getString(categoryCursor.getColumnIndex(VocabDbContract.COLUMN_NAME_CATEGORY));
+                    Toast.makeText(MainActivity.this, categoryName, Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        mCategoryListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Cursor categoryCursor = mDbHelper.getCategoryCursor();
+                categoryCursor.moveToPosition(position);
+                String categoryName = categoryCursor.getString(categoryCursor.getColumnIndex(VocabDbContract.COLUMN_NAME_CATEGORY));
+                editCategoryAlertDialog(categoryName, id, mDbHelper, mCategoryAdapter);
+                return true;
             }
         });
     }
@@ -271,6 +288,72 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    protected void editCategoryAlertDialog(final String selectedCategory, final long id, final VocabDbHelper dbHelper,
+                                        final CategoryCursorAdapter cursorAdapter) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Edit Category");
+        builder.setMessage(selectedCategory);
+        // Set up the input
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText categoryInput = new EditText(this);
+        categoryInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+        categoryInput.setHint("New category name");
+        layout.addView(categoryInput);
+
+        builder.setView(layout);
+
+        // Set up the buttons
+        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String categoryName = categoryInput.getText().toString();
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+                ContentValues values = new ContentValues();
+                values.put(VocabDbContract.COLUMN_NAME_CATEGORY, categoryName);
+
+                String selectionMyVocab = VocabDbContract.COLUMN_NAME_CATEGORY + " = ?";
+                String[] selectionArgsMyVocab = {selectedCategory};
+
+                db.update(
+                        VocabDbContract.TABLE_NAME_CATEGORY,
+                        values,
+                        selectionMyVocab,
+                        selectionArgsMyVocab
+                );
+
+                // Update Cursor
+                cursorAdapter.changeCursor(dbHelper.getCategoryCursor());
+            }
+        });
+        builder.setNegativeButton("Delete     ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Delete Category from Database
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                // Define 'where' part of query
+                String selection = VocabDbContract._ID + " LIKE ?";
+                // Specify arguments in placeholder order
+                String[] selectionArgs = {String.valueOf(id)};
+                // Issue SQL statement
+                db.delete(VocabDbContract.TABLE_NAME_CATEGORY, selection, selectionArgs);
+
+                // Update Cursor
+                cursorAdapter.changeCursor(dbHelper.getCategoryCursor());
             }
         });
 
