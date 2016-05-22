@@ -28,9 +28,6 @@ public class VocabCursorAdapter extends CursorAdapter {
     private static final int PERFECT = 3;
 
     public List<Integer> selectedItemsPositions;
-    // Add getter and setter for selectedItemsPositions
-    // Iterate through when option item clicked and delete items at given positions.
-    // Empty selectedItemsPosition when action is performed
 
 
     public VocabCursorAdapter(Context context, Cursor c, int flags) {
@@ -40,8 +37,7 @@ public class VocabCursorAdapter extends CursorAdapter {
     }
 
 
-    // The newView method is used to inflate a new view and return it,
-    // you don't bind any data to the view at this point.
+    // The newView method is used to inflate a new view and return it
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_vocab, parent, false);

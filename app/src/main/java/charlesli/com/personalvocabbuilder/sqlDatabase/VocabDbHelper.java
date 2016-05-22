@@ -102,7 +102,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion == 3) {
+        if (oldVersion <= 3) {
             db.execSQL("ALTER TABLE " + VocabDbContract.TABLE_NAME_MY_VOCAB +
                     " ADD COLUMN " + VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT DEFAULT '" +
                     VocabDbContract.CATEGORY_NAME_MY_VOCAB + "'");
@@ -151,7 +151,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
             db.execSQL(DELETE_TABLE_GMAT);
             db.execSQL(DELETE_TABLE_GRE);
         }
-        else if (oldVersion == 4) {
+        if (oldVersion < newVersion) {
             db.execSQL(CREATE_TABLE_CATEGORY);
             loadDefaultCategoryTable(db);
         }
