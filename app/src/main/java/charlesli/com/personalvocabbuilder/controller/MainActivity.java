@@ -121,8 +121,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String category = categoryInput.getText().toString();
-                mDbHelper.insertCategory(category);
-                mCategoryAdapter.changeCursor(mDbHelper.getCategoryCursor());
+                if (mDbHelper.checkIfCategoryExists(category)) {
+                    Toast.makeText(MainActivity.this, category + " already exists", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    mDbHelper.insertCategory(category);
+                    mCategoryAdapter.changeCursor(mDbHelper.getCategoryCursor());
+                }
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
