@@ -158,8 +158,6 @@ public class MainActivity extends AppCompatActivity {
         numText.setText(String.valueOf(maxRow));
 
         // Spinner
-        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MainActivity.this,
-        //        R.array.table_array, android.R.layout.simple_spinner_item);
         String[] from = {VocabDbContract.COLUMN_NAME_CATEGORY};
         int[] to = {android.R.id.text1};
         final Cursor categoryCursor = mDbHelper.getCategoryCursor();
