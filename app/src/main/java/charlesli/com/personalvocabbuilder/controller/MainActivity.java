@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -25,12 +24,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.CategoryCursorAdapter;
-import charlesli.com.personalvocabbuilder.sqlDatabase.VocabCursorAdapter;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
@@ -48,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private ListView mCategoryListView;
     private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
 
+    private ArrayAdapter<CharSequence> spinnerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = mDbHelper.getCategoryCursor();
         mCategoryAdapter = new CategoryCursorAdapter(this, cursor, 0);
         mCategoryListView.setAdapter(mCategoryAdapter);
+
+        spinnerAdapter = ArrayAdapter.createFromResource(MainActivity.this,
+                R.array.table_array, android.R.layout.simple_spinner_item);
 
 
         mCategoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -162,10 +162,10 @@ public class MainActivity extends AppCompatActivity {
         numText.setText(String.valueOf(maxRow));
 
         // Spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MainActivity.this,
-                R.array.table_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MainActivity.this,
+        //        R.array.table_array, android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
