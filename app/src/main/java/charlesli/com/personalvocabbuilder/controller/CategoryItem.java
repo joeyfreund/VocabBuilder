@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -33,6 +34,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Iterator;
+import java.util.concurrent.ExecutionException;
 
 import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabCursorAdapter;
@@ -235,8 +237,14 @@ public abstract class CategoryItem extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 GoogleTranslate googleTranslate = new GoogleTranslate();
-                String translatedText = googleTranslate.doInBackground("Hola");
-                definitionInput.setText(translatedText);
+                String vocab = vocabInput.getText().toString();
+                AsyncTask<String, Void, String> asyncTask = googleTranslate.execute(vocab);
+                try {
+                    String translatedText = asyncTask.get();
+                    definitionInput.setText(translatedText);
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
