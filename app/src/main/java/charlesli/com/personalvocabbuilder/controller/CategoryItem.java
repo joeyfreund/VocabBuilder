@@ -241,9 +241,10 @@ public abstract class CategoryItem extends AppCompatActivity {
                 AsyncTask<String, Void, String> asyncTask = googleTranslate.execute(vocab);
                 try {
                     String translatedText = asyncTask.get();
-                    definitionInput.setText(translatedText);
+                    Log.i("JSON", translatedText);
+                    //definitionInput.setText(translatedText);
                 } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
+                    Log.i("Error", e.getMessage());
                 }
 
             }
