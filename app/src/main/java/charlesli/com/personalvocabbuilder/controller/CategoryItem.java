@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -81,23 +82,20 @@ public abstract class CategoryItem extends AppCompatActivity {
 
             // Add Spinner to alert dialog
             final Spinner spinner = new Spinner(this);
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                    R.array.table_array, android.R.layout.simple_spinner_item);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(adapter);
+            String[] from = {VocabDbContract.COLUMN_NAME_CATEGORY};
+            int[] to = {android.R.id.text1};
+            final Cursor categoryCursor = dbHelper.getCategoryCursor();
+            SimpleCursorAdapter spinnerAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item,
+                    categoryCursor, from, to, 0);
+            //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+            //        R.array.table_array, android.R.layout.simple_spinner_item);
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(spinnerAdapter);
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    String table = (String) parent.getItemAtPosition(position);
-                    if (table.equals("My Vocab")) {
-                        selectedCategory[0] = VocabDbContract.CATEGORY_NAME_MY_VOCAB;
-                    } else if (table.equals("My Word Bank")) {
-                        selectedCategory[0] = VocabDbContract.CATEGORY_NAME_MY_WORD_BANK;
-                    } else if (table.equals("GMAT")) {
-                        selectedCategory[0] = VocabDbContract.CATEGORY_NAME_GMAT;
-                    } else if (table.equals("GRE")) {
-                        selectedCategory[0] = VocabDbContract.CATEGORY_NAME_GRE;
-                    }
+                    categoryCursor.moveToPosition(position);
+                    selectedCategory[0] = categoryCursor.getString(categoryCursor.getColumnIndex(VocabDbContract.COLUMN_NAME_CATEGORY));
                 }
 
                 @Override
