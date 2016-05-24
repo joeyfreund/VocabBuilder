@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.api.services.translate.Translate;
+import com.google.api.services.translate.TranslateRequestInitializer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,6 +31,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Iterator;
 
 import charlesli.com.personalvocabbuilder.R;
@@ -232,36 +234,10 @@ public abstract class CategoryItem extends AppCompatActivity {
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                definitionInput.setText("Hello");
-                try {
-                    String APIKey = "AIzaSyDGijVCq6fPpmoP9ZLJwr9GZPtOuvVxrSU";
-                    String query = vocabInput.getText().toString();
-                    // encoded = URLEncoder.encode(original, "UTF-8");
-                    // GoogleAPI.setHttpReferrer("http://translate.google.com.vn/");
-                    // GoogleAPI.setKey(/* Enter your API key here */);
-                    String source = "es";
-                    String target = "en";
-                    URL url = new URL("https://www.googleapis.com/language/translate/v2?key=" +
-                            APIKey +
-                            "&q=" +
-                            query +
-                            //"&source=" +
-                            //source +
-                            "&target=" +
-                            target);
-                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        stringBuilder.append(line).append("\n");
-                    }
-                    bufferedReader.close();
-                    Log.d("A", stringBuilder.toString());
+                GoogleTranslate googleTranslate = new GoogleTranslate();
+                String translatedText = googleTranslate.doInBackground("Hola");
+                definitionInput.setText(translatedText);
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
         });
 
