@@ -22,6 +22,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Iterator;
 
 import charlesli.com.personalvocabbuilder.R;
@@ -224,6 +226,24 @@ public abstract class CategoryItem extends AppCompatActivity {
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                definitionInput.setText("Hello");
+                try {
+                    String APIKey = "AIzaSyDGijVCq6fPpmoP9ZLJwr9GZPtOuvVxrSU";
+                    String query = vocabInput.getText().toString();
+                    // encoded = URLEncoder.encode(original, "UTF-8");
+                    String source = "es";
+                    String target = "en";
+                    URL url = new URL("https://www.googleapis.com/language/translate/v2?key=" +
+                            APIKey +
+                            "&q=" +
+                            query +
+                            //"&source=" +
+                            //source +
+                            "&target=" +
+                            target);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
