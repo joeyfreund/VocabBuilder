@@ -252,7 +252,7 @@ public abstract class CategoryItem extends AppCompatActivity {
                     builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            //
+                            dialog.cancel();
                         }
                     });
                     AlertDialog alert = builder.create();
