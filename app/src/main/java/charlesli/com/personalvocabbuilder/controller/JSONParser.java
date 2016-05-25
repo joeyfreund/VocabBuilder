@@ -9,14 +9,14 @@ import org.json.JSONTokener;
  */
 public class JSONParser {
 
-    public String parseJSONString(String jsonString) {
+    public String parseJSONForTranslation(String jsonString) {
         try {
             JSONObject object = (JSONObject) new JSONTokener(jsonString).nextValue();
-            String data = object.getString("data");
-
+            return object.getJSONObject("data").getJSONArray("translations").
+                    getJSONObject(0).getString("translatedText");
         } catch (JSONException e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 }

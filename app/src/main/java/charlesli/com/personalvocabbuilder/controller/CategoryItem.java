@@ -240,9 +240,10 @@ public abstract class CategoryItem extends AppCompatActivity {
                 String vocab = vocabInput.getText().toString();
                 AsyncTask<String, Void, String> asyncTask = googleTranslate.execute(vocab);
                 try {
-                    String translatedText = asyncTask.get();
-                    Log.i("JSON", translatedText);
-                    //definitionInput.setText(translatedText);
+                    String translatedJSON = asyncTask.get();
+                    JSONParser jsonParser = new JSONParser();
+                    String translatedText = jsonParser.parseJSONForTranslation(translatedJSON);
+                    definitionInput.setText(translatedText);
                 } catch (InterruptedException | ExecutionException e) {
                     Log.i("Error", e.getMessage());
                 }
