@@ -103,30 +103,52 @@ public class MainActivity extends AppCompatActivity {
 
     private void createSettingsDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Settings");
+        builder.setTitle("Translation Settings");
 
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
+        VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
+        Cursor cursor = dbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
+        final Integer maxRow = cursor.getCount();
+        reviewNumOfWords = maxRow;
 
-        final EditText categoryInput = new EditText(this);
-        categoryInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
-        categoryInput.setHint("Category name");
-        layout.addView(categoryInput);
+        LayoutInflater li = LayoutInflater.from(MainActivity.this);
+        View promptsView = li.inflate(R.layout.alert_dialog_settings, null);
 
-        builder.setView(layout);
+        final TextView numText = (TextView) promptsView.findViewById(R.id.numberText);
+        Spinner spinner = (Spinner) promptsView.findViewById(R.id.spinner);
 
-        // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        // TextView
+        numText.setText(String.valueOf(maxRow));
+
+        // Spinner
+        String[] from = {VocabDbContract.COLUMN_NAME_CATEGORY};
+        int[] to = {android.R.id.text1};
+        final Cursor categoryCursor = mDbHelper.getCategoryCursor();
+        SimpleCursorAdapter spinnerAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item,
+                categoryCursor, from, to, 0);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                categoryCursor.moveToPosition(position);
+                reviewCategory = categoryCursor.getString(categoryCursor.getColumnIndex(VocabDbContract.COLUMN_NAME_CATEGORY));
+                VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
+                Cursor cursor = dbHelper.getVocabCursor(reviewCategory);
+                Integer maxRow = cursor.getCount();
+                numText.setText(String.valueOf(maxRow));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        builder.setView(promptsView);
+
+        builder.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String category = categoryInput.getText().toString();
-                if (mDbHelper.checkIfCategoryExists(category)) {
-                    Toast.makeText(MainActivity.this, category + " already exists", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    mDbHelper.insertCategory(category);
-                    mCategoryAdapter.changeCursor(mDbHelper.getCategoryCursor());
-                }
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
