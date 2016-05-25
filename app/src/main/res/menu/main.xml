@@ -14,4 +14,9 @@
         android:orderInCategory="50"
         app:showAsAction="always"/>
 
+    <item android:id="@+id/settings_button"
+        android:title="@string/action_settings"
+        android:orderInCategory="150"
+        app:showAsAction="never"/>
+
 </menu>

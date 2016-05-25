@@ -103,8 +103,6 @@ public abstract class CategoryItem extends AppCompatActivity {
             final Cursor categoryCursor = dbHelper.getCategoryCursor();
             SimpleCursorAdapter spinnerAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item,
                     categoryCursor, from, to, 0);
-            //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-            //        R.array.table_array, android.R.layout.simple_spinner_item);
             spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(spinnerAdapter);
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

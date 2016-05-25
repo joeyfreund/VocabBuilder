@@ -92,10 +92,51 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.review_button) {
             createReviewDialog();
         }
-        if (id == R.id.add_category_button) {
+        else if (id == R.id.add_category_button) {
             createAddCategoryDialog();
         }
+        else if (id == R.id.settings_button) {
+            createSettingsDialog();
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void createSettingsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Settings");
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText categoryInput = new EditText(this);
+        categoryInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+        categoryInput.setHint("Category name");
+        layout.addView(categoryInput);
+
+        builder.setView(layout);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String category = categoryInput.getText().toString();
+                if (mDbHelper.checkIfCategoryExists(category)) {
+                    Toast.makeText(MainActivity.this, category + " already exists", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    mDbHelper.insertCategory(category);
+                    mCategoryAdapter.changeCursor(mDbHelper.getCategoryCursor());
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
     private void createAddCategoryDialog() {
