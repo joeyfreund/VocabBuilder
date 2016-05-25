@@ -15,8 +15,6 @@ import java.net.URLEncoder;
  */
 public class GoogleTranslate extends AsyncTask<String, Void, String>{
 
-    private Exception exception;
-
     @Override
     protected String doInBackground(String... params) {
         String vocab = params[0];

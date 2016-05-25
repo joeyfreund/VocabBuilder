@@ -257,7 +257,6 @@ public abstract class CategoryItem extends AppCompatActivity {
                     });
                     AlertDialog alert = builder.create();
                     alert.show();
-
                 }
             }
         });
