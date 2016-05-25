@@ -50,8 +50,6 @@ public class GoogleTranslate extends AsyncTask<String, Void, String>{
             }
         }
         catch (Exception e) {
-            //Toast.makeText(this, "Please try again later", Toast.LENGTH_SHORT).show();
-            Log.i("Error", e.getMessage());
             return null;
         }
     }

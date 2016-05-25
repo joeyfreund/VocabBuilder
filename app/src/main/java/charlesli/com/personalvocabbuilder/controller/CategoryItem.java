@@ -26,6 +26,8 @@ import android.widget.Toast;
 import com.google.api.services.translate.Translate;
 import com.google.api.services.translate.TranslateRequestInitializer;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -244,10 +246,19 @@ public abstract class CategoryItem extends AppCompatActivity {
                     JSONParser jsonParser = new JSONParser();
                     String translatedText = jsonParser.parseJSONForTranslation(translatedJSON);
                     definitionInput.setText(translatedText);
-                } catch (InterruptedException | ExecutionException e) {
-                    Log.i("Error", e.getMessage());
-                }
+                } catch (Exception e) {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(CategoryItem.this);
+                    builder.setMessage("Connection error. Sorry, please try again later.");
+                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //
+                        }
+                    });
+                    AlertDialog alert = builder.create();
+                    alert.show();
 
+                }
             }
         });
 
