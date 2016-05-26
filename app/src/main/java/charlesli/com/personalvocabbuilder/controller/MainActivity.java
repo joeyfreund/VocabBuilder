@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.CategoryCursorAdapter;
+import charlesli.com.personalvocabbuilder.sqlDatabase.LanguageOptions;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
@@ -106,36 +107,43 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle("Translation Settings");
 
         VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-        Cursor cursor = dbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
-        final Integer maxRow = cursor.getCount();
-        reviewNumOfWords = maxRow;
 
         LayoutInflater li = LayoutInflater.from(MainActivity.this);
         View promptsView = li.inflate(R.layout.alert_dialog_settings, null);
 
-        final TextView numText = (TextView) promptsView.findViewById(R.id.numberText);
-        Spinner spinner = (Spinner) promptsView.findViewById(R.id.spinner);
+        final TextView tvTranslateFrom = (TextView) promptsView.findViewById(R.id.tvTranslateFrom);
+        Spinner spinnerTranslateFrom = (Spinner) promptsView.findViewById(R.id.spinnerTranslateFrom);
 
-        // TextView
-        numText.setText(String.valueOf(maxRow));
+        final TextView tvTranslateTo = (TextView) promptsView.findViewById(R.id.tvTranslateTo);
+        Spinner spinnerTranslateTo = (Spinner) promptsView.findViewById(R.id.spinnerTranslateTo);
 
         // Spinner
-        String[] from = {VocabDbContract.COLUMN_NAME_CATEGORY};
-        int[] to = {android.R.id.text1};
-        final Cursor categoryCursor = mDbHelper.getCategoryCursor();
-        SimpleCursorAdapter spinnerAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item,
-                categoryCursor, from, to, 0);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(spinnerAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        ArrayAdapter<String> fromArrayAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, LanguageOptions.LANGUAGE);
+        ArrayAdapter<String> toArrayAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, LanguageOptions.LANGUAGE);
+
+        fromArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        toArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerTranslateFrom.setAdapter(fromArrayAdapter);
+        spinnerTranslateTo.setAdapter(toArrayAdapter);
+
+        spinnerTranslateFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                categoryCursor.moveToPosition(position);
-                reviewCategory = categoryCursor.getString(categoryCursor.getColumnIndex(VocabDbContract.COLUMN_NAME_CATEGORY));
-                VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-                Cursor cursor = dbHelper.getVocabCursor(reviewCategory);
-                Integer maxRow = cursor.getCount();
-                numText.setText(String.valueOf(maxRow));
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinnerTranslateTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
             }
 
             @Override
@@ -145,18 +153,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         builder.setView(promptsView);
-
-        builder.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
 
         builder.show();
     }
