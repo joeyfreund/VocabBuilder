@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -132,10 +133,14 @@ public class MainActivity extends AppCompatActivity {
         spinnerTranslateFrom.setSelection(0);
         spinnerTranslateTo.setSelection(19);
 
+
         spinnerTranslateFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                SharedPreferences sharedPreferences = getSharedPreferences("Translation", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("Source", LanguageOptions.FROM_LANGUAGE_CODE[position]);
+                editor.apply();
             }
 
             @Override
@@ -146,7 +151,10 @@ public class MainActivity extends AppCompatActivity {
         spinnerTranslateTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                SharedPreferences sharedPreferences = getSharedPreferences("Translation", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("Target", LanguageOptions.TO_LANGUAGE_CODE[position]);
+                editor.apply();
             }
 
             @Override
