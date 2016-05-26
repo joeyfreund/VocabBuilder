@@ -119,15 +119,18 @@ public class MainActivity extends AppCompatActivity {
 
         // Spinner
         ArrayAdapter<String> fromArrayAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, LanguageOptions.LANGUAGE);
+                android.R.layout.simple_spinner_item, LanguageOptions.FROM_LANGUAGE);
         ArrayAdapter<String> toArrayAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, LanguageOptions.LANGUAGE);
+                android.R.layout.simple_spinner_item, LanguageOptions.TO_LANGUAGE);
 
         fromArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         toArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerTranslateFrom.setAdapter(fromArrayAdapter);
         spinnerTranslateTo.setAdapter(toArrayAdapter);
+
+        spinnerTranslateFrom.setSelection(0);
+        spinnerTranslateTo.setSelection(19);
 
         spinnerTranslateFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
