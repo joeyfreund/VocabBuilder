@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createSettingsDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Translation Settings");
 
         VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
@@ -130,8 +130,12 @@ public class MainActivity extends AppCompatActivity {
         spinnerTranslateFrom.setAdapter(fromArrayAdapter);
         spinnerTranslateTo.setAdapter(toArrayAdapter);
 
-        spinnerTranslateFrom.setSelection(0);
-        spinnerTranslateTo.setSelection(19);
+        SharedPreferences sharedPreferences = getSharedPreferences("Translation", MODE_PRIVATE);
+        int source = sharedPreferences.getInt("Source", 0); // 0 is for Detect Language
+        int target = sharedPreferences.getInt("Target", 19); // 19 is for English
+
+        spinnerTranslateFrom.setSelection(source);
+        spinnerTranslateTo.setSelection(target);
 
 
         spinnerTranslateFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -139,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SharedPreferences sharedPreferences = getSharedPreferences("Translation", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("Source", LanguageOptions.FROM_LANGUAGE_CODE[position]);
+                editor.putInt("Source", position);
                 editor.apply();
             }
 
@@ -153,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SharedPreferences sharedPreferences = getSharedPreferences("Translation", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("Target", LanguageOptions.TO_LANGUAGE_CODE[position]);
+                editor.putInt("Target", position);
                 editor.apply();
             }
 
@@ -164,6 +168,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         builder.setView(promptsView);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
 
         builder.show();
     }
