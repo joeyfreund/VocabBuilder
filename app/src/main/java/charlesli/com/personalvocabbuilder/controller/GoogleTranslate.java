@@ -18,18 +18,18 @@ public class GoogleTranslate extends AsyncTask<String, Void, String>{
     @Override
     protected String doInBackground(String... params) {
         String vocab = params[0];
+        String source = params[1];
+        String target = params[2];
 
         try {
             String APIKey = "AIzaSyDGijVCq6fPpmoP9ZLJwr9GZPtOuvVxrSU";
             String encodedQuery = URLEncoder.encode(vocab, "UTF-8");
-            //String source = "es";
-            String target = "en";
             URL url = new URL("https://www.googleapis.com/language/translate/v2?key=" +
                     APIKey +
                     "&q=" +
                     encodedQuery +
-                    //"&source=" +
-                    //source +
+                    "&source=" +
+                    source +
                     "&target=" +
                     target);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

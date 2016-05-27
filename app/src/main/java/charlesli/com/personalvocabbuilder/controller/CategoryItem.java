@@ -3,6 +3,7 @@ package charlesli.com.personalvocabbuilder.controller;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -39,6 +40,7 @@ import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 import charlesli.com.personalvocabbuilder.R;
+import charlesli.com.personalvocabbuilder.sqlDatabase.LanguageOptions;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabCursorAdapter;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
@@ -238,7 +240,15 @@ public abstract class CategoryItem extends AppCompatActivity {
             public void onClick(View v) {
                 GoogleTranslate googleTranslate = new GoogleTranslate();
                 String vocab = vocabInput.getText().toString();
-                AsyncTask<String, Void, String> asyncTask = googleTranslate.execute(vocab);
+
+                SharedPreferences sharedPreferences = getSharedPreferences("Translation", MODE_PRIVATE);
+                int sourcePos = sharedPreferences.getInt("Source", 0); // 0 is for Detect Language
+                int targetPos = sharedPreferences.getInt("Target", 19); // 19 is for English
+
+                String source = LanguageOptions.FROM_LANGUAGE_CODE[sourcePos];
+                String target = LanguageOptions.TO_LANGUAGE_CODE[targetPos];
+
+                AsyncTask<String, Void, String> asyncTask = googleTranslate.execute(vocab, source, target);
                 try {
                     String translatedJSON = asyncTask.get();
                     JSONParser jsonParser = new JSONParser();

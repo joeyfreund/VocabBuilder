@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerTranslateFrom.setAdapter(fromArrayAdapter);
         spinnerTranslateTo.setAdapter(toArrayAdapter);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("Translation", MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = getSharedPreferences("Translation", MODE_PRIVATE);
         int source = sharedPreferences.getInt("Source", 0); // 0 is for Detect Language
         int target = sharedPreferences.getInt("Target", 19); // 19 is for English
 
@@ -141,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
         spinnerTranslateFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                SharedPreferences sharedPreferences = getSharedPreferences("Translation", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt("Source", position);
                 editor.apply();
@@ -155,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
         spinnerTranslateTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                SharedPreferences sharedPreferences = getSharedPreferences("Translation", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt("Target", position);
                 editor.apply();
