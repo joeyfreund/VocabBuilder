@@ -103,7 +103,7 @@ public class LanguageOptions {
     };
 
     public static final String [] FROM_LANGUAGE_CODE = {
-            "",
+            "Detect Language",
             "af",
             "sq",
             "ar",

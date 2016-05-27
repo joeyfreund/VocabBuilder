@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Objects;
 
 /**
  * Created by charles on 2016-05-24.
@@ -21,6 +22,14 @@ public class GoogleTranslate extends AsyncTask<String, Void, String>{
         String source = params[1];
         String target = params[2];
 
+        String sourceQuery = "";
+        String targetQuery = "&target=" + target;
+
+        // "" means its
+        if (!source.equals("Detect Language")) {
+            sourceQuery = "&source=" + source;
+        }
+
         try {
             String APIKey = "AIzaSyDGijVCq6fPpmoP9ZLJwr9GZPtOuvVxrSU";
             String encodedQuery = URLEncoder.encode(vocab, "UTF-8");
@@ -28,10 +37,8 @@ public class GoogleTranslate extends AsyncTask<String, Void, String>{
                     APIKey +
                     "&q=" +
                     encodedQuery +
-                    "&source=" +
-                    source +
-                    "&target=" +
-                    target);
+                    sourceQuery +
+                    targetQuery);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             try {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
