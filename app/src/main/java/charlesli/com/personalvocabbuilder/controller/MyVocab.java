@@ -31,6 +31,7 @@ public class MyVocab extends CategoryItem{
         // Get Category Information
         Intent intent = getIntent();
         mCategory = intent.getStringExtra("Category");
+        setTitle(mCategory);
 
         mVocabListView = (ListView) findViewById(R.id.mVocabList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
