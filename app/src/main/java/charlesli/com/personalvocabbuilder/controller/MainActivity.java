@@ -107,8 +107,6 @@ public class MainActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Translation Settings");
 
-        VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-
         LayoutInflater li = LayoutInflater.from(MainActivity.this);
         View promptsView = li.inflate(R.layout.alert_dialog_settings, null);
 
