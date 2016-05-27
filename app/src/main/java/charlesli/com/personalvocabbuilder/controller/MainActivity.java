@@ -112,13 +112,9 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater li = LayoutInflater.from(MainActivity.this);
         View promptsView = li.inflate(R.layout.alert_dialog_settings, null);
 
-        final TextView tvTranslateFrom = (TextView) promptsView.findViewById(R.id.tvTranslateFrom);
         Spinner spinnerTranslateFrom = (Spinner) promptsView.findViewById(R.id.spinnerTranslateFrom);
-
-        final TextView tvTranslateTo = (TextView) promptsView.findViewById(R.id.tvTranslateTo);
         Spinner spinnerTranslateTo = (Spinner) promptsView.findViewById(R.id.spinnerTranslateTo);
 
-        // Spinner
         ArrayAdapter<String> fromArrayAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, LanguageOptions.FROM_LANGUAGE);
         ArrayAdapter<String> toArrayAdapter = new ArrayAdapter<String>(this,
