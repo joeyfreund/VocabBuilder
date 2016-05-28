@@ -251,22 +251,28 @@ public abstract class CategoryItem extends AppCompatActivity {
                 String source = LanguageOptions.FROM_LANGUAGE_CODE[sourcePos];
                 String target = LanguageOptions.TO_LANGUAGE_CODE[targetPos];
 
-                AsyncTask<String, Void, String> asyncTask = googleTranslate.execute(vocab, source, target);
-                try {
-                    String translatedJSON = asyncTask.get();
-                    JSONParser jsonParser = new JSONParser();
-                    String translatedText = jsonParser.parseJSONForTranslation(translatedJSON);
-                    definitionInput.setText(translatedText);
-                } catch (Exception e) {
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(CategoryItem.this);
-                    builder.setMessage("Connection error. Sorry, please try again later.");
-                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    AlertDialog alert = builder.create();
+                final AlertDialog.Builder builder = new AlertDialog.Builder(CategoryItem.this);
+                builder.setMessage("Network is unavailable. Please try again later.");
+                builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alert = builder.create();
+
+                if (isNetworkAvailable()) {
+                    AsyncTask<String, Void, String> asyncTask = googleTranslate.execute(vocab, source, target);
+                    try {
+                        String translatedJSON = asyncTask.get();
+                        JSONParser jsonParser = new JSONParser();
+                        String translatedText = jsonParser.parseJSONForTranslation(translatedJSON);
+                        definitionInput.setText(translatedText);
+                    } catch (Exception e) {
+                        alert.show();
+                    }
+                }
+                else {
                     alert.show();
                 }
             }
