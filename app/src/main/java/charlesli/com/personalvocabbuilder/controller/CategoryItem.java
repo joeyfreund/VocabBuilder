@@ -14,7 +14,9 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.text.InputType;
+import android.text.Layout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -191,21 +194,12 @@ public abstract class CategoryItem extends AppCompatActivity {
                                      final VocabCursorAdapter cursorAdapter) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add Vocab");
-        // Set up the input
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
 
-        final EditText vocabInput = new EditText(this);
-        vocabInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
-        vocabInput.setHint("Vocab");
-        layout.addView(vocabInput);
-
-        final EditText definitionInput = new EditText(this);
-        definitionInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
-        definitionInput.setHint("Definition");
-        layout.addView(definitionInput);
-
-        builder.setView(layout);
+        LayoutInflater li = LayoutInflater.from(CategoryItem.this);
+        View promptsView = li.inflate(R.layout.alert_dialog_add_vocab, null);
+        final EditText vocabInput = (EditText) promptsView.findViewById(R.id.vocabInput);
+        final EditText definitionInput = (EditText) promptsView.findViewById(R.id.definitionInput);
+        builder.setView(promptsView);
 
         // Set up the buttons
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
