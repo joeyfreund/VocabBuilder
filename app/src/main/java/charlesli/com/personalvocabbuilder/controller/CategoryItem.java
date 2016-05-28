@@ -199,6 +199,8 @@ public abstract class CategoryItem extends AppCompatActivity {
         View promptsView = li.inflate(R.layout.alert_dialog_add_vocab, null);
         final EditText vocabInput = (EditText) promptsView.findViewById(R.id.vocabInput);
         final EditText definitionInput = (EditText) promptsView.findViewById(R.id.definitionInput);
+        final ProgressBar progressBar = (ProgressBar) promptsView.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
         builder.setView(promptsView);
 
         // Set up the buttons
