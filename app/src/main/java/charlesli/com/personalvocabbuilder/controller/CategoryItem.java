@@ -238,6 +238,7 @@ public abstract class CategoryItem extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 GoogleTranslate googleTranslate = new GoogleTranslate();
+                googleTranslate.setProgressBar(progressBar);
                 String vocab = vocabInput.getText().toString();
 
                 SharedPreferences sharedPreferences = getSharedPreferences("Translation", MODE_PRIVATE);

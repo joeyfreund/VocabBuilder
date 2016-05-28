@@ -2,6 +2,8 @@ package charlesli.com.personalvocabbuilder.controller;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -15,6 +17,18 @@ import java.util.Objects;
  * Created by charles on 2016-05-24.
  */
 public class GoogleTranslate extends AsyncTask<String, Void, String>{
+
+    private ProgressBar mProgressBar;
+
+    @Override
+    protected void onPreExecute() {
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        mProgressBar.setVisibility(View.INVISIBLE);
+    }
 
     @Override
     protected String doInBackground(String... params) {
@@ -57,5 +71,9 @@ public class GoogleTranslate extends AsyncTask<String, Void, String>{
         catch (Exception e) {
             return null;
         }
+    }
+
+    public void setProgressBar(ProgressBar progressBar) {
+        mProgressBar = progressBar;
     }
 }
