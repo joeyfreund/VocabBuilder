@@ -360,8 +360,17 @@ public class MainActivity extends AppCompatActivity {
                 String selectionMyVocab = VocabDbContract.COLUMN_NAME_CATEGORY + " = ?";
                 String[] selectionArgsMyVocab = {selectedCategory};
 
+                // Update Category Table
                 db.update(
                         VocabDbContract.TABLE_NAME_CATEGORY,
+                        values,
+                        selectionMyVocab,
+                        selectionArgsMyVocab
+                );
+
+                // Update My Vocab Table for categories column to transfer the data
+                db.update(
+                        VocabDbContract.TABLE_NAME_MY_VOCAB,
                         values,
                         selectionMyVocab,
                         selectionArgsMyVocab
