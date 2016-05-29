@@ -46,6 +46,8 @@
     <string name="search_button">Search Vocab</string>
     <string name="review_button">Review</string>
     <string name="add_category">Add Category</string>
+    <color name="item_background">#ffffff</color>
+
 
     <string-array name="table_array">
         <item>My Vocab</item>
