@@ -39,7 +39,7 @@
     <string name="title_activity_my_word_bank">My Word Bank</string>
     <string name="title_activity_gmat">GMAT</string>
     <string name="title_activity_gre">GRE</string>
-    <string name="empty_text_view">Begin by adding the vocab you want to learn! :)</string>
+    <string name="empty_text_view">Begin by adding the vocab you want to learn!</string>
     <string name="label_vocab_button">Add Vocab To</string>
     <string name="select_all_button">Select All</string>
     <string name="search_vocab">Search Vocab</string>
@@ -49,6 +49,7 @@
     <color name="white">#ffffff</color>
     <color name="action_bar_background">#2b5ea2</color>
     <color name="dark_primary_color">#244f88</color>
+    <color name="light_primary_color">#3a78cc</color>
 
 
     <string-array name="table_array">
