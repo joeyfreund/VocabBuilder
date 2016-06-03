@@ -49,8 +49,8 @@
         android:layout_height="wrap_content"
         android:text="@string/level_again"
         android:id="@+id/lvl_again_button"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/bottomTextView"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/lvl_difficult_button"
         android:layout_centerHorizontal="true"/>
 
     <Button
@@ -60,7 +60,7 @@
         android:text="@string/level_difficult"
         android:id="@+id/lvl_difficult_button"
         android:layout_marginTop="@dimen/button_top_margin"
-        android:layout_below="@+id/lvl_again_button"
+        android:layout_below="@+id/lvl_familiar_button"
         android:layout_centerHorizontal="true"/>
 
     <Button
@@ -70,7 +70,7 @@
         android:text="@string/level_familiar"
         android:id="@+id/lvl_familiar_button"
         android:layout_marginTop="@dimen/button_top_margin"
-        android:layout_below="@+id/lvl_difficult_button"
+        android:layout_below="@+id/lvl_easy_button"
         android:layout_centerHorizontal="true"/>
 
     <Button
@@ -80,7 +80,7 @@
         android:text="@string/level_easy"
         android:id="@+id/lvl_easy_button"
         android:layout_marginTop="@dimen/button_top_margin"
-        android:layout_below="@+id/lvl_familiar_button"
+        android:layout_below="@+id/lvl_perfect_button"
         android:layout_centerHorizontal="true"/>
 
     <Button
@@ -89,8 +89,8 @@
         android:layout_height="wrap_content"
         android:text="@string/level_perfect"
         android:id="@+id/lvl_perfect_button"
-        android:layout_marginTop="@dimen/button_top_margin"
-        android:layout_below="@+id/lvl_easy_button"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/bottomTextView"
         android:layout_centerHorizontal="true"/>
 
 
