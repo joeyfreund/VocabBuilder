@@ -144,7 +144,13 @@ public abstract class CategoryItem extends AppCompatActivity {
                 }
             });
 
-            builder.show();
+            final AlertDialog dialog = builder.create();
+
+            dialog.show();
+
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+            dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
         }
     }
 
@@ -262,7 +268,7 @@ public abstract class CategoryItem extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-                AlertDialog alert = builder.create();
+                AlertDialog dialog = builder.create();
 
                 if (isNetworkAvailable()) {
                     AsyncTask<String, Void, String> asyncTask = googleTranslate.execute(vocab, source, target);
@@ -272,11 +278,19 @@ public abstract class CategoryItem extends AppCompatActivity {
                         String translatedText = jsonParser.parseJSONForTranslation(translatedJSON);
                         definitionInput.setText(translatedText);
                     } catch (Exception e) {
-                        alert.show();
+                        dialog.show();
+
+                        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(CategoryItem.this, R.color.app_icon_color));
+                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(CategoryItem.this, R.color.app_icon_color));
+                        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(CategoryItem.this, R.color.app_icon_color));
                     }
                 }
                 else {
-                    alert.show();
+                    dialog.show();
+
+                    dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(CategoryItem.this, R.color.app_icon_color));
+                    dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(CategoryItem.this, R.color.app_icon_color));
+                    dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(CategoryItem.this, R.color.app_icon_color));
                 }
             }
         });
@@ -350,7 +364,14 @@ public abstract class CategoryItem extends AppCompatActivity {
             }
         });
 
-        builder.show();
+        final AlertDialog dialog = builder.create();
+
+        dialog.show();
+
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+
     }
 
     protected void implementSearchBar(Menu menu, int menuItemId, final String category,
