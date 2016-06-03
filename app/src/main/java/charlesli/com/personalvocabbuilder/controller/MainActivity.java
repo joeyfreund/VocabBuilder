@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -176,7 +177,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        builder.show();
+        final AlertDialog dialog = builder.create();
+
+        dialog.show();
+
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
     }
 
     private void createAddCategoryDialog() {
@@ -214,7 +221,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        builder.show();
+        final AlertDialog dialog = builder.create();
+
+        dialog.show();
+
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
     }
 
     private void createReviewDialog() {
@@ -330,7 +343,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        builder.show();
+        final AlertDialog dialog = builder.create();
+
+        dialog.show();
+
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
     }
 
     protected void editCategoryAlertDialog(final String selectedCategory, final long id, final VocabDbHelper dbHelper,
@@ -405,7 +424,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        builder.show();
+        final AlertDialog dialog = builder.create();
+
+        dialog.show();
+
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
     }
 
 }
