@@ -47,9 +47,9 @@
     <string name="review_button">Review</string>
     <string name="add_category">Add Category</string>
     <color name="white">#ffffff</color>
-    <color name="action_bar_background">#2b5ea2</color>
+    <color name="app_icon_color">#2b5ea2</color>
     <color name="dark_primary_color">#244f88</color>
-    <color name="light_primary_color">#3a78cc</color>
+    <color name="light_primary_color">#5e8ed1</color>
 
 
     <string-array name="table_array">

@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/action_bar_background</item>
+        <item name="colorPrimary">@color/app_icon_color</item>
         <item name="colorPrimaryDark">@color/dark_primary_color</item>
         <item name="colorControlNormal">@color/light_primary_color</item>
         <item name="colorControlActivated">@color/light_primary_color</item>
