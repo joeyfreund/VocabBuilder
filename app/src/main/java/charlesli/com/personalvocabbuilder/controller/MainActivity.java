@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 Cursor categoryCursor = mDbHelper.getCategoryCursor();
                 categoryCursor.moveToPosition(position);
                 String categoryName = categoryCursor.getString(categoryCursor.getColumnIndex(VocabDbContract.COLUMN_NAME_CATEGORY));
-                editCategoryAlertDialog(categoryName, id, mDbHelper, mCategoryAdapter);
+                editCategoryAlertDialog(categoryName, mDbHelper, mCategoryAdapter);
                 return true;
             }
         });
@@ -352,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
     }
 
-    protected void editCategoryAlertDialog(final String selectedCategory, final long id, final VocabDbHelper dbHelper,
+    protected void editCategoryAlertDialog(final String selectedCategory, final VocabDbHelper dbHelper,
                                         final CategoryCursorAdapter cursorAdapter) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit Category");
