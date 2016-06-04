@@ -407,20 +407,41 @@ public class MainActivity extends AppCompatActivity {
                 cursorAdapter.changeCursor(dbHelper.getCategoryCursor());
             }
         });
-        builder.setNegativeButton("Delete     ", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Delete Category from Database
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-                // Define 'where' part of query
-                String selection = VocabDbContract._ID + " LIKE ?";
-                // Specify arguments in placeholder order
-                String[] selectionArgs = {String.valueOf(id)};
-                // Issue SQL statement
-                db.delete(VocabDbContract.TABLE_NAME_CATEGORY, selection, selectionArgs);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage("This action will delete all the vocab in this category.");
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Delete Category from Database
+                        SQLiteDatabase db = dbHelper.getWritableDatabase();
+                        // Define 'where' part of query
+                        String selection = VocabDbContract.COLUMN_NAME_CATEGORY + " LIKE ?";
+                        // Specify arguments in placeholder order
+                        String[] selectionArgs = {selectedCategory};
+                        // Issue SQL statement
+                        db.delete(VocabDbContract.TABLE_NAME_CATEGORY, selection, selectionArgs);
+                        db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
 
-                // Update Cursor
-                cursorAdapter.changeCursor(dbHelper.getCategoryCursor());
+                        // Update Cursor
+                        cursorAdapter.changeCursor(dbHelper.getCategoryCursor());
+
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                alertDialog.getButton(DialogInterface.BUTTON_POSITIVE)
+                        .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.app_icon_color));
+                alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE)
+                        .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.app_icon_color));
             }
         });
 
