@@ -263,6 +263,21 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    public int getCategoryLevelSum(String category) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT SUM(" +
+                VocabDbContract.COLUMN_NAME_LEVEL + ") FROM " +
+                VocabDbContract.TABLE_NAME_MY_VOCAB + " WHERE " +
+                VocabDbContract.COLUMN_NAME_CATEGORY + " = " + "'" + category + "'";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            int sum = cursor.getInt(0);
+            cursor.close();
+            return sum;
+        }
+        return 0;
+    }
+
 
 }
 
