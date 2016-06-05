@@ -25,7 +25,7 @@
         android:layout_centerVertical="true"
         custom:donut_text_size="0dp"
         custom:donut_finished_color="@color/light_primary_color"
-        custom:donut_unfinished_color="#d8e6f9"
+        custom:donut_unfinished_color="#d0e1f8"
         custom:donut_progress="0"/>
 
 
