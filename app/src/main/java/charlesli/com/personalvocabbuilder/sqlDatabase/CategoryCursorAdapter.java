@@ -8,13 +8,17 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import com.github.lzyzsd.circleprogress.DonutProgress;
+
 import charlesli.com.personalvocabbuilder.R;
+import charlesli.com.personalvocabbuilder.controller.MyVocab;
 
 /**
  * Created by charles on 2016-05-21.
  */
 public class CategoryCursorAdapter extends CursorAdapter {
 
+    private VocabDbHelper mDBHelper;
     public CategoryCursorAdapter(Context context, Cursor c, int flags) {
         super(context, c, 0);
     }
@@ -29,5 +33,11 @@ public class CategoryCursorAdapter extends CursorAdapter {
         TextView tvCategory = (TextView) view.findViewById(R.id.categoryName);
         String categoryName = cursor.getString(cursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_CATEGORY));
         tvCategory.setText(categoryName);
+        mDBHelper = VocabDbHelper.getDBHelper(context);
+        Cursor vocabCursor = mDBHelper.getVocabCursor(categoryName);
+        int progress = vocabCursor.getCount();
+        DonutProgress donutProgress = (DonutProgress) view.findViewById(R.id.donut_progress);
+        donutProgress.setMax(3 * progress);
+        donutProgress.setProgress(progress);
     }
 }
