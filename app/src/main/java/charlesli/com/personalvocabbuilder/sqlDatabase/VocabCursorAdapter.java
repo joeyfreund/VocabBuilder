@@ -69,7 +69,6 @@ public class VocabCursorAdapter extends CursorAdapter {
         TextView tvVocabName = (TextView) view.findViewById(R.id.vocabName);
         TextView tvVocabDefinition = (TextView) view.findViewById(R.id.vocabDefinition);
         ImageView tvVocabLevel = (ImageView) view.findViewById(R.id.vocabLevel);
-        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         // Extract properties from cursor
         String vocab = cursor.getString(cursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_VOCAB));
         String definition = cursor.getString(cursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_DEFINITION));
@@ -77,7 +76,7 @@ public class VocabCursorAdapter extends CursorAdapter {
         // Populate fields with extracted properties
         tvVocabName.setText(vocab);
         tvVocabDefinition.setText(definition);
-        progressBar.setProgress(20);
+
         // Set Level images later *************************************************
         if (level == DIFFICULT) {
             tvVocabLevel.setImageResource(R.drawable.level_bars_difficult);
