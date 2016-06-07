@@ -81,19 +81,19 @@ public class VocabCursorAdapter extends CursorAdapter {
 
         // Set Level images later *************************************************
         if (level == DIFFICULT) {
-            tvVocabLevel.setImageResource(R.drawable.level_bars_difficult);
+            tvVocabLevel.setImageResource(R.drawable.level_difficult);
             tvVocabLevel.setTag(DIFFICULT);
         }
         else if (level == FAMILIAR) {
-            tvVocabLevel.setImageResource(R.drawable.level_bars_familiar);
+            tvVocabLevel.setImageResource(R.drawable.level_familiar);
             tvVocabLevel.setTag(FAMILIAR);
         }
         else if (level == EASY) {
-            tvVocabLevel.setImageResource(R.drawable.level_bars_easy);
+            tvVocabLevel.setImageResource(R.drawable.level_easy);
             tvVocabLevel.setTag(EASY);
         }
         else if (level == PERFECT) {
-            tvVocabLevel.setImageResource(R.drawable.level_bars_perfect);
+            tvVocabLevel.setImageResource(R.drawable.level_perfect);
             tvVocabLevel.setTag(PERFECT);
         }
 
