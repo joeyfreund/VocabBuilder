@@ -44,8 +44,10 @@ public class MainActivity extends AppCompatActivity {
     private final int WORDTODEF = 0;
     private final int DEFTOWORD = 1;
     private String reviewCategory = VocabDbContract.CATEGORY_NAME_MY_VOCAB;
-    private Integer reviewMode = WORDTODEF;
-    private Integer reviewNumOfWords = 0;
+    private int reviewMode = WORDTODEF;
+    private int reviewNumOfWords = 0;
+    private final int DETECT_LANGUAGE = 0;
+    private final int ENGLISH = 19;
 
     private CategoryCursorAdapter mCategoryAdapter;
     private ListView mCategoryListView;
@@ -141,8 +143,8 @@ public class MainActivity extends AppCompatActivity {
         spinnerTranslateTo.setAdapter(toArrayAdapter);
 
         final SharedPreferences sharedPreferences = getSharedPreferences("Translation", MODE_PRIVATE);
-        int source = sharedPreferences.getInt("Source", 0); // 0 is for Detect Language
-        int target = sharedPreferences.getInt("Target", 19); // 19 is for English
+        int source = sharedPreferences.getInt("Source", DETECT_LANGUAGE);
+        int target = sharedPreferences.getInt("Target", ENGLISH);
 
         spinnerTranslateFrom.setSelection(source);
         spinnerTranslateTo.setSelection(target);
