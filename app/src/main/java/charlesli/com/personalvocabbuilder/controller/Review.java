@@ -52,6 +52,8 @@ public class Review extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Intent intent = getIntent();
         // default value, 0, indicates Word -> Definition review option
         mReviewMode = intent.getIntExtra("Mode", 0);

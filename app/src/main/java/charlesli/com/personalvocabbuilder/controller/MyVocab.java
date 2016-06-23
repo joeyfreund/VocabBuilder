@@ -32,6 +32,7 @@ public class MyVocab extends CategoryItem{
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Get Category Information
         Intent intent = getIntent();
         mCategory = intent.getStringExtra("Category");
