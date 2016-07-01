@@ -27,7 +27,7 @@ public class GoogleTranslate extends AsyncTask<String, Void, String>{
 
     @Override
     protected void onPostExecute(String s) {
-        mProgressBar.setVisibility(View.INVISIBLE);
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override
