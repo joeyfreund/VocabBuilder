@@ -33,5 +33,9 @@ public class CategoryCursorAdapter extends CursorAdapter {
         TextView tvCategory = (TextView) view.findViewById(R.id.categoryName);
         String categoryName = cursor.getString(cursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_CATEGORY));
         tvCategory.setText(categoryName);
+
+        TextView tvDescription = (TextView) view.findViewById(R.id.categoryDesc);
+        String categoryDesc = cursor.getString(cursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_DESCRIPTION));
+        tvDescription.setText(categoryDesc);
     }
 }

@@ -32,8 +32,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Stores every vocab that you've added"
-        android:id="@+id/textView"
+        android:text="Vocab"
+        android:id="@+id/categoryDesc"
         android:layout_below="@id/categoryName"
         android:layout_alignLeft="@id/categoryName"/>
 
