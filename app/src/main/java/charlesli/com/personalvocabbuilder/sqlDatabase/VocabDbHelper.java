@@ -164,22 +164,22 @@ public class VocabDbHelper extends SQLiteOpenHelper {
                     " SET " + VocabDbContract.COLUMN_NAME_DESCRIPTION +
                     " = " + "'Vocab currently being learned'" +
                     " WHERE " + VocabDbContract.COLUMN_NAME_CATEGORY +
-                    " = " + VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
+                    " = " + "'" + VocabDbContract.CATEGORY_NAME_MY_VOCAB + "'");
             db.execSQL("UPDATE " + VocabDbContract.TABLE_NAME_CATEGORY +
                     " SET " + VocabDbContract.COLUMN_NAME_DESCRIPTION +
                     " = " + "'Every vocab that you have added'" +
                     " WHERE " + VocabDbContract.COLUMN_NAME_CATEGORY +
-                    " = " + VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
+                    " = " + "'" + VocabDbContract.CATEGORY_NAME_MY_WORD_BANK + "'");
             db.execSQL("UPDATE " + VocabDbContract.TABLE_NAME_CATEGORY +
                     " SET " + VocabDbContract.COLUMN_NAME_DESCRIPTION +
                     " = " + "'Graduate Management Admission Test'" +
                     " WHERE " + VocabDbContract.COLUMN_NAME_CATEGORY +
-                    " = " + VocabDbContract.CATEGORY_NAME_GMAT);
+                    " = " + "'" + VocabDbContract.CATEGORY_NAME_GMAT + "'");
             db.execSQL("UPDATE " + VocabDbContract.TABLE_NAME_CATEGORY +
                     " SET " + VocabDbContract.COLUMN_NAME_DESCRIPTION +
                     " = " + "'Graduate Record Examination'" +
                     " WHERE " + VocabDbContract.COLUMN_NAME_CATEGORY +
-                    " = " + VocabDbContract.CATEGORY_NAME_GRE);
+                    " = " + "'" + VocabDbContract.CATEGORY_NAME_GRE + "'");
         }
 
     }
@@ -262,7 +262,8 @@ public class VocabDbHelper extends SQLiteOpenHelper {
 
         String[] projection = {
                 VocabDbContract._ID,
-                VocabDbContract.COLUMN_NAME_CATEGORY
+                VocabDbContract.COLUMN_NAME_CATEGORY,
+                VocabDbContract.COLUMN_NAME_DESCRIPTION
         };
 
         Cursor cursor = db.query(
