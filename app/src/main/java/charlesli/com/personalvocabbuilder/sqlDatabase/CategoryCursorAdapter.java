@@ -33,11 +33,5 @@ public class CategoryCursorAdapter extends CursorAdapter {
         TextView tvCategory = (TextView) view.findViewById(R.id.categoryName);
         String categoryName = cursor.getString(cursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_CATEGORY));
         tvCategory.setText(categoryName);
-        //mDBHelper = VocabDbHelper.getDBHelper(context);
-        //Cursor vocabCursor = mDBHelper.getVocabCursor(categoryName);
-        //int numOfRows = vocabCursor.getCount();
-        //DonutProgress donutProgress = (DonutProgress) view.findViewById(R.id.donut_progress);
-        //donutProgress.setMax(3 * numOfRows);
-        //donutProgress.setProgress(mDBHelper.getCategoryLevelSum(categoryName));
     }
 }

@@ -89,15 +89,16 @@ public class VocabDbHelper extends SQLiteOpenHelper {
     }
 
     private void loadDefaultCategoryTable(SQLiteDatabase db) {
-        loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_MY_VOCAB);
-        loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
-        loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_GMAT);
-        loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_GRE);
+        loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_MY_VOCAB, "Vocab currently being learned");
+        loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_MY_WORD_BANK, "Every vocab that you have added");
+        loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_GMAT, "Graduate Management Admission Test");
+        loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_GRE, "Graduate Record Examination");
     }
 
-    private void loadDefaultCategoryValue(SQLiteDatabase db, String category) {
+    private void loadDefaultCategoryValue(SQLiteDatabase db, String category, String description) {
         ContentValues cv = new ContentValues();
         cv.put(VocabDbContract.COLUMN_NAME_CATEGORY, category);
+        cv.put(VocabDbContract.COLUMN_NAME_DESCRIPTION, description);
         db.insert(VocabDbContract.TABLE_NAME_CATEGORY, null, cv);
     }
 
@@ -158,8 +159,27 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         }
         if (oldVersion <= 5) {
             db.execSQL("ALTER TABLE " + VocabDbContract.TABLE_NAME_CATEGORY +
-                    " ADD COLUMN " + VocabDbContract.COLUMN_NAME_DESCRIPTION + " TEXT DEFAULT ''");
-            //db.execSQL();
+                    " ADD COLUMN " + VocabDbContract.COLUMN_NAME_DESCRIPTION + " TEXT");
+            db.execSQL("UPDATE " + VocabDbContract.TABLE_NAME_CATEGORY +
+                    " SET " + VocabDbContract.COLUMN_NAME_DESCRIPTION +
+                    " = " + "'Vocab currently being learned'" +
+                    " WHERE " + VocabDbContract.COLUMN_NAME_CATEGORY +
+                    " = " + VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
+            db.execSQL("UPDATE " + VocabDbContract.TABLE_NAME_CATEGORY +
+                    " SET " + VocabDbContract.COLUMN_NAME_DESCRIPTION +
+                    " = " + "'Every vocab that you have added'" +
+                    " WHERE " + VocabDbContract.COLUMN_NAME_CATEGORY +
+                    " = " + VocabDbContract.CATEGORY_NAME_MY_WORD_BANK);
+            db.execSQL("UPDATE " + VocabDbContract.TABLE_NAME_CATEGORY +
+                    " SET " + VocabDbContract.COLUMN_NAME_DESCRIPTION +
+                    " = " + "'Graduate Management Admission Test'" +
+                    " WHERE " + VocabDbContract.COLUMN_NAME_CATEGORY +
+                    " = " + VocabDbContract.CATEGORY_NAME_GMAT);
+            db.execSQL("UPDATE " + VocabDbContract.TABLE_NAME_CATEGORY +
+                    " SET " + VocabDbContract.COLUMN_NAME_DESCRIPTION +
+                    " = " + "'Graduate Record Examination'" +
+                    " WHERE " + VocabDbContract.COLUMN_NAME_CATEGORY +
+                    " = " + VocabDbContract.CATEGORY_NAME_GRE);
         }
 
     }
