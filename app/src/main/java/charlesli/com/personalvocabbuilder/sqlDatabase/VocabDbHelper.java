@@ -14,7 +14,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
     private static VocabDbHelper dbInstance;
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 5; // previously 3
+    public static final int DATABASE_VERSION = 6;
     public static final String DATABASE_NAME = "VocabDatabase.db";
 
 
@@ -31,7 +31,8 @@ public class VocabDbHelper extends SQLiteOpenHelper {
     private String CREATE_TABLE_CATEGORY =
             "CREATE TABLE  " + VocabDbContract.TABLE_NAME_CATEGORY +
                     " (" + VocabDbContract._ID + " INTEGER PRIMARY KEY," +
-                    VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT );";
+                    VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT, " +
+                    VocabDbContract.COLUMN_NAME_DESCRIPTION + " TEXT );";
 
 
 
@@ -151,10 +152,16 @@ public class VocabDbHelper extends SQLiteOpenHelper {
             db.execSQL(DELETE_TABLE_GMAT);
             db.execSQL(DELETE_TABLE_GRE);
         }
-        if (oldVersion < newVersion) {
+        if (oldVersion <= 4) {
             db.execSQL(CREATE_TABLE_CATEGORY);
             loadDefaultCategoryTable(db);
         }
+        if (oldVersion <= 5) {
+            db.execSQL("ALTER TABLE " + VocabDbContract.TABLE_NAME_CATEGORY +
+                    " ADD COLUMN " + VocabDbContract.COLUMN_NAME_DESCRIPTION + " TEXT DEFAULT ''");
+            //db.execSQL();
+        }
+
     }
 
     public void insertVocab(String category, String vocab, String definition, int level) {
