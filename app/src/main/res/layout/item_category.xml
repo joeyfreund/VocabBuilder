@@ -6,10 +6,10 @@
     android:padding="5dp">
 
     <ImageView
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:id="@+id/categoryImage"
-        android:src="@drawable/book_single_rotation"
+        android:src="@drawable/book_icon_color"
         android:scaleType="fitXY"
         android:contentDescription="@string/vocab_level"
         android:layout_centerVertical="true"
