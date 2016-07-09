@@ -399,6 +399,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String categoryName = categoryNameInput.getText().toString();
                 String categoryDesc = categoryDescInput.getText().toString();
+
+                if (mDbHelper.checkIfCategoryExists(categoryName)) {
+                    Toast.makeText(MainActivity.this, categoryName + " already exists", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
 
                 ContentValues vocabTableValues = new ContentValues();
