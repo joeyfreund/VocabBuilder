@@ -397,44 +397,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String categoryName = categoryNameInput.getText().toString();
-                String categoryDesc = categoryDescInput.getText().toString();
 
-                if (mDbHelper.checkIfCategoryExists(categoryName)) {
-                    Toast.makeText(MainActivity.this, categoryName + " already exists", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-                ContentValues vocabTableValues = new ContentValues();
-                vocabTableValues.put(VocabDbContract.COLUMN_NAME_CATEGORY, categoryName);
-
-                ContentValues categoryTableValues = new ContentValues();
-                categoryTableValues.put(VocabDbContract.COLUMN_NAME_CATEGORY, categoryName);
-                categoryTableValues.put(VocabDbContract.COLUMN_NAME_DESCRIPTION, categoryDesc);
-
-                String selectionVocab = VocabDbContract.COLUMN_NAME_CATEGORY + " = ?";
-                String[] selectionArgsVocab = {selectedCategory};
-
-                // Update Category Table
-                db.update(
-                        VocabDbContract.TABLE_NAME_CATEGORY,
-                        categoryTableValues,
-                        selectionVocab,
-                        selectionArgsVocab
-                );
-
-                // Update Vocab Table for categories column to transfer the data
-                db.update(
-                        VocabDbContract.TABLE_NAME_MY_VOCAB,
-                        vocabTableValues,
-                        selectionVocab,
-                        selectionArgsVocab
-                );
-
-                // Update Cursor
-                cursorAdapter.changeCursor(dbHelper.getCategoryCursor());
             }
         });
         builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
@@ -482,6 +445,51 @@ public class MainActivity extends AppCompatActivity {
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
         dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
         dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String categoryName = categoryNameInput.getText().toString();
+                String categoryDesc = categoryDescInput.getText().toString();
+
+                if (mDbHelper.checkIfCategoryExists(categoryName)) {
+                    Toast.makeText(MainActivity.this, categoryName + " already exists", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+                    ContentValues vocabTableValues = new ContentValues();
+                    vocabTableValues.put(VocabDbContract.COLUMN_NAME_CATEGORY, categoryName);
+
+                    ContentValues categoryTableValues = new ContentValues();
+                    categoryTableValues.put(VocabDbContract.COLUMN_NAME_CATEGORY, categoryName);
+                    categoryTableValues.put(VocabDbContract.COLUMN_NAME_DESCRIPTION, categoryDesc);
+
+                    String selectionVocab = VocabDbContract.COLUMN_NAME_CATEGORY + " = ?";
+                    String[] selectionArgsVocab = {selectedCategory};
+
+                    // Update Category Table
+                    db.update(
+                            VocabDbContract.TABLE_NAME_CATEGORY,
+                            categoryTableValues,
+                            selectionVocab,
+                            selectionArgsVocab
+                    );
+
+                    // Update Vocab Table for categories column to transfer the data
+                    db.update(
+                            VocabDbContract.TABLE_NAME_MY_VOCAB,
+                            vocabTableValues,
+                            selectionVocab,
+                            selectionArgsVocab
+                    );
+
+                    // Update Cursor
+                    cursorAdapter.changeCursor(dbHelper.getCategoryCursor());
+                    dialog.dismiss();
+                }
+            }
+        });
     }
 
 }
