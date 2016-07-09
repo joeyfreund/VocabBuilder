@@ -309,6 +309,7 @@ public abstract class CategoryItem extends AppCompatActivity {
         final EditText definitionInput = new EditText(this);
         definitionInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
         definitionInput.setHint("New Definition");
+        definitionInput.setText(selectedDefinition);
         layout.addView(definitionInput);
 
         builder.setView(layout);
