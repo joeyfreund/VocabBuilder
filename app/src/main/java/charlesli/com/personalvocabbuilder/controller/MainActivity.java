@@ -373,10 +373,15 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
 
-        final EditText categoryInput = new EditText(this);
-        categoryInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
-        categoryInput.setHint("New category name");
-        layout.addView(categoryInput);
+        final EditText categoryNameInput = new EditText(this);
+        categoryNameInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+        categoryNameInput.setHint("New name");
+        layout.addView(categoryNameInput);
+
+        final EditText categoryDescInput = new EditText(this);
+        categoryDescInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+        categoryDescInput.setHint("New description");
+        layout.addView(categoryDescInput);
 
         builder.setView(layout);
 
@@ -390,29 +395,34 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String categoryName = categoryInput.getText().toString();
+                String categoryName = categoryNameInput.getText().toString();
+                String categoryDesc = categoryDescInput.getText().toString();
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-                ContentValues values = new ContentValues();
-                values.put(VocabDbContract.COLUMN_NAME_CATEGORY, categoryName);
+                ContentValues vocabTableValues = new ContentValues();
+                vocabTableValues.put(VocabDbContract.COLUMN_NAME_CATEGORY, categoryName);
 
-                String selectionMyVocab = VocabDbContract.COLUMN_NAME_CATEGORY + " = ?";
-                String[] selectionArgsMyVocab = {selectedCategory};
+                ContentValues categoryTableValues = new ContentValues();
+                categoryTableValues.put(VocabDbContract.COLUMN_NAME_CATEGORY, categoryName);
+                categoryTableValues.put(VocabDbContract.COLUMN_NAME_DESCRIPTION, categoryDesc);
+
+                String selectionVocab = VocabDbContract.COLUMN_NAME_CATEGORY + " = ?";
+                String[] selectionArgsVocab = {selectedCategory};
 
                 // Update Category Table
                 db.update(
                         VocabDbContract.TABLE_NAME_CATEGORY,
-                        values,
-                        selectionMyVocab,
-                        selectionArgsMyVocab
+                        categoryTableValues,
+                        selectionVocab,
+                        selectionArgsVocab
                 );
 
-                // Update My Vocab Table for categories column to transfer the data
+                // Update Vocab Table for categories column to transfer the data
                 db.update(
                         VocabDbContract.TABLE_NAME_MY_VOCAB,
-                        values,
-                        selectionMyVocab,
-                        selectionArgsMyVocab
+                        vocabTableValues,
+                        selectionVocab,
+                        selectionArgsVocab
                 );
 
                 // Update Cursor
