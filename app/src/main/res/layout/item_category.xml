@@ -6,8 +6,8 @@
     android:padding="5dp">
 
     <ImageView
-        android:layout_width="42dp"
-        android:layout_height="42dp"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
         android:id="@+id/categoryImage"
         android:src="@drawable/book_icon_color"
         android:scaleType="fitXY"
