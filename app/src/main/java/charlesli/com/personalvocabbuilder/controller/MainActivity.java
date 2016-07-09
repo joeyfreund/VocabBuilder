@@ -1,6 +1,5 @@
 package charlesli.com.personalvocabbuilder.controller;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -8,8 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -202,10 +199,15 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
 
-        final EditText categoryInput = new EditText(this);
-        categoryInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
-        categoryInput.setHint("Category name");
-        layout.addView(categoryInput);
+        final EditText categoryNameInput = new EditText(this);
+        categoryNameInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+        categoryNameInput.setHint("Name");
+        layout.addView(categoryNameInput);
+
+        final EditText categoryDescInput = new EditText(this);
+        categoryDescInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+        categoryDescInput.setHint("Description");
+        layout.addView(categoryDescInput);
 
         builder.setView(layout);
 
@@ -213,12 +215,13 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String category = categoryInput.getText().toString();
-                if (mDbHelper.checkIfCategoryExists(category)) {
-                    Toast.makeText(MainActivity.this, category + " already exists", Toast.LENGTH_SHORT).show();
+                String name = categoryNameInput.getText().toString();
+                String description = categoryDescInput.getText().toString();
+                if (mDbHelper.checkIfCategoryExists(name)) {
+                    Toast.makeText(MainActivity.this, name + " already exists", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    mDbHelper.insertCategory(category);
+                    mDbHelper.insertCategory(name, description);
                     mCategoryAdapter.changeCursor(mDbHelper.getCategoryCursor());
                 }
             }

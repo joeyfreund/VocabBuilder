@@ -248,11 +248,12 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public void insertCategory(String category) {
+    public void insertCategory(String name, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(VocabDbContract.COLUMN_NAME_CATEGORY, category);
+        values.put(VocabDbContract.COLUMN_NAME_CATEGORY, name);
+        values.put(VocabDbContract.COLUMN_NAME_DESCRIPTION, description);
 
         db.insert(VocabDbContract.TABLE_NAME_CATEGORY, null, values);
     }
