@@ -83,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
                 Cursor categoryCursor = mDbHelper.getCategoryCursor();
                 categoryCursor.moveToPosition(position);
                 String categoryName = categoryCursor.getString(categoryCursor.getColumnIndex(VocabDbContract.COLUMN_NAME_CATEGORY));
-                editCategoryAlertDialog(categoryName, mDbHelper, mCategoryAdapter);
+                String categoryDesc = categoryCursor.getString(categoryCursor.getColumnIndex(VocabDbContract.COLUMN_NAME_DESCRIPTION));
+                editCategoryAlertDialog(categoryName, categoryDesc, mDbHelper, mCategoryAdapter);
                 return true;
             }
         });
@@ -364,11 +365,10 @@ public class MainActivity extends AppCompatActivity {
         dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
     }
 
-    protected void editCategoryAlertDialog(final String selectedCategory, final VocabDbHelper dbHelper,
+    protected void editCategoryAlertDialog(final String selectedCategory, String selectedDesc, final VocabDbHelper dbHelper,
                                         final CategoryCursorAdapter cursorAdapter) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit Category");
-        builder.setMessage(selectedCategory);
         // Set up the input
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -376,11 +376,13 @@ public class MainActivity extends AppCompatActivity {
         final EditText categoryNameInput = new EditText(this);
         categoryNameInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
         categoryNameInput.setHint("New name");
+        categoryNameInput.setText(selectedCategory);
         layout.addView(categoryNameInput);
 
         final EditText categoryDescInput = new EditText(this);
         categoryDescInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
         categoryDescInput.setHint("New description");
+        categoryDescInput.setText(selectedDesc);
         layout.addView(categoryDescInput);
 
         builder.setView(layout);
