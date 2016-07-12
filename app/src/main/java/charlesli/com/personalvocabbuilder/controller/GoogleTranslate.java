@@ -39,7 +39,6 @@ public class GoogleTranslate extends AsyncTask<String, Void, String>{
         String sourceQuery = "";
         String targetQuery = "&target=" + target;
 
-        // "" means its
         if (!source.equals("Detect Language")) {
             sourceQuery = "&source=" + source;
         }
