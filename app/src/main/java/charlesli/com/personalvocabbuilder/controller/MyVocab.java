@@ -305,8 +305,6 @@ public class MyVocab extends AppCompatActivity {
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoogleTranslate googleTranslate = new GoogleTranslate();
-                googleTranslate.setProgressBar(progressBar);
                 String vocab = vocabInput.getText().toString();
 
                 SharedPreferences sharedPreferences = getSharedPreferences("Translation", MODE_PRIVATE);
@@ -327,6 +325,8 @@ public class MyVocab extends AppCompatActivity {
                 AlertDialog dialog = builder.create();
 
                 if (isNetworkAvailable()) {
+                    GoogleTranslate googleTranslate = new GoogleTranslate();
+                    googleTranslate.setProgressBar(progressBar);
                     progressBar.setVisibility(View.VISIBLE);
                     AsyncTask<String, Void, String> asyncTask = googleTranslate.execute(vocab, source, target);
                     try {
