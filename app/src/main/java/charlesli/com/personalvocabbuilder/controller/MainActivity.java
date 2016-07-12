@@ -365,8 +365,8 @@ public class MainActivity extends AppCompatActivity {
         dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
     }
 
-    protected void editCategoryAlertDialog(final String selectedCategory, String selectedDesc, final VocabDbHelper dbHelper,
-                                        final CategoryCursorAdapter cursorAdapter) {
+    protected void editCategoryAlertDialog(final String selectedCategory, final String selectedDesc, final VocabDbHelper dbHelper,
+                                           final CategoryCursorAdapter cursorAdapter) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit Category");
         // Set up the input
@@ -452,9 +452,11 @@ public class MainActivity extends AppCompatActivity {
                 String categoryName = categoryNameInput.getText().toString();
                 String categoryDesc = categoryDescInput.getText().toString();
 
-                if (mDbHelper.checkIfCategoryExists(categoryName)) {
+                // If new category name exists already
+                if (!selectedCategory.equals(categoryName) && mDbHelper.checkIfCategoryExists(categoryName)) {
                     Toast.makeText(MainActivity.this, categoryName + " already exists", Toast.LENGTH_SHORT).show();
                 }
+                // If attempting to modify My Word Bank's name
                 else if (selectedCategory.equals("My Word Bank")) {
                     Toast.makeText(MainActivity.this, "My Word Bank is a special category so its name can't be edited", Toast.LENGTH_SHORT).show();
                 }
