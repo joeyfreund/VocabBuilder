@@ -455,6 +455,9 @@ public class MainActivity extends AppCompatActivity {
                 if (mDbHelper.checkIfCategoryExists(categoryName)) {
                     Toast.makeText(MainActivity.this, categoryName + " already exists", Toast.LENGTH_SHORT).show();
                 }
+                else if (selectedCategory.equals("My Word Bank")) {
+                    Toast.makeText(MainActivity.this, "My Word Bank is a special category so its name can't be edited", Toast.LENGTH_SHORT).show();
+                }
                 else {
                     SQLiteDatabase db = dbHelper.getReadableDatabase();
 
