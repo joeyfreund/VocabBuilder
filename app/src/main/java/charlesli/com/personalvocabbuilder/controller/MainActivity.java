@@ -367,46 +367,46 @@ public class MainActivity extends AppCompatActivity {
 
     protected void editCategoryAlertDialog(final String selectedCategory, final String selectedDesc, final VocabDbHelper dbHelper,
                                            final CategoryCursorAdapter cursorAdapter) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Edit Category");
-        // Set up the input
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
+        if (selectedCategory.equals("My Word Bank")) {
+            Toast.makeText(MainActivity.this, "My Word Bank is a special use category so it can't be modified", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Edit Category");
+            // Set up the input
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.VERTICAL);
 
-        final EditText categoryNameInput = new EditText(this);
-        categoryNameInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
-        categoryNameInput.setHint("New name");
-        categoryNameInput.setText(selectedCategory);
-        layout.addView(categoryNameInput);
+            final EditText categoryNameInput = new EditText(this);
+            categoryNameInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+            categoryNameInput.setHint("New name");
+            categoryNameInput.setText(selectedCategory);
+            layout.addView(categoryNameInput);
 
-        final EditText categoryDescInput = new EditText(this);
-        categoryDescInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
-        categoryDescInput.setHint("New description");
-        categoryDescInput.setText(selectedDesc);
-        layout.addView(categoryDescInput);
+            final EditText categoryDescInput = new EditText(this);
+            categoryDescInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE);
+            categoryDescInput.setHint("New description");
+            categoryDescInput.setText(selectedDesc);
+            layout.addView(categoryDescInput);
 
-        builder.setView(layout);
+            builder.setView(layout);
 
-        // Set up the buttons
-        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (selectedCategory.equals("My Word Bank")) {
-                    Toast.makeText(MainActivity.this, "My Word Bank is a special use category so it can't be deleted", Toast.LENGTH_SHORT).show();
+            // Set up the buttons
+            builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
                 }
-                else {
+            });
+            builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("This action will delete all the vocab in this category.");
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -439,67 +439,64 @@ public class MainActivity extends AppCompatActivity {
                             .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.app_icon_color));
                     alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE)
                             .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.app_icon_color));
+
                 }
-            }
-        });
+            });
 
-        final AlertDialog dialog = builder.create();
+            final AlertDialog dialog = builder.create();
 
-        dialog.show();
+            dialog.show();
 
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
-        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
-        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+            dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
 
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String categoryName = categoryNameInput.getText().toString();
-                String categoryDesc = categoryDescInput.getText().toString();
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String categoryName = categoryNameInput.getText().toString();
+                    String categoryDesc = categoryDescInput.getText().toString();
 
-                // If new category name exists already
-                if (!selectedCategory.equals(categoryName) && mDbHelper.checkIfCategoryExists(categoryName)) {
-                    Toast.makeText(MainActivity.this, categoryName + " already exists", Toast.LENGTH_SHORT).show();
+                    // If new category name exists already
+                    if (!selectedCategory.equals(categoryName) && mDbHelper.checkIfCategoryExists(categoryName)) {
+                        Toast.makeText(MainActivity.this, categoryName + " already exists", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+                        ContentValues vocabTableValues = new ContentValues();
+                        vocabTableValues.put(VocabDbContract.COLUMN_NAME_CATEGORY, categoryName);
+
+                        ContentValues categoryTableValues = new ContentValues();
+                        categoryTableValues.put(VocabDbContract.COLUMN_NAME_CATEGORY, categoryName);
+                        categoryTableValues.put(VocabDbContract.COLUMN_NAME_DESCRIPTION, categoryDesc);
+
+                        String selectionVocab = VocabDbContract.COLUMN_NAME_CATEGORY + " = ?";
+                        String[] selectionArgsVocab = {selectedCategory};
+
+                        // Update Category Table
+                        db.update(
+                                VocabDbContract.TABLE_NAME_CATEGORY,
+                                categoryTableValues,
+                                selectionVocab,
+                                selectionArgsVocab
+                        );
+
+                        // Update Vocab Table for categories column to transfer the data
+                        db.update(
+                                VocabDbContract.TABLE_NAME_MY_VOCAB,
+                                vocabTableValues,
+                                selectionVocab,
+                                selectionArgsVocab
+                        );
+
+                        // Update Cursor
+                        cursorAdapter.changeCursor(dbHelper.getCategoryCursor());
+                        dialog.dismiss();
+                    }
                 }
-                // If attempting to modify My Word Bank's name
-                else if (selectedCategory.equals("My Word Bank")) {
-                    Toast.makeText(MainActivity.this, "My Word Bank is a special use category so its name can't be edited", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-                    ContentValues vocabTableValues = new ContentValues();
-                    vocabTableValues.put(VocabDbContract.COLUMN_NAME_CATEGORY, categoryName);
-
-                    ContentValues categoryTableValues = new ContentValues();
-                    categoryTableValues.put(VocabDbContract.COLUMN_NAME_CATEGORY, categoryName);
-                    categoryTableValues.put(VocabDbContract.COLUMN_NAME_DESCRIPTION, categoryDesc);
-
-                    String selectionVocab = VocabDbContract.COLUMN_NAME_CATEGORY + " = ?";
-                    String[] selectionArgsVocab = {selectedCategory};
-
-                    // Update Category Table
-                    db.update(
-                            VocabDbContract.TABLE_NAME_CATEGORY,
-                            categoryTableValues,
-                            selectionVocab,
-                            selectionArgsVocab
-                    );
-
-                    // Update Vocab Table for categories column to transfer the data
-                    db.update(
-                            VocabDbContract.TABLE_NAME_MY_VOCAB,
-                            vocabTableValues,
-                            selectionVocab,
-                            selectionArgsVocab
-                    );
-
-                    // Update Cursor
-                    cursorAdapter.changeCursor(dbHelper.getCategoryCursor());
-                    dialog.dismiss();
-                }
-            }
-        });
+            });
+        }
     }
 
 }
