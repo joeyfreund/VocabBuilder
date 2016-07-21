@@ -368,7 +368,16 @@ public class MainActivity extends AppCompatActivity {
     protected void editCategoryAlertDialog(final String selectedCategory, final String selectedDesc, final VocabDbHelper dbHelper,
                                            final CategoryCursorAdapter cursorAdapter) {
         if (selectedCategory.equals("My Word Bank")) {
-            Toast.makeText(MainActivity.this, "My Word Bank is a special use category so it can't be modified", Toast.LENGTH_SHORT).show();
+            final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage("My Word Bank backs up all the vocab you've added so it can't be modified.");
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         }
         else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
