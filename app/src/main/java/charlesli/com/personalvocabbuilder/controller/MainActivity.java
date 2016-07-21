@@ -403,38 +403,43 @@ public class MainActivity extends AppCompatActivity {
         builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setMessage("This action will delete all the vocab in this category.");
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Delete Category from Database
-                        SQLiteDatabase db = dbHelper.getWritableDatabase();
-                        // Define 'where' part of query
-                        String selection = VocabDbContract.COLUMN_NAME_CATEGORY + " LIKE ?";
-                        // Specify arguments in placeholder order
-                        String[] selectionArgs = {selectedCategory};
-                        // Issue SQL statement
-                        db.delete(VocabDbContract.TABLE_NAME_CATEGORY, selection, selectionArgs);
-                        db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
+                if (selectedCategory.equals("My Word Bank")) {
+                    Toast.makeText(MainActivity.this, "My Word Bank is a special use category so it can't be deleted", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setMessage("This action will delete all the vocab in this category.");
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Delete Category from Database
+                            SQLiteDatabase db = dbHelper.getWritableDatabase();
+                            // Define 'where' part of query
+                            String selection = VocabDbContract.COLUMN_NAME_CATEGORY + " LIKE ?";
+                            // Specify arguments in placeholder order
+                            String[] selectionArgs = {selectedCategory};
+                            // Issue SQL statement
+                            db.delete(VocabDbContract.TABLE_NAME_CATEGORY, selection, selectionArgs);
+                            db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
 
-                        // Update Cursor
-                        cursorAdapter.changeCursor(dbHelper.getCategoryCursor());
+                            // Update Cursor
+                            cursorAdapter.changeCursor(dbHelper.getCategoryCursor());
 
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-                alertDialog.getButton(DialogInterface.BUTTON_POSITIVE)
-                        .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.app_icon_color));
-                alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE)
-                        .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.app_icon_color));
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    alertDialog.getButton(DialogInterface.BUTTON_POSITIVE)
+                            .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.app_icon_color));
+                    alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE)
+                            .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.app_icon_color));
+                }
             }
         });
 
@@ -458,7 +463,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 // If attempting to modify My Word Bank's name
                 else if (selectedCategory.equals("My Word Bank")) {
-                    Toast.makeText(MainActivity.this, "My Word Bank is a special category so its name can't be edited", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "My Word Bank is a special use category so its name can't be edited", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     SQLiteDatabase db = dbHelper.getReadableDatabase();
