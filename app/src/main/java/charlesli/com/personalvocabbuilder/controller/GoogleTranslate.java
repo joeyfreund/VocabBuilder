@@ -20,6 +20,11 @@ public class GoogleTranslate extends AsyncTask<String, Void, String>{
 
     private ProgressBar mProgressBar;
 
+    public GoogleTranslate(ProgressBar progressBar) {
+        super();
+        mProgressBar = progressBar;
+    }
+
     @Override
     protected void onPreExecute() {
         mProgressBar.setVisibility(View.VISIBLE);
@@ -72,7 +77,4 @@ public class GoogleTranslate extends AsyncTask<String, Void, String>{
         }
     }
 
-    public void setProgressBar(ProgressBar progressBar) {
-        mProgressBar = progressBar;
-    }
 }
