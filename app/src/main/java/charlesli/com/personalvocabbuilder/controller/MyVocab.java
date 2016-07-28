@@ -326,19 +326,16 @@ public class MyVocab extends AppCompatActivity {
                 AlertDialog dialog = builder.create();
 
                 if (isNetworkAvailable()) {
-                    AsyncTask<String, Void, String> asyncTask = googleTranslate.execute(vocab, source, target);
-                    try {
-                        String translatedJSON = asyncTask.get();
-                        JSONParser jsonParser = new JSONParser();
-                        String translatedText = jsonParser.parseJSONForTranslation(translatedJSON);
-                        definitionInput.setText(translatedText);
-                    } catch (Exception e) {
-                        dialog.show();
-
-                        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(MyVocab.this, R.color.app_icon_color));
-                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(MyVocab.this, R.color.app_icon_color));
-                        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(MyVocab.this, R.color.app_icon_color));
-                    }
+                    googleTranslate.setListener(new GoogleTranslate.Listener() {
+                        @Override
+                        public void onTaskResult(String string) {
+                            String translatedJSON = string;
+                            JSONParser jsonParser = new JSONParser();
+                            String translatedText = jsonParser.parseJSONForTranslation(translatedJSON);
+                            definitionInput.setText(translatedText);
+                        }
+                    });
+                    googleTranslate.execute(vocab, source, target);
                 }
                 else {
                     dialog.show();
