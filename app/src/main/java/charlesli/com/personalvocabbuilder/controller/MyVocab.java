@@ -267,7 +267,6 @@ public class MyVocab extends AppCompatActivity {
         final ProgressBar progressBar = (ProgressBar) promptsView.findViewById(R.id.progressBar);
         builder.setView(promptsView);
 
-        final GoogleTranslate googleTranslate = new GoogleTranslate(progressBar);
         // Set up the buttons
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -326,6 +325,7 @@ public class MyVocab extends AppCompatActivity {
                 AlertDialog dialog = builder.create();
 
                 if (isNetworkAvailable()) {
+                    GoogleTranslate googleTranslate = new GoogleTranslate(progressBar);
                     googleTranslate.setListener(new GoogleTranslate.Listener() {
                         @Override
                         public void onTaskResult(String string) {
