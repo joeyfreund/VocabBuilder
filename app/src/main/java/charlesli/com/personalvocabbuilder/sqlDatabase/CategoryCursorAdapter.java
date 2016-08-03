@@ -2,17 +2,13 @@ package charlesli.com.personalvocabbuilder.sqlDatabase;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import com.github.lzyzsd.circleprogress.DonutProgress;
-
 import charlesli.com.personalvocabbuilder.R;
-import charlesli.com.personalvocabbuilder.controller.MyVocab;
 
 /**
  * Created by charles on 2016-05-21.

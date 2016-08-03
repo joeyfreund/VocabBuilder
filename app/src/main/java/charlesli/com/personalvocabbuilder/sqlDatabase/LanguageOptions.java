@@ -1,7 +1,5 @@
 package charlesli.com.personalvocabbuilder.sqlDatabase;
 
-import java.util.Hashtable;
-
 /**
  * Created by charles on 2016-05-25.
  */
