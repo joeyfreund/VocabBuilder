@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -88,6 +89,16 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.categoryFAB);
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    createReviewDialog();
+                }
+            });
+        }
     }
 
     @Override
@@ -107,10 +118,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.review_button) {
-            createReviewDialog();
-        }
-        else if (id == R.id.add_category_button) {
+        if (id == R.id.add_category_button) {
             createAddCategoryDialog();
         }
         else if (id == R.id.settings_button) {
