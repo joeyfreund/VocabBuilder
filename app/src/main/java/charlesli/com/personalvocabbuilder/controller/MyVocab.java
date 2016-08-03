@@ -48,6 +48,7 @@ public class MyVocab extends AppCompatActivity {
     private ListView mVocabListView;
     private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(MyVocab.this);
     private String mCategory;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +83,7 @@ public class MyVocab extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.FAB);
+        fab = (FloatingActionButton) findViewById(R.id.FAB);
         if (fab != null) {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -456,11 +457,12 @@ public class MyVocab extends AppCompatActivity {
         searchView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
             @Override
             public void onViewAttachedToWindow(View v) {
-
+                fab.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onViewDetachedFromWindow(View v) {
+                fab.setVisibility(View.VISIBLE);
                 cursorAdapter.changeCursor(dbHelper.getVocabCursor(category));
             }
         });
