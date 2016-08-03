@@ -3,12 +3,6 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".controller.MyVocab">
 
-    <item android:id="@+id/add_vocab_my_vocab_button"
-          android:title="@string/add_vocab_button"
-          android:icon="@drawable/ic_action_new"
-          android:orderInCategory="100"
-          app:showAsAction="always"/>
-
     <item android:id="@+id/del_my_vocab_button"
         android:title="@string/del_vocab_button"
         android:icon="@drawable/ic_action_discard"

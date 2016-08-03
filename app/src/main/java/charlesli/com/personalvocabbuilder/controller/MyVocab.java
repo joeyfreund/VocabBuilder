@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -56,7 +57,9 @@ public class MyVocab extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         // Get Category Information
         Intent intent = getIntent();
         mCategory = intent.getStringExtra("Category");
@@ -79,6 +82,15 @@ public class MyVocab extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.FAB);
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addVocabAlertDialog(mDbHelper, mCategory, mVocabAdapter);
+                }
+            });
+        }
     }
 
     @Override
@@ -94,16 +106,9 @@ public class MyVocab extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.add_vocab_my_vocab_button) {
-            addVocabAlertDialog(mDbHelper, mCategory, mVocabAdapter);
-        }
-        else if (id == R.id.del_my_vocab_button) {
+        if (id == R.id.del_my_vocab_button) {
             deleteVocab(mDbHelper, mCategory, mVocabAdapter);
         }
         else if (id == R.id.label_my_vocab_button) {
