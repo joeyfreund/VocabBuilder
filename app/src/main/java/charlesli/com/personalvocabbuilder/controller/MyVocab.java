@@ -10,7 +10,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -83,7 +82,7 @@ public class MyVocab extends AppCompatActivity {
             }
         });
 
-        fab = (FloatingActionButton) findViewById(R.id.FAB);
+        fab = (FloatingActionButton) findViewById(R.id.vocabFAB);
         if (fab != null) {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
