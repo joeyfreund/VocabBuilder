@@ -156,7 +156,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
                     " = " + "'" + VocabDbContract.CATEGORY_NAME_MY_VOCAB + "'");
             db.execSQL("UPDATE " + VocabDbContract.TABLE_NAME_CATEGORY +
                     " SET " + VocabDbContract.COLUMN_NAME_DESCRIPTION +
-                    " = " + "'Every vocab that you have added'" +
+                    " = " + "'A collection of all your vocab'" +
                     " WHERE " + VocabDbContract.COLUMN_NAME_CATEGORY +
                     " = " + "'" + VocabDbContract.CATEGORY_NAME_MY_WORD_BANK + "'");
             db.execSQL("UPDATE " + VocabDbContract.TABLE_NAME_CATEGORY +
