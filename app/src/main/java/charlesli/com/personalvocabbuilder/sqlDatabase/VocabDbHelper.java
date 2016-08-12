@@ -11,13 +11,20 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class VocabDbHelper extends SQLiteOpenHelper {
 
-    private static VocabDbHelper dbInstance;
-
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 6;
     public static final String DATABASE_NAME = "VocabDatabase.db";
-
-
+    private static final String DELETE_TABLE_MY_VOCAB =
+            "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_MY_VOCAB;
+    private static final String DELETE_TABLE_MY_WORD_BANK =
+            "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_MY_WORD_BANK;
+    private static final String DELETE_TABLE_GMAT =
+            "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_GMAT;
+    private static final String DELETE_TABLE_GRE =
+            "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_GRE;
+    private static final String DELETE_TABLE_CATEGORY =
+            "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_CATEGORY;
+    private static VocabDbHelper dbInstance;
     // Table for My Vocab
     private String CREATE_TABLE_MY_VOCAB =
             "CREATE TABLE  " + VocabDbContract.TABLE_NAME_MY_VOCAB +
@@ -26,30 +33,12 @@ public class VocabDbHelper extends SQLiteOpenHelper {
             VocabDbContract.COLUMN_NAME_DEFINITION + " TEXT, " +
             VocabDbContract.COLUMN_NAME_LEVEL + " INTEGER, " +
                     VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT );";
-
     // Table for Category
     private String CREATE_TABLE_CATEGORY =
             "CREATE TABLE  " + VocabDbContract.TABLE_NAME_CATEGORY +
                     " (" + VocabDbContract._ID + " INTEGER PRIMARY KEY," +
                     VocabDbContract.COLUMN_NAME_CATEGORY + " TEXT, " +
                     VocabDbContract.COLUMN_NAME_DESCRIPTION + " TEXT );";
-
-
-
-    private static final String DELETE_TABLE_MY_VOCAB =
-            "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_MY_VOCAB;
-
-    private static final String DELETE_TABLE_MY_WORD_BANK =
-            "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_MY_WORD_BANK;
-
-    private static final String DELETE_TABLE_GMAT =
-            "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_GMAT;
-
-    private static final String DELETE_TABLE_GRE =
-            "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_GRE;
-
-    private static final String DELETE_TABLE_CATEGORY =
-            "DROP TABLE IF EXISTS " + VocabDbContract.TABLE_NAME_CATEGORY;
 
     private VocabDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -90,7 +79,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
 
     private void loadDefaultCategoryTable(SQLiteDatabase db) {
         loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_MY_VOCAB, "Vocab currently being learned");
-        loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_MY_WORD_BANK, "Every vocab that you have added");
+        loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_MY_WORD_BANK, "A collection of all your vocab");
         loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_GMAT, "Graduate Management Admission Test");
         loadDefaultCategoryValue(db, VocabDbContract.CATEGORY_NAME_GRE, "Graduate Record Examination");
     }
