@@ -145,6 +145,11 @@ public class MyVocab extends AppCompatActivity {
                 rbDateDescending.setChecked(false);
                 rbVocabAscending.setChecked(false);
                 rbVocabDescending.setChecked(false);
+
+                SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt(mCategory, 0);
+                editor.apply();
             }
         });
 
@@ -155,6 +160,11 @@ public class MyVocab extends AppCompatActivity {
                 rbDateDescending.setChecked(true);
                 rbVocabAscending.setChecked(false);
                 rbVocabDescending.setChecked(false);
+
+                SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt(mCategory, 1);
+                editor.apply();
             }
         });
 
@@ -165,6 +175,11 @@ public class MyVocab extends AppCompatActivity {
                 rbDateDescending.setChecked(false);
                 rbVocabAscending.setChecked(true);
                 rbVocabDescending.setChecked(false);
+
+                SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt(mCategory, 2);
+                editor.apply();
             }
         });
 
@@ -175,6 +190,11 @@ public class MyVocab extends AppCompatActivity {
                 rbDateDescending.setChecked(false);
                 rbVocabAscending.setChecked(false);
                 rbVocabDescending.setChecked(true);
+
+                SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt(mCategory, 3);
+                editor.apply();
             }
         });
 

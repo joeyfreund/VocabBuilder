@@ -205,7 +205,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
                 null,                                        // selectionArgs
                 null,                                        // groupBy
                 null,                                        // having
-                null,                                        // orderBy
+                VocabDbContract._ID + " ASC",                                        // orderBy
                 null                                         // limit (the number of rows)
         );
         return cursor;
