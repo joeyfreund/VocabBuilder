@@ -22,7 +22,7 @@
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/sort_my_vocab_button"
-        android:icon="@drawable/ic_action_select_all"
+        android:icon="@drawable/ic_sort_white_48dp"
         android:orderInCategory="500"
         android:title="@string/sort_vocab_button"
         app:showAsAction="ifRoom"/>
