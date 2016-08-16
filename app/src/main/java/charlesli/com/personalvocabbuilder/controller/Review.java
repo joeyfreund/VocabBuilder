@@ -67,7 +67,7 @@ public class Review extends AppCompatActivity {
         mPerLvlButton = (Button) findViewById(R.id.lvl_perfect_button);
         mAgaLvlButton = (Button) findViewById(R.id.lvl_again_button);
 
-        mCursor = mDbHelper.getVocabCursor(mReviewCategory, VocabDbContract._ID + " ASC");
+        mCursor = mDbHelper.getVocabCursor(mReviewCategory);
 
         loadVocabInRandomOrder();
     }

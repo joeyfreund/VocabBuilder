@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle("Review Vocab");
 
         VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-        Cursor cursor = dbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_MY_VOCAB, VocabDbContract._ID + " ASC");
+        Cursor cursor = dbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
         final Integer maxRow = cursor.getCount();
         reviewNumOfWords = maxRow;
 
@@ -285,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
                 categoryCursor.moveToPosition(position);
                 reviewCategory = categoryCursor.getString(categoryCursor.getColumnIndex(VocabDbContract.COLUMN_NAME_CATEGORY));
                 VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-                Cursor cursor = dbHelper.getVocabCursor(reviewCategory, VocabDbContract._ID + " ASC");
+                Cursor cursor = dbHelper.getVocabCursor(reviewCategory);
                 Integer maxRow = cursor.getCount();
                 numText.setText(String.valueOf(maxRow));
                 seekBar.setMax(maxRow);
