@@ -117,8 +117,42 @@ public class MyVocab extends AppCompatActivity {
         else if (id == R.id.select_all_my_vocab_button) {
             selectAll(mVocabAdapter, mDbHelper, mCategory);
         }
+        else if (id == R.id.sort_my_vocab_button) {
+            sortVocab();
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void sortVocab() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sort By");
+
+        LayoutInflater li = LayoutInflater.from(MyVocab.this);
+        View promptsView = li.inflate(R.layout.alert_dialog_sort, null);
+        builder.setView(promptsView);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        final AlertDialog dialog = builder.create();
+
+        dialog.show();
+
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
     }
 
     protected void selectAll(VocabCursorAdapter cursorAdapter, VocabDbHelper dbHelper,
