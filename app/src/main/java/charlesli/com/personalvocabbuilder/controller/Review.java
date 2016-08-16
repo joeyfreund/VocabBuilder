@@ -21,10 +21,13 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
 public class Review extends AppCompatActivity {
 
+    private static final int DIFFICULT = 0;
+    private static final int FAMILIAR = 1;
+    private static final int EASY = 2;
+    private static final int PERFECT = 3;
     private int mReviewMode;
     private String mReviewCategory;
     private int mReviewNumOfWords;
-
     private TextView mTopTextView;
     private TextView mBottomTextView;
     private Button mRevealButton;
@@ -34,12 +37,6 @@ public class Review extends AppCompatActivity {
     private Button mPerLvlButton;
     private Button mAgaLvlButton;
     private Cursor mCursor;
-
-    private static final int DIFFICULT = 0;
-    private static final int FAMILIAR = 1;
-    private static final int EASY = 2;
-    private static final int PERFECT = 3;
-
     private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(Review.this);
     private Random mRandom = new Random();
     private ArrayList<Integer> mTracker = new ArrayList<Integer>();
@@ -70,7 +67,7 @@ public class Review extends AppCompatActivity {
         mPerLvlButton = (Button) findViewById(R.id.lvl_perfect_button);
         mAgaLvlButton = (Button) findViewById(R.id.lvl_again_button);
 
-        mCursor = mDbHelper.getVocabCursor(mReviewCategory);
+        mCursor = mDbHelper.getVocabCursor(mReviewCategory, VocabDbContract._ID + " ASC");
 
         loadVocabInRandomOrder();
     }

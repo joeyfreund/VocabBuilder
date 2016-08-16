@@ -41,12 +41,11 @@ public class MainActivity extends AppCompatActivity {
     // Review Mode
     private final int WORDTODEF = 0;
     private final int DEFTOWORD = 1;
+    private final int DETECT_LANGUAGE = 0;
+    private final int ENGLISH = 19;
     private String reviewCategory = VocabDbContract.CATEGORY_NAME_MY_VOCAB;
     private int reviewMode = WORDTODEF;
     private int reviewNumOfWords = 0;
-    private final int DETECT_LANGUAGE = 0;
-    private final int ENGLISH = 19;
-
     private CategoryCursorAdapter mCategoryAdapter;
     private ListView mCategoryListView;
     private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
@@ -256,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle("Review Vocab");
 
         VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-        Cursor cursor = dbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_MY_VOCAB);
+        Cursor cursor = dbHelper.getVocabCursor(VocabDbContract.CATEGORY_NAME_MY_VOCAB, VocabDbContract._ID + " ASC");
         final Integer maxRow = cursor.getCount();
         reviewNumOfWords = maxRow;
 
@@ -286,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
                 categoryCursor.moveToPosition(position);
                 reviewCategory = categoryCursor.getString(categoryCursor.getColumnIndex(VocabDbContract.COLUMN_NAME_CATEGORY));
                 VocabDbHelper dbHelper = VocabDbHelper.getDBHelper(MainActivity.this);
-                Cursor cursor = dbHelper.getVocabCursor(reviewCategory);
+                Cursor cursor = dbHelper.getVocabCursor(reviewCategory, VocabDbContract._ID + " ASC");
                 Integer maxRow = cursor.getCount();
                 numText.setText(String.valueOf(maxRow));
                 seekBar.setMax(maxRow);

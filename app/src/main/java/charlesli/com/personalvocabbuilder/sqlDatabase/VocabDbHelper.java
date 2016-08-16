@@ -186,7 +186,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
     }
 
 
-    public Cursor getVocabCursor(String category) {
+    public Cursor getVocabCursor(String category, String orderBy) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String[] projection = {
@@ -205,7 +205,7 @@ public class VocabDbHelper extends SQLiteOpenHelper {
                 null,                                        // selectionArgs
                 null,                                        // groupBy
                 null,                                        // having
-                VocabDbContract._ID + " ASC",                                        // orderBy
+                orderBy,                                        // orderBy
                 null                                         // limit (the number of rows)
         );
         return cursor;

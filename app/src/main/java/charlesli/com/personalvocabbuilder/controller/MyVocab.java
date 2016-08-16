@@ -69,7 +69,7 @@ public class MyVocab extends AppCompatActivity {
         mVocabListView = (ListView) findViewById(R.id.mVocabList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mVocabListView.setEmptyView(emptyTextView);
-        Cursor cursor = mDbHelper.getVocabCursor(mCategory);
+        Cursor cursor = mDbHelper.getVocabCursor(mCategory, VocabDbContract._ID + " ASC");
         mVocabAdapter = new VocabCursorAdapter(this, cursor, 0);
         mVocabListView.setAdapter(mVocabAdapter);
         mVocabListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -223,7 +223,7 @@ public class MyVocab extends AppCompatActivity {
 
     protected void selectAll(VocabCursorAdapter cursorAdapter, VocabDbHelper dbHelper,
                              String category) {
-        Cursor cursor = dbHelper.getVocabCursor(category);
+        Cursor cursor = dbHelper.getVocabCursor(category, VocabDbContract._ID + " ASC");
         int numOfRows = cursor.getCount();
         for (int i = 0; i < numOfRows; i++) {
             cursorAdapter.selectedItemsPositions.add(i);
@@ -248,7 +248,7 @@ public class MyVocab extends AppCompatActivity {
                 // Issue SQL statement
                 db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
             }
-            Cursor cursor = dbHelper.getVocabCursor(category);
+            Cursor cursor = dbHelper.getVocabCursor(category, VocabDbContract._ID + " ASC");
             cursorAdapter.changeCursor(cursor);
 
             cursorAdapter.selectedItemsPositions.clear();
@@ -353,7 +353,7 @@ public class MyVocab extends AppCompatActivity {
                 dbHelper.insertVocab(toCategory, vocab, definition, level);
             }
             cursorAdapter.selectedItemsPositions.clear();
-            Cursor cursor = dbHelper.getVocabCursor(fromCategory);
+            Cursor cursor = dbHelper.getVocabCursor(fromCategory, VocabDbContract._ID + " ASC");
             cursorAdapter.changeCursor(cursor);
 
             Toast.makeText(this, "Vocab added successfully", Toast.LENGTH_SHORT).show();
@@ -383,7 +383,7 @@ public class MyVocab extends AppCompatActivity {
                     dbHelper.insertVocab(VocabDbContract.CATEGORY_NAME_MY_WORD_BANK, vocab, definition, 0);
                 }
                 // Update Cursor
-                Cursor cursor = dbHelper.getVocabCursor(category);
+                Cursor cursor = dbHelper.getVocabCursor(category, VocabDbContract._ID + " ASC");
                 cursorAdapter.changeCursor(cursor);
             }
         });
@@ -502,7 +502,7 @@ public class MyVocab extends AppCompatActivity {
                 );
 
                 // Update Cursor
-                cursorAdapter.changeCursor(dbHelper.getVocabCursor(category));
+                cursorAdapter.changeCursor(dbHelper.getVocabCursor(category, VocabDbContract._ID + " ASC"));
             }
         });
         builder.setNegativeButton("Delete Vocab", new DialogInterface.OnClickListener() {
@@ -518,7 +518,7 @@ public class MyVocab extends AppCompatActivity {
                 db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
 
                 // Update Cursor
-                cursorAdapter.changeCursor(dbHelper.getVocabCursor(category));
+                cursorAdapter.changeCursor(dbHelper.getVocabCursor(category, VocabDbContract._ID + " ASC"));
             }
         });
 
@@ -562,7 +562,7 @@ public class MyVocab extends AppCompatActivity {
             @Override
             public void onViewDetachedFromWindow(View v) {
                 fab.setVisibility(View.VISIBLE);
-                cursorAdapter.changeCursor(dbHelper.getVocabCursor(category));
+                cursorAdapter.changeCursor(dbHelper.getVocabCursor(category, VocabDbContract._ID + " ASC"));
             }
         });
     }
