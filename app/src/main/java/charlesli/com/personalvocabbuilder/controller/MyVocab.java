@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -131,6 +132,51 @@ public class MyVocab extends AppCompatActivity {
         LayoutInflater li = LayoutInflater.from(MyVocab.this);
         View promptsView = li.inflate(R.layout.alert_dialog_sort, null);
         builder.setView(promptsView);
+
+        final RadioButton rbDateAscending = (RadioButton) promptsView.findViewById(R.id.btDateAscending);
+        final RadioButton rbDateDescending = (RadioButton) promptsView.findViewById(R.id.btDateDescending);
+        final RadioButton rbVocabAscending = (RadioButton) promptsView.findViewById(R.id.btVocabAscending);
+        final RadioButton rbVocabDescending = (RadioButton) promptsView.findViewById(R.id.btVocabDescending);
+
+        rbDateAscending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rbDateAscending.setChecked(true);
+                rbDateDescending.setChecked(false);
+                rbVocabAscending.setChecked(false);
+                rbVocabDescending.setChecked(false);
+            }
+        });
+
+        rbDateDescending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rbDateAscending.setChecked(false);
+                rbDateDescending.setChecked(true);
+                rbVocabAscending.setChecked(false);
+                rbVocabDescending.setChecked(false);
+            }
+        });
+
+        rbVocabAscending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rbDateAscending.setChecked(false);
+                rbDateDescending.setChecked(false);
+                rbVocabAscending.setChecked(true);
+                rbVocabDescending.setChecked(false);
+            }
+        });
+
+        rbVocabDescending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rbDateAscending.setChecked(false);
+                rbDateDescending.setChecked(false);
+                rbVocabAscending.setChecked(false);
+                rbVocabDescending.setChecked(true);
+            }
+        });
 
         // Set up the buttons
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {

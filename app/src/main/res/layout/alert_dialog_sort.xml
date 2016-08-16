@@ -8,7 +8,7 @@
         android:id="@+id/btDateAscending"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:checked="false"
+        android:checked="true"
         android:text="Date ascending"
         android:textSize="15sp"/>
 
