@@ -46,8 +46,8 @@ public class MyVocab extends AppCompatActivity {
 
     private final String DATE_ASC = VocabDbContract._ID + " ASC";
     private final String DATE_DESC = VocabDbContract._ID + " DESC";
-    private final String VOCAB_ASC = VocabDbContract.COLUMN_NAME_VOCAB + " ASC";
-    private final String VOCAB_DESC = VocabDbContract.COLUMN_NAME_VOCAB + " DESC";
+    private final String VOCAB_ASC = VocabDbContract.COLUMN_NAME_VOCAB + " COLLATE NOCASE ASC";
+    private final String VOCAB_DESC = VocabDbContract.COLUMN_NAME_VOCAB + " COLLATE NOCASE DESC";
     private VocabCursorAdapter mVocabAdapter;
     private ListView mVocabListView;
     private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(MyVocab.this);
@@ -166,7 +166,7 @@ public class MyVocab extends AppCompatActivity {
             rbVocabAscending.setChecked(true);
         }
         else if (orderBy.equals(VOCAB_DESC)) {
-            rbDateDescending.setChecked(true);
+            rbVocabDescending.setChecked(true);
         }
 
 
