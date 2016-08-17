@@ -44,6 +44,10 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
 public class MyVocab extends AppCompatActivity {
 
+    private final String DATE_ASC = VocabDbContract._ID + " ASC";
+    private final String DATE_DESC = VocabDbContract._ID + " DESC";
+    private final String VOCAB_ASC = VocabDbContract.COLUMN_NAME_VOCAB + " ASC";
+    private final String VOCAB_DESC = VocabDbContract.COLUMN_NAME_VOCAB + " DESC";
     private VocabCursorAdapter mVocabAdapter;
     private ListView mVocabListView;
     private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(MyVocab.this);
@@ -69,7 +73,11 @@ public class MyVocab extends AppCompatActivity {
         mVocabListView = (ListView) findViewById(R.id.mVocabList);
         TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
         mVocabListView.setEmptyView(emptyTextView);
-        Cursor cursor = mDbHelper.getVocabCursor(mCategory, VocabDbContract._ID + " ASC");
+
+        SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", MODE_PRIVATE);
+        String orderBy = sharedPreferences.getString(mCategory, DATE_ASC);
+
+        Cursor cursor = mDbHelper.getVocabCursor(mCategory, orderBy);
         mVocabAdapter = new VocabCursorAdapter(this, cursor, 0);
         mVocabListView.setAdapter(mVocabAdapter);
         mVocabListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -140,6 +148,28 @@ public class MyVocab extends AppCompatActivity {
         final RadioButton rbVocabAscending = (RadioButton) promptsView.findViewById(R.id.btVocabAscending);
         final RadioButton rbVocabDescending = (RadioButton) promptsView.findViewById(R.id.btVocabDescending);
 
+        rbDateAscending.setChecked(false);
+        rbDateDescending.setChecked(false);
+        rbVocabAscending.setChecked(false);
+        rbVocabDescending.setChecked(false);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", MODE_PRIVATE);
+        String orderBy = sharedPreferences.getString(mCategory, DATE_ASC);
+
+        if (orderBy.equals(DATE_ASC)) {
+            rbDateAscending.setChecked(true);
+        }
+        else if (orderBy.equals(DATE_DESC)) {
+            rbDateDescending.setChecked(true);
+        }
+        else if (orderBy.equals(VOCAB_ASC)) {
+            rbVocabAscending.setChecked(true);
+        }
+        else if (orderBy.equals(VOCAB_DESC)) {
+            rbDateDescending.setChecked(true);
+        }
+
+
         rbDateAscending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +180,7 @@ public class MyVocab extends AppCompatActivity {
 
                 SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                String orderBy = VocabDbContract._ID + " ASC";
+                String orderBy = DATE_ASC;
                 editor.putString(mCategory, orderBy);
                 editor.apply();
 
@@ -170,7 +200,7 @@ public class MyVocab extends AppCompatActivity {
 
                 SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                String orderBy = VocabDbContract._ID + " DESC";
+                String orderBy = DATE_DESC;
                 editor.putString(mCategory, orderBy);
                 editor.apply();
 
@@ -190,7 +220,7 @@ public class MyVocab extends AppCompatActivity {
 
                 SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                String orderBy = VocabDbContract.COLUMN_NAME_VOCAB + " ASC";
+                String orderBy = VOCAB_ASC;
                 editor.putString(mCategory, orderBy);
                 editor.apply();
 
@@ -210,7 +240,7 @@ public class MyVocab extends AppCompatActivity {
 
                 SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                String orderBy = VocabDbContract.COLUMN_NAME_VOCAB + " DESC";
+                String orderBy = VOCAB_DESC;
                 editor.putString(mCategory, orderBy);
                 editor.apply();
 
@@ -225,7 +255,10 @@ public class MyVocab extends AppCompatActivity {
 
     protected void selectAll(VocabCursorAdapter cursorAdapter, VocabDbHelper dbHelper,
                              String category) {
-        Cursor cursor = dbHelper.getVocabCursor(category, VocabDbContract._ID + " ASC");
+        SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", MODE_PRIVATE);
+        String orderBy = sharedPreferences.getString(mCategory, DATE_ASC);
+
+        Cursor cursor = dbHelper.getVocabCursor(category, orderBy);
         int numOfRows = cursor.getCount();
         for (int i = 0; i < numOfRows; i++) {
             cursorAdapter.selectedItemsPositions.add(i);
@@ -250,7 +283,10 @@ public class MyVocab extends AppCompatActivity {
                 // Issue SQL statement
                 db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
             }
-            Cursor cursor = dbHelper.getVocabCursor(category, VocabDbContract._ID + " ASC");
+            SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", MODE_PRIVATE);
+            String orderBy = sharedPreferences.getString(category, DATE_ASC);
+
+            Cursor cursor = dbHelper.getVocabCursor(category, orderBy);
             cursorAdapter.changeCursor(cursor);
 
             cursorAdapter.selectedItemsPositions.clear();
@@ -355,7 +391,11 @@ public class MyVocab extends AppCompatActivity {
                 dbHelper.insertVocab(toCategory, vocab, definition, level);
             }
             cursorAdapter.selectedItemsPositions.clear();
-            Cursor cursor = dbHelper.getVocabCursor(fromCategory, VocabDbContract._ID + " ASC");
+
+            SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", MODE_PRIVATE);
+            String orderBy = sharedPreferences.getString(fromCategory, DATE_ASC);
+
+            Cursor cursor = dbHelper.getVocabCursor(fromCategory, orderBy);
             cursorAdapter.changeCursor(cursor);
 
             Toast.makeText(this, "Vocab added successfully", Toast.LENGTH_SHORT).show();
@@ -385,7 +425,10 @@ public class MyVocab extends AppCompatActivity {
                     dbHelper.insertVocab(VocabDbContract.CATEGORY_NAME_MY_WORD_BANK, vocab, definition, 0);
                 }
                 // Update Cursor
-                Cursor cursor = dbHelper.getVocabCursor(category, VocabDbContract._ID + " ASC");
+                SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", MODE_PRIVATE);
+                String orderBy = sharedPreferences.getString(category, DATE_ASC);
+
+                Cursor cursor = dbHelper.getVocabCursor(category, orderBy);
                 cursorAdapter.changeCursor(cursor);
             }
         });
@@ -504,7 +547,11 @@ public class MyVocab extends AppCompatActivity {
                 );
 
                 // Update Cursor
-                cursorAdapter.changeCursor(dbHelper.getVocabCursor(category, VocabDbContract._ID + " ASC"));
+                SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", MODE_PRIVATE);
+                String orderBy = sharedPreferences.getString(category, DATE_ASC);
+
+                Cursor cursor = dbHelper.getVocabCursor(category, orderBy);
+                cursorAdapter.changeCursor(cursor);
             }
         });
         builder.setNegativeButton("Delete Vocab", new DialogInterface.OnClickListener() {
@@ -520,7 +567,11 @@ public class MyVocab extends AppCompatActivity {
                 db.delete(VocabDbContract.TABLE_NAME_MY_VOCAB, selection, selectionArgs);
 
                 // Update Cursor
-                cursorAdapter.changeCursor(dbHelper.getVocabCursor(category, VocabDbContract._ID + " ASC"));
+                SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", MODE_PRIVATE);
+                String orderBy = sharedPreferences.getString(category, DATE_ASC);
+
+                Cursor cursor = dbHelper.getVocabCursor(category, orderBy);
+                cursorAdapter.changeCursor(cursor);
             }
         });
 
