@@ -119,19 +119,21 @@ public class MyVocab extends AppCompatActivity {
             selectAll(mVocabAdapter, mDbHelper, mCategory);
         }
         else if (id == R.id.sort_my_vocab_button) {
-            sortVocab();
+            sortVocab(mDbHelper, mVocabAdapter);
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    protected void sortVocab() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    protected void sortVocab(final VocabDbHelper dbHelper, final VocabCursorAdapter cursorAdapter) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Sort By");
 
         LayoutInflater li = LayoutInflater.from(MyVocab.this);
         View promptsView = li.inflate(R.layout.alert_dialog_sort, null);
         builder.setView(promptsView);
+
+        final AlertDialog dialog = builder.create();
 
         final RadioButton rbDateAscending = (RadioButton) promptsView.findViewById(R.id.btDateAscending);
         final RadioButton rbDateDescending = (RadioButton) promptsView.findViewById(R.id.btDateDescending);
@@ -148,8 +150,13 @@ public class MyVocab extends AppCompatActivity {
 
                 SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt(mCategory, 0);
+                String orderBy = VocabDbContract._ID + " ASC";
+                editor.putString(mCategory, orderBy);
                 editor.apply();
+
+                Cursor cursor = dbHelper.getVocabCursor(mCategory, orderBy);
+                cursorAdapter.changeCursor(cursor);
+                dialog.dismiss();
             }
         });
 
@@ -163,8 +170,13 @@ public class MyVocab extends AppCompatActivity {
 
                 SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt(mCategory, 1);
+                String orderBy = VocabDbContract._ID + " DESC";
+                editor.putString(mCategory, orderBy);
                 editor.apply();
+
+                Cursor cursor = dbHelper.getVocabCursor(mCategory, orderBy);
+                cursorAdapter.changeCursor(cursor);
+                dialog.dismiss();
             }
         });
 
@@ -178,8 +190,13 @@ public class MyVocab extends AppCompatActivity {
 
                 SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt(mCategory, 2);
+                String orderBy = VocabDbContract.COLUMN_NAME_VOCAB + " ASC";
+                editor.putString(mCategory, orderBy);
                 editor.apply();
+
+                Cursor cursor = dbHelper.getVocabCursor(mCategory, orderBy);
+                cursorAdapter.changeCursor(cursor);
+                dialog.dismiss();
             }
         });
 
@@ -193,32 +210,17 @@ public class MyVocab extends AppCompatActivity {
 
                 SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt(mCategory, 3);
+                String orderBy = VocabDbContract.COLUMN_NAME_VOCAB + " DESC";
+                editor.putString(mCategory, orderBy);
                 editor.apply();
+
+                Cursor cursor = dbHelper.getVocabCursor(mCategory, orderBy);
+                cursorAdapter.changeCursor(cursor);
+                dialog.dismiss();
             }
         });
-
-        // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        final AlertDialog dialog = builder.create();
 
         dialog.show();
-
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
-        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
-        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
     }
 
     protected void selectAll(VocabCursorAdapter cursorAdapter, VocabDbHelper dbHelper,
