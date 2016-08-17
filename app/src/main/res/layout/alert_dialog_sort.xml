@@ -3,8 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
-    android:layout_margin="2dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
 
     <RadioButton
         android:id="@+id/btDateAscending"
@@ -13,7 +13,7 @@
         android:layout_margin="2dp"
         android:checked="true"
         android:text="Date ascending"
-        android:textSize="15sp"/>
+        android:textSize="16sp"/>
 
     <RadioButton
         android:id="@+id/btDateDescending"
@@ -22,7 +22,7 @@
         android:layout_margin="2dp"
         android:checked="false"
         android:text="Date descending"
-        android:textSize="15sp"/>
+        android:textSize="16sp"/>
 
     <RadioButton
         android:id="@+id/btVocabAscending"
@@ -31,7 +31,7 @@
         android:layout_margin="2dp"
         android:checked="false"
         android:text="Vocab ascending"
-        android:textSize="15sp"/>
+        android:textSize="16sp"/>
 
     <RadioButton
         android:id="@+id/btVocabDescending"
@@ -40,5 +40,5 @@
         android:layout_margin="2dp"
         android:checked="false"
         android:text="Vocab descending"
-        android:textSize="15sp"/>
+        android:textSize="16sp"/>
 </LinearLayout>
