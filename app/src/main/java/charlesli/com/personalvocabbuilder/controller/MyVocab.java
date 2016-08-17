@@ -22,6 +22,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -153,7 +155,7 @@ public class MyVocab extends AppCompatActivity {
         rbVocabAscending.setChecked(false);
         rbVocabDescending.setChecked(false);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", MODE_PRIVATE);
         String orderBy = sharedPreferences.getString(mCategory, DATE_ASC);
 
         if (orderBy.equals(DATE_ASC)) {

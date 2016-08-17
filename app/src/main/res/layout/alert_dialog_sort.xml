@@ -2,12 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_margin="2dp"
     android:orientation="vertical">
 
     <RadioButton
         android:id="@+id/btDateAscending"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="2dp"
         android:checked="true"
         android:text="Date ascending"
         android:textSize="15sp"/>
@@ -16,6 +19,7 @@
         android:id="@+id/btDateDescending"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="2dp"
         android:checked="false"
         android:text="Date descending"
         android:textSize="15sp"/>
@@ -24,6 +28,7 @@
         android:id="@+id/btVocabAscending"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="2dp"
         android:checked="false"
         android:text="Vocab ascending"
         android:textSize="15sp"/>
@@ -32,6 +37,7 @@
         android:id="@+id/btVocabDescending"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="2dp"
         android:checked="false"
         android:text="Vocab descending"
         android:textSize="15sp"/>
