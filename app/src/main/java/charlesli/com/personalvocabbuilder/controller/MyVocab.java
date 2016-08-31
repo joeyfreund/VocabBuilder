@@ -477,7 +477,8 @@ public class MyVocab extends AppCompatActivity {
                 AlertDialog dialog = builder.create();
 
                 if (isNetworkAvailable()) {
-                    GoogleTranslate googleTranslate = new GoogleTranslate(progressBar);
+                    String APIKey = getString(R.string.translateKey);
+                    GoogleTranslate googleTranslate = new GoogleTranslate(progressBar, APIKey);
                     googleTranslate.setListener(new GoogleTranslate.Listener() {
                         @Override
                         public void onTaskResult(String string) {

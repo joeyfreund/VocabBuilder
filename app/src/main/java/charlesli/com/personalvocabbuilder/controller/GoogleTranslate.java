@@ -15,33 +15,30 @@ import java.net.URLEncoder;
  */
 public class GoogleTranslate extends AsyncTask<String, Void, String>{
 
-    private ProgressBar mProgressBar;
+    private ProgressBar progressBar;
+    private String APIKey;
 
     private Listener listener;
 
-    public interface Listener{
-        void onTaskResult(String string);
+    public GoogleTranslate(ProgressBar progressBar, String key) {
+        super();
+        this.progressBar = progressBar;
+        APIKey = key;
     }
 
     public void setListener(Listener listener){
         this.listener = listener;
     }
 
-
-    public GoogleTranslate(ProgressBar progressBar) {
-        super();
-        mProgressBar = progressBar;
-    }
-
     @Override
     protected void onPreExecute() {
-        mProgressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     protected void onPostExecute(String s) {
         if (listener!=null){ listener.onTaskResult(s); }
-        mProgressBar.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
 
     }
 
@@ -59,7 +56,6 @@ public class GoogleTranslate extends AsyncTask<String, Void, String>{
         }
 
         try {
-            String APIKey = "AIzaSyDGijVCq6fPpmoP9ZLJwr9GZPtOuvVxrSU";
             String encodedQuery = URLEncoder.encode(vocab, "UTF-8");
             URL url = new URL("https://www.googleapis.com/language/translate/v2?key=" +
                     APIKey +
@@ -85,6 +81,10 @@ public class GoogleTranslate extends AsyncTask<String, Void, String>{
         catch (Exception e) {
             return null;
         }
+    }
+
+    public interface Listener{
+        void onTaskResult(String string);
     }
 
 }
