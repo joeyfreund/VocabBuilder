@@ -322,9 +322,7 @@ public class MyVocab extends AppCompatActivity {
 
             dialog.show();
 
-            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
-            dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
-            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+            changeDialogButtonsColor(dialog);
         }
     }
 
@@ -421,9 +419,7 @@ public class MyVocab extends AppCompatActivity {
 
         dialog.show();
 
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
-        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
-        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        changeDialogButtonsColor(dialog);
 
         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -464,9 +460,7 @@ public class MyVocab extends AppCompatActivity {
                 else {
                     dialog.show();
 
-                    dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(MyVocab.this, R.color.app_icon_color));
-                    dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(MyVocab.this, R.color.app_icon_color));
-                    dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(MyVocab.this, R.color.app_icon_color));
+                    changeDialogButtonsColor(dialog);
                 }
             }
         });
@@ -553,9 +547,7 @@ public class MyVocab extends AppCompatActivity {
 
         dialog.show();
 
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
-        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
-        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        changeDialogButtonsColor(dialog);
 
     }
 
@@ -592,6 +584,12 @@ public class MyVocab extends AppCompatActivity {
                 cursorAdapter.changeCursor(dbHelper.getVocabCursor(category, VocabDbContract._ID + " ASC"));
             }
         });
+    }
+
+    private void changeDialogButtonsColor(AlertDialog dialog) {
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
     }
 
     private boolean isNetworkAvailable() {
