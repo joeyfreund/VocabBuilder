@@ -22,8 +22,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -55,6 +53,13 @@ public class MyVocab extends AppCompatActivity {
     private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(MyVocab.this);
     private String mCategory;
     private FloatingActionButton fab;
+
+    // Sort Radio Button
+    private RadioButton rbDateAscending;
+    private RadioButton rbDateDescending;
+    private RadioButton rbVocabAscending;
+    private RadioButton rbVocabDescending;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,13 +134,13 @@ public class MyVocab extends AppCompatActivity {
             selectAll(mVocabAdapter, mDbHelper, mCategory);
         }
         else if (id == R.id.sort_my_vocab_button) {
-            sortVocab(mDbHelper, mVocabAdapter);
+            sortVocab();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    protected void sortVocab(final VocabDbHelper dbHelper, final VocabCursorAdapter cursorAdapter) {
+    protected void sortVocab() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Sort By");
 
@@ -145,10 +150,10 @@ public class MyVocab extends AppCompatActivity {
 
         final AlertDialog dialog = builder.create();
 
-        final RadioButton rbDateAscending = (RadioButton) promptsView.findViewById(R.id.btDateAscending);
-        final RadioButton rbDateDescending = (RadioButton) promptsView.findViewById(R.id.btDateDescending);
-        final RadioButton rbVocabAscending = (RadioButton) promptsView.findViewById(R.id.btVocabAscending);
-        final RadioButton rbVocabDescending = (RadioButton) promptsView.findViewById(R.id.btVocabDescending);
+        rbDateAscending = (RadioButton) promptsView.findViewById(R.id.btDateAscending);
+        rbDateDescending = (RadioButton) promptsView.findViewById(R.id.btDateDescending);
+        rbVocabAscending = (RadioButton) promptsView.findViewById(R.id.btVocabAscending);
+        rbVocabDescending = (RadioButton) promptsView.findViewById(R.id.btVocabDescending);
 
         rbDateAscending.setChecked(false);
         rbDateDescending.setChecked(false);
@@ -175,84 +180,50 @@ public class MyVocab extends AppCompatActivity {
         rbDateAscending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rbDateAscending.setChecked(true);
-                rbDateDescending.setChecked(false);
-                rbVocabAscending.setChecked(false);
-                rbVocabDescending.setChecked(false);
-
-                SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                String orderBy = DATE_ASC;
-                editor.putString(mCategory, orderBy);
-                editor.apply();
-
-                Cursor cursor = dbHelper.getVocabCursor(mCategory, orderBy);
-                cursorAdapter.changeCursor(cursor);
-                dialog.dismiss();
+                setSortByRadioButton(rbDateAscending, DATE_ASC, dialog);
             }
         });
 
         rbDateDescending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rbDateAscending.setChecked(false);
-                rbDateDescending.setChecked(true);
-                rbVocabAscending.setChecked(false);
-                rbVocabDescending.setChecked(false);
-
-                SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                String orderBy = DATE_DESC;
-                editor.putString(mCategory, orderBy);
-                editor.apply();
-
-                Cursor cursor = dbHelper.getVocabCursor(mCategory, orderBy);
-                cursorAdapter.changeCursor(cursor);
-                dialog.dismiss();
+                setSortByRadioButton(rbDateDescending, DATE_DESC, dialog);
             }
         });
 
         rbVocabAscending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rbDateAscending.setChecked(false);
-                rbDateDescending.setChecked(false);
-                rbVocabAscending.setChecked(true);
-                rbVocabDescending.setChecked(false);
-
-                SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                String orderBy = VOCAB_ASC;
-                editor.putString(mCategory, orderBy);
-                editor.apply();
-
-                Cursor cursor = dbHelper.getVocabCursor(mCategory, orderBy);
-                cursorAdapter.changeCursor(cursor);
-                dialog.dismiss();
+                setSortByRadioButton(rbVocabAscending, VOCAB_ASC, dialog);
             }
         });
 
         rbVocabDescending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rbDateAscending.setChecked(false);
-                rbDateDescending.setChecked(false);
-                rbVocabAscending.setChecked(false);
-                rbVocabDescending.setChecked(true);
-
-                SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                String orderBy = VOCAB_DESC;
-                editor.putString(mCategory, orderBy);
-                editor.apply();
-
-                Cursor cursor = dbHelper.getVocabCursor(mCategory, orderBy);
-                cursorAdapter.changeCursor(cursor);
-                dialog.dismiss();
+                setSortByRadioButton(rbVocabDescending, VOCAB_DESC, dialog);
             }
         });
 
         dialog.show();
+    }
+
+    private void setSortByRadioButton(RadioButton selectedButton, String orderBy, AlertDialog dialog) {
+        rbDateAscending.setChecked(false);
+        rbDateDescending.setChecked(false);
+        rbVocabAscending.setChecked(false);
+        rbVocabDescending.setChecked(false);
+
+        selectedButton.setChecked(true);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(mCategory, orderBy);
+        editor.apply();
+
+        Cursor cursor = mDbHelper.getVocabCursor(mCategory, orderBy);
+        mVocabAdapter.changeCursor(cursor);
+        dialog.dismiss();
     }
 
     protected void selectAll(VocabCursorAdapter cursorAdapter, VocabDbHelper dbHelper,
