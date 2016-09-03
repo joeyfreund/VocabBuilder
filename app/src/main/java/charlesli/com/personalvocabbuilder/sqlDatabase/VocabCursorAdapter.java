@@ -35,8 +35,6 @@ public class VocabCursorAdapter extends CursorAdapter {
         selectedItemsPositions = new ArrayList<>();
     }
 
-
-    // The newView method is used to inflate a new view and return it
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_vocab, parent, false);
@@ -59,38 +57,30 @@ public class VocabCursorAdapter extends CursorAdapter {
     }
 
 
-    // The bindView method is used to bind all data to a given view
-    // such as setting the text on a TextView.
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        // Find fields to populate in inflated template
         TextView tvVocabName = (TextView) view.findViewById(R.id.vocabName);
         TextView tvVocabDefinition = (TextView) view.findViewById(R.id.vocabDefinition);
         ImageView tvVocabLevel = (ImageView) view.findViewById(R.id.vocabLevel);
-        // Extract properties from cursor
+
         String vocab = cursor.getString(cursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_VOCAB));
         String definition = cursor.getString(cursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_DEFINITION));
         int level = cursor.getInt(cursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_LEVEL));
-        // Populate fields with extracted properties
+
         tvVocabName.setText(vocab);
         tvVocabDefinition.setText(definition);
 
-        // Set Level images later *************************************************
         if (level == DIFFICULT) {
             tvVocabLevel.setImageResource(R.drawable.level_difficult_orange);
-            tvVocabLevel.setTag(DIFFICULT);
         }
         else if (level == FAMILIAR) {
             tvVocabLevel.setImageResource(R.drawable.level_familiar_orange);
-            tvVocabLevel.setTag(FAMILIAR);
         }
         else if (level == EASY) {
             tvVocabLevel.setImageResource(R.drawable.level_easy_orange);
-            tvVocabLevel.setTag(EASY);
         }
         else if (level == PERFECT) {
             tvVocabLevel.setImageResource(R.drawable.level_perfect_orange);
-            tvVocabLevel.setTag(PERFECT);
         }
 
         CheckBox box = (CheckBox) view.findViewById(R.id.editCheckbox);
