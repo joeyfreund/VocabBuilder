@@ -195,6 +195,10 @@ public class MainActivity extends AppCompatActivity {
 
         dialog.show();
 
+        changeDialogButtonsColor(dialog);
+    }
+
+    private void changeDialogButtonsColor(AlertDialog dialog) {
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
         dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
         dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
@@ -245,9 +249,7 @@ public class MainActivity extends AppCompatActivity {
 
         dialog.show();
 
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
-        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
-        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        changeDialogButtonsColor(dialog);
     }
 
     private void createReviewDialog() {
@@ -367,9 +369,7 @@ public class MainActivity extends AppCompatActivity {
 
         dialog.show();
 
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
-        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
-        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+        changeDialogButtonsColor(dialog);
     }
 
     protected void editCategoryAlertDialog(final String selectedCategory, final String selectedDesc, final VocabDbHelper dbHelper,
@@ -463,9 +463,7 @@ public class MainActivity extends AppCompatActivity {
 
             dialog.show();
 
-            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
-            dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
-            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(this, R.color.app_icon_color));
+            changeDialogButtonsColor(dialog);
 
             dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                 @Override
