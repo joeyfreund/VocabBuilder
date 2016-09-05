@@ -449,10 +449,15 @@ public class MyVocab extends AppCompatActivity {
                     googleTranslate.setListener(new GoogleTranslate.Listener() {
                         @Override
                         public void onTaskResult(String string) {
-                            String translatedJSON = string;
-                            JSONParser jsonParser = new JSONParser();
-                            String translatedText = jsonParser.parseJSONForTranslation(translatedJSON);
-                            definitionInput.setText(translatedText);
+                            if (string != null) {
+                                JSONParser jsonParser = new JSONParser();
+                                String translatedText = jsonParser.parseJSONForTranslation(string);
+                                definitionInput.setText(translatedText);
+                            }
+                            else {
+                                Toast.makeText(MyVocab.this, "Sorry, the translation operation did not go through. Please try again.",
+                                        Toast.LENGTH_LONG).show();
+                            }
                         }
                     });
                     googleTranslate.execute(vocab, source, target);
