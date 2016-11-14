@@ -17,6 +17,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -452,7 +453,7 @@ public class MyVocab extends AppCompatActivity {
                             if (string != null) {
                                 JSONParser jsonParser = new JSONParser();
                                 String translatedText = jsonParser.parseJSONForTranslation(string);
-                                definitionInput.setText(translatedText);
+                                definitionInput.setText(Html.fromHtml(translatedText));
                             }
                             else {
                                 Toast.makeText(MyVocab.this, "Sorry, the translation operation did not go through. Please try again.",
