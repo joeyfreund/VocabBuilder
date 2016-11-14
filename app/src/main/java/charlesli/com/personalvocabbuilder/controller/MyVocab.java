@@ -563,14 +563,18 @@ public class MyVocab extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Cursor cursor = dbHelper.getVocabCursorWithStringPattern(category, s);
+                SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", MODE_PRIVATE);
+                String orderBy = sharedPreferences.getString(mCategory, DATE_ASC);
+                Cursor cursor = dbHelper.getVocabCursorWithStringPattern(category, s, orderBy);
                 cursorAdapter.changeCursor(cursor);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                Cursor cursor = dbHelper.getVocabCursorWithStringPattern(category, s);
+                SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", MODE_PRIVATE);
+                String orderBy = sharedPreferences.getString(mCategory, DATE_ASC);
+                Cursor cursor = dbHelper.getVocabCursorWithStringPattern(category, s, orderBy);
                 cursorAdapter.changeCursor(cursor);
                 return true;
             }
@@ -586,7 +590,9 @@ public class MyVocab extends AppCompatActivity {
             @Override
             public void onViewDetachedFromWindow(View v) {
                 fab.setVisibility(View.VISIBLE);
-                cursorAdapter.changeCursor(dbHelper.getVocabCursor(category, VocabDbContract._ID + " ASC"));
+                SharedPreferences sharedPreferences = getSharedPreferences("Sort Order", MODE_PRIVATE);
+                String orderBy = sharedPreferences.getString(mCategory, DATE_ASC);
+                cursorAdapter.changeCursor(dbHelper.getVocabCursor(category, orderBy));
             }
         });
     }
