@@ -272,7 +272,8 @@ public class VocabDbHelper extends SQLiteOpenHelper {
         };
 
         String selection = VocabDbContract.COLUMN_NAME_CATEGORY + " = " + "'" + category + "'" +
-                " AND " + VocabDbContract.COLUMN_NAME_VOCAB + " LIKE " + "'%" + pattern + "%'";
+                " AND " + "(" + VocabDbContract.COLUMN_NAME_VOCAB + " LIKE " + "'%" + pattern + "%'"
+                + " OR " + VocabDbContract.COLUMN_NAME_DEFINITION + " LIKE " + "'%" + pattern + "%'" + ")";
 
         Cursor cursor = db.query(
                 VocabDbContract.TABLE_NAME_MY_VOCAB, // The table to query
