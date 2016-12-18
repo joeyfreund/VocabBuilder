@@ -132,28 +132,28 @@ public class Review extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         mTracker.add(finalRandomNum);
-                        selectRLevel(DIFFICULT);
+                        selectVocabFamiliarityLevel(DIFFICULT);
                     }
                 });
                 mFamLvlButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mTracker.add(finalRandomNum);
-                        selectRLevel(FAMILIAR);
+                        selectVocabFamiliarityLevel(FAMILIAR);
                     }
                 });
                 mEasLvlButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mTracker.add(finalRandomNum);
-                        selectRLevel(EASY);
+                        selectVocabFamiliarityLevel(EASY);
                     }
                 });
                 mPerLvlButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mTracker.add(finalRandomNum);
-                        selectRLevel(PERFECT);
+                        selectVocabFamiliarityLevel(PERFECT);
                     }
                 });
                 mAgaLvlButton.setOnClickListener(new View.OnClickListener() {
@@ -167,7 +167,7 @@ public class Review extends AppCompatActivity {
 
     }
 
-    private void selectRLevel(int level) {
+    private void selectVocabFamiliarityLevel(int level) {
         // Update level information of the word to the SQLite database ****
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
