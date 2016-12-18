@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class Review extends AppCompatActivity {
     private Button mEasLvlButton;
     private Button mPerLvlButton;
     private Button mAgaLvlButton;
+    private ProgressBar mReviewProgressBar;
     private Cursor mCursor;
     private VocabDbHelper mDbHelper = VocabDbHelper.getDBHelper(Review.this);
     private Random mRandom = new Random();
@@ -66,8 +68,10 @@ public class Review extends AppCompatActivity {
         mEasLvlButton = (Button) findViewById(R.id.lvl_easy_button);
         mPerLvlButton = (Button) findViewById(R.id.lvl_perfect_button);
         mAgaLvlButton = (Button) findViewById(R.id.lvl_again_button);
+        mReviewProgressBar = (ProgressBar) findViewById(R.id.reviewProgressBar);
 
         mCursor = mDbHelper.getVocabCursor(mReviewCategory);
+        mReviewProgressBar.setMax(mCursor.getCount());
 
         loadVocabInRandomOrder();
     }
@@ -90,14 +94,14 @@ public class Review extends AppCompatActivity {
         // Get Definition from Desired Random Row
         String definition = mCursor.getString(mCursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_DEFINITION));
 
-        // if 0 (word - > definition): ********
+        // if 0 (word - > definition):
         if (mReviewMode == 0) {
             // Set mTopView to Word
             mTopTextView.setText(word);
             // Set mBottomView to Definition
             mBottomTextView.setText(definition);
         }
-        // if 1, else, (definition -> word): ********
+        // else (definition -> word):
         else {
             // Set mTopView to Definition
             mTopTextView.setText(definition);
@@ -168,7 +172,8 @@ public class Review extends AppCompatActivity {
     }
 
     private void selectVocabFamiliarityLevel(int level) {
-        // Update level information of the word to the SQLite database ****
+        mReviewProgressBar.incrementProgressBy(1);
+        // Update level information of the word to the SQLite database
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         // New value for one column

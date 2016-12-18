@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".controller.Review">
 
     <android.support.v7.widget.Toolbar
@@ -15,87 +15,94 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <TextView
+        android:id="@+id/topTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/sample_word"
-        android:id="@+id/topTextView"
         android:layout_below="@id/my_toolbar"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="50dp"
+        android:text="@string/sample_word"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <TextView
+        android:id="@+id/bottomTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/sample_definition"
-        android:id="@+id/bottomTextView"
         android:layout_below="@+id/topTextView"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp"
+        android:text="@string/sample_definition"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <Button
+        android:id="@+id/revealButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/reveal_answer"
-        android:id="@+id/revealButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:text="@string/reveal_answer"/>
 
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="@dimen/level_button_width"
-        android:layout_height="wrap_content"
-        android:text="@string/level_again"
         android:id="@+id/lvl_again_button"
-        android:layout_marginTop="5dp"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="@dimen/level_button_width"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/lvl_difficult_button"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="@string/level_again"/>
 
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="@dimen/level_button_width"
-        android:layout_height="wrap_content"
-        android:text="@string/level_difficult"
         android:id="@+id/lvl_difficult_button"
-        android:layout_marginTop="@dimen/button_top_margin"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="@dimen/level_button_width"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/lvl_familiar_button"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/button_top_margin"
+        android:text="@string/level_difficult"/>
 
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="@dimen/level_button_width"
-        android:layout_height="wrap_content"
-        android:text="@string/level_familiar"
         android:id="@+id/lvl_familiar_button"
-        android:layout_marginTop="@dimen/button_top_margin"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="@dimen/level_button_width"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/lvl_easy_button"
-        android:layout_centerHorizontal="true"/>
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="@dimen/level_button_width"
-        android:layout_height="wrap_content"
-        android:text="@string/level_easy"
-        android:id="@+id/lvl_easy_button"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/button_top_margin"
-        android:layout_below="@+id/lvl_perfect_button"
-        android:layout_centerHorizontal="true"/>
+        android:text="@string/level_familiar"/>
 
     <Button
+        android:id="@+id/lvl_easy_button"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="@dimen/level_button_width"
         android:layout_height="wrap_content"
-        android:text="@string/level_perfect"
+        android:layout_below="@+id/lvl_perfect_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/button_top_margin"
+        android:text="@string/level_easy"/>
+
+    <Button
         android:id="@+id/lvl_perfect_button"
-        android:layout_marginTop="20dp"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="@dimen/level_button_width"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/bottomTextView"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/level_perfect"/>
+
+    <ProgressBar
+        android:id="@+id/reviewProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/my_toolbar" />
 
 
 </RelativeLayout>
