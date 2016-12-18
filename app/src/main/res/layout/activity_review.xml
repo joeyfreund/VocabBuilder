@@ -97,12 +97,15 @@
         android:layout_marginTop="20dp"
         android:text="@string/level_perfect"/>
 
-    <ProgressBar
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/reviewProgressBar"
-        style="?android:attr/progressBarStyleHorizontal"
+        style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/my_toolbar" />
+        android:layout_height="6dp"
+        android:layout_below="@+id/my_toolbar"
+        android:indeterminate="false"
+        app:mpb_progressStyle="horizontal"
+        app:mpb_useIntrinsicPadding="false"/>
 
 
 </RelativeLayout>
