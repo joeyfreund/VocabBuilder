@@ -19,6 +19,8 @@ import charlesli.com.personalvocabbuilder.R;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbContract;
 import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 
+import static charlesli.com.personalvocabbuilder.controller.MainActivity.WORDTODEF;
+
 
 public class Review extends AppCompatActivity {
 
@@ -54,8 +56,8 @@ public class Review extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        // default value, 0, indicates Word -> Definition review option
-        mReviewMode = intent.getIntExtra("Mode", 0);
+
+        mReviewMode = intent.getIntExtra("Mode", WORDTODEF);
         mReviewCategory = intent.getStringExtra("Category");
         mReviewNumOfWords = intent.getIntExtra("NumOfWords", 0);
 
@@ -79,9 +81,7 @@ public class Review extends AppCompatActivity {
 
 
     private void loadVocabInRandomOrder() {
-        // Get the length / number of rows in the table
         int numOfRows = mCursor.getCount();
-        // Use Random to generate a random number from length
         int randomNum = mRandom.nextInt(numOfRows);
         // Prevent a repeated number from being generated
         while (mTracker.contains(randomNum)) {
@@ -89,26 +89,19 @@ public class Review extends AppCompatActivity {
         }
 
         mCursor.moveToPosition(randomNum);
-        // Get Word from Desired Random Row
+        // Get word and definition from Desired Random Row
         String word = mCursor.getString(mCursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_VOCAB));
-        // Get Definition from Desired Random Row
         String definition = mCursor.getString(mCursor.getColumnIndexOrThrow(VocabDbContract.COLUMN_NAME_DEFINITION));
 
-        // if 0 (word - > definition):
-        if (mReviewMode == 0) {
-            // Set mTopView to Word
+        if (mReviewMode == WORDTODEF) {
             mTopTextView.setText(word);
-            // Set mBottomView to Definition
             mBottomTextView.setText(definition);
         }
-        // else (definition -> word):
         else {
-            // Set mTopView to Definition
             mTopTextView.setText(definition);
-            // Set mBottomView to Word
             mBottomTextView.setText(word);
         }
-        // Make level buttons and definition invisible, reveal button visible
+
         mDifLvlButton.setVisibility(View.INVISIBLE);
         mFamLvlButton.setVisibility(View.INVISIBLE);
         mEasLvlButton.setVisibility(View.INVISIBLE);
@@ -117,21 +110,19 @@ public class Review extends AppCompatActivity {
         mBottomTextView.setVisibility(View.INVISIBLE);
         mRevealButton.setVisibility(View.VISIBLE);
 
-        // Set OnClickListener for RevealAnswer
         final int finalRandomNum = randomNum;
         mRevealButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Make RevealAnswer invisible
                 mRevealButton.setVisibility(View.INVISIBLE);
-                // When pressed make level buttons visible
+
                 mDifLvlButton.setVisibility(View.VISIBLE);
                 mFamLvlButton.setVisibility(View.VISIBLE);
                 mEasLvlButton.setVisibility(View.VISIBLE);
                 mPerLvlButton.setVisibility(View.VISIBLE);
                 mAgaLvlButton.setVisibility(View.VISIBLE);
                 mBottomTextView.setVisibility(View.VISIBLE);
-                // Set OnClickListener for level buttons
+
                 mDifLvlButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -195,7 +186,7 @@ public class Review extends AppCompatActivity {
         );
         // If this is not last word to be reviewed
         if (mTracker.size() < mReviewNumOfWords) {
-            // Do the same thing / loadPage(int) again (recursive)
+            // load the next vocab to be reviewed
             loadVocabInRandomOrder();
 
         }

@@ -39,8 +39,8 @@ import charlesli.com.personalvocabbuilder.sqlDatabase.VocabDbHelper;
 public class MainActivity extends AppCompatActivity {
 
     // Review Mode
-    private final int WORDTODEF = 0;
-    private final int DEFTOWORD = 1;
+    public static final int WORDTODEF = 0;
+    public static final int DEFTOWORD = 1;
     private final int DETECT_LANGUAGE = 0;
     private final int ENGLISH = 19;
     private String reviewCategory = VocabDbContract.CATEGORY_NAME_MY_VOCAB;
